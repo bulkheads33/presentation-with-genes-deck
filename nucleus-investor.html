@@ -42,6 +42,95 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
+/* ── PASSWORD GATE ───────────────────────────────────── */
+#gate{
+  position:fixed;inset:0;z-index:9999;
+  background:#0A0908;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  transition:opacity .5s ease;
+}
+#gate.hidden{opacity:0;pointer-events:none}
+.gate-card{
+  width:100%;max-width:420px;
+  padding:52px 48px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  background:#111009;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+.gate-logo{
+  font-family:'Instrument Serif','Georgia',serif;
+  font-size:28px;color:#fff;letter-spacing:-.01em;
+  margin-bottom:4px;
+}
+.gate-logo span{
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  color:#0F6E56;vertical-align:super;margin-left:3px;
+}
+.gate-sub{
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:12px;font-weight:500;letter-spacing:.08em;
+  color:rgba(255,255,255,.35);text-transform:uppercase;
+  margin-bottom:36px;
+}
+.gate-label{
+  width:100%;
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:.08em;
+  color:rgba(255,255,255,.4);text-transform:uppercase;
+  margin-bottom:10px;
+}
+.gate-row{
+  display:flex;width:100%;gap:0;
+  border:1.5px solid rgba(255,255,255,.12);
+  border-radius:12px;overflow:hidden;
+  transition:border-color .2s;
+}
+.gate-row:focus-within{border-color:rgba(15,110,86,.6);}
+#gate-input{
+  flex:1;background:transparent;border:none;outline:none;
+  padding:14px 18px;
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:15px;font-weight:500;
+  color:#fff;letter-spacing:.04em;
+  caret-color:#0F6E56;
+}
+#gate-input::placeholder{color:rgba(255,255,255,.2);}
+#gate-btn{
+  background:#0F6E56;border:none;cursor:pointer;
+  padding:14px 22px;
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:16px;color:#fff;
+  transition:background .2s;
+}
+#gate-btn:hover{background:#0A5240;}
+#gate-error{
+  margin-top:14px;height:18px;
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:12px;font-weight:600;letter-spacing:.04em;
+  color:#C45840;opacity:0;
+  transition:opacity .2s;
+}
+#gate-error.show{opacity:1;}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+.gate-row.shake{animation:shake .4s ease;}
+.gate-footer{
+  margin-top:40px;
+  font-family:'Syne','Helvetica Neue',sans-serif;
+  font-size:11px;color:rgba(255,255,255,.2);
+  letter-spacing:.02em;text-align:center;line-height:1.8;
+}
+.gate-footer a{color:rgba(255,255,255,.35);text-decoration:none;}
+.gate-footer a:hover{color:rgba(255,255,255,.6);}
+
 /* ── NAV ─────────────────────────────────────────────── */
 nav{
   position:sticky;top:0;z-index:100;
@@ -573,6 +662,25 @@ button.btn-primary, button.btn-ghost, button.nav-logo {
 </style>
 </head>
 <body>
+
+<!-- ── PASSWORD GATE ──────────────────────────────────── -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">nucleus<span>SERIES B</span></div>
+    <div class="gate-sub">Investor Overview · Confidential</div>
+    <div class="gate-label">Access Code</div>
+    <div class="gate-row" id="gate-row">
+      <input id="gate-input" type="password" placeholder="Enter access code" autocomplete="off" spellcheck="false" />
+      <button id="gate-btn" aria-label="Unlock">→</button>
+    </div>
+    <div id="gate-error">Incorrect access code. Try again.</div>
+  </div>
+  <div class="gate-footer">
+    This document is confidential and intended solely<br>for the named recipient.<br>
+    <a href="mailto:invest@nucleus.com">Request access · invest@nucleus.com</a>
+  </div>
+</div>
+
 
 <!-- ═══ NAV ═══════════════════════════════════════════════ -->
 <nav>
@@ -1606,6 +1714,51 @@ document.querySelectorAll('.stat-trio, .fin-grid, .leaders, .advisors, .moat-gri
     child.style.transitionDelay = (i * 0.08) + 's';
   });
 });
+
+// ── PASSWORD GATE ────────────────────────────────────────
+(function(){
+  const PASS = 'nucleus2026';
+  const SESSION_KEY = 'nucleus_unlocked';
+  const gate = document.getElementById('gate');
+  const input = document.getElementById('gate-input');
+  const btn = document.getElementById('gate-btn');
+  const row = document.getElementById('gate-row');
+  const err = document.getElementById('gate-error');
+
+  function unlock(){
+    gate.classList.add('hidden');
+    sessionStorage.setItem(SESSION_KEY,'1');
+    setTimeout(()=>{ gate.style.display='none'; }, 500);
+  }
+
+  // Already unlocked this session?
+  if(sessionStorage.getItem(SESSION_KEY)==='1'){
+    gate.style.display='none';
+    return;
+  }
+
+  // Prevent body scroll while gate is up
+  document.body.style.overflow='hidden';
+
+  function attempt(){
+    if(input.value === PASS){
+      document.body.style.overflow='';
+      unlock();
+    } else {
+      err.classList.add('show');
+      row.classList.remove('shake');
+      void row.offsetWidth; // reflow to restart animation
+      row.classList.add('shake');
+      input.value='';
+      input.focus();
+      setTimeout(()=>{ row.classList.remove('shake'); }, 400);
+    }
+  }
+
+  btn.addEventListener('click', attempt);
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter') attempt(); });
+  input.focus();
+})();
 </script>
 </body>
 </html>
