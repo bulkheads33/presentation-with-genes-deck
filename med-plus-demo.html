@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nucleus Med+ — Clinical Genomic Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #F7F5F1;
+      --panel-bg: #FFFFFF;
+      --section-bg: #EFECE6;
+      --accent: #C45840;
+      --accent-light: rgba(196, 88, 64, 0.08);
+      --accent-mid: rgba(196, 88, 64, 0.15);
+      --green: #0F6E56;
+      --green-light: rgba(15, 110, 86, 0.08);
+      --amber: #9A6E20;
+      --amber-light: rgba(154, 110, 32, 0.08);
+      --blue: #1E5FA8;
+      --blue-light: rgba(30, 95, 168, 0.08);
+      --ink: #0A0908;
+      --ink-60: rgba(10, 9, 8, 0.60);
+      --ink-40: rgba(10, 9, 8, 0.40);
+      --ink-20: rgba(10, 9, 8, 0.20);
+      --border: rgba(10, 9, 8, 0.09);
+      --border-strong: rgba(10, 9, 8, 0.16);
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-ui: 'Syne', system-ui, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      height: 60px;
+      background: var(--panel-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 0;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+    }
+
+    .logo-nucleus {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-plus {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .header-sep {
+      width: 1px;
+      height: 22px;
+      background: var(--border-strong);
+    }
+
+    .badge-medplus {
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .header-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 0 20px;
+    }
+
+    .patient-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+    }
+
+    .patient-sub {
+      font-size: 11.5px;
+      color: var(--ink-60);
+      font-weight: 400;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+      width: 300px;
+      flex-shrink: 0;
+    }
+
+    .report-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .back-link {
+      font-size: 11.5px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+
+    .back-link:hover {
+      opacity: 0.75;
+    }
+
+    /* ── MAIN CONTENT GRID ── */
+    .content {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 280px 1fr 300px;
+      gap: 0;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    /* ── PANELS ── */
+    .panel {
+      background: var(--panel-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .panel:last-child {
+      border-right: none;
+    }
+
+    .panel-center {
+      background: var(--bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Custom scrollbar */
+    .panel::-webkit-scrollbar,
+    .panel-center::-webkit-scrollbar {
+      width: 4px;
+    }
+    .panel::-webkit-scrollbar-track,
+    .panel-center::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .panel::-webkit-scrollbar-thumb,
+    .panel-center::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 2px;
+    }
+
+    /* ── SECTION BLOCKS ── */
+    .section {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      margin-bottom: 10px;
+    }
+
+    /* ── LEFT PANEL ── */
+    .patient-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .patient-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-size: 11px;
+      color: var(--ink-40);
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+
+    .field-value {
+      font-size: 11.5px;
+      color: var(--ink);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .field-value.accent {
+      color: var(--accent);
+    }
+
+    /* Indication and test — full-width */
+    .field-block {
+      margin-bottom: 6px;
+    }
+
+    .field-block .field-label {
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .field-block .field-value {
+      display: block;
+      text-align: left;
+      font-size: 11.5px;
+    }
+
+    /* ── RISK BARS ── */
+    .risk-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .risk-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .risk-system {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink);
+      width: 88px;
+      flex-shrink: 0;
+    }
+
+    .risk-bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--section-bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .risk-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+
+    .risk-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      width: 72px;
+      text-align: center;
+    }
+
+    .risk-badge.high {
+      background: var(--accent-mid);
+      color: var(--accent);
+    }
+
+    .risk-badge.moderate {
+      background: var(--amber-light);
+      color: var(--amber);
+    }
+
+    .risk-badge.low {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .risk-badge.low-mod {
+      background: var(--amber-light);
+      color: var(--amber);
+    }
+
+    /* ── CONDITIONS SCREENED ── */
+    .conditions-count {
+      font-family: var(--font-serif);
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .conditions-sub {
+      font-size: 11px;
+      color: var(--ink-60);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .conditions-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-60);
+    }
+
+    .stat-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── CENTER PANEL ── */
+    .table-header {
+      padding: 14px 20px 12px;
+      background: var(--panel-bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .table-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .table-subtitle {
+      font-size: 11.5px;
+      color: var(--ink-40);
+      font-weight: 400;
+    }
+
+    .table-wrap {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .table-wrap::-webkit-scrollbar {
+      width: 4px;
+    }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: var(--section-bg);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+      border-left: 3px solid transparent;
+    }
+
+    tbody tr:hover {
+      filter: brightness(0.97);
+    }
+
+    tbody tr.selected {
+      filter: brightness(0.95);
+      box-shadow: inset 0 0 0 1px var(--border-strong);
+    }
+
+    tbody tr.row-urgent {
+      background: rgba(196, 88, 64, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    tbody tr.row-pathogenic {
+      background: rgba(154, 110, 32, 0.04);
+      border-left-color: var(--amber);
+    }
+
+    tbody tr.row-vus {
+      background: rgba(30, 95, 168, 0.03);
+      border-left-color: var(--blue);
+    }
+
+    tbody tr.row-protective {
+      background: rgba(15, 110, 86, 0.04);
+      border-left-color: var(--green);
+    }
+
+    td {
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--ink);
+      vertical-align: middle;
+    }
+
+    .td-gene {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    .td-variant {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--ink-60);
+      white-space: nowrap;
+    }
+
+    .td-significance {
+      font-size: 11px;
+      color: var(--ink-60);
+      max-width: 160px;
+      line-height: 1.35;
+    }
+
+    /* Classification badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .badge-lp {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .badge-path {
+      background: var(--amber);
+      color: #fff;
+    }
+
+    .badge-vus {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .badge-protect {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .badge-risk {
+      background: var(--amber-light);
+      color: var(--amber);
+      border: 1px solid rgba(154, 110, 32, 0.2);
+    }
+
+    /* Action badges */
+    .action-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .action-urgent {
+      background: var(--accent);
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .action-surveillance {
+      background: var(--amber-light);
+      color: var(--amber);
+      border: 1px solid rgba(154, 110, 32, 0.2);
+    }
+
+    .action-counseling {
+      background: var(--blue-light);
+      color: var(--blue);
+      border: 1px solid rgba(30, 95, 168, 0.2);
+    }
+
+    .action-monitor {
+      background: var(--amber-light);
+      color: var(--amber);
+      border: 1px solid rgba(154, 110, 32, 0.2);
+    }
+
+    .action-retest {
+      background: rgba(30, 95, 168, 0.08);
+      color: var(--blue);
+      border: 1px solid rgba(30, 95, 168, 0.18);
+    }
+
+    .action-referral {
+      background: var(--amber-light);
+      color: var(--amber);
+      border: 1px solid rgba(154, 110, 32, 0.2);
+    }
+
+    .action-favorable {
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid rgba(15, 110, 86, 0.2);
+    }
+
+    .inheritance-tag {
+      font-size: 10.5px;
+      color: var(--ink-40);
+      font-weight: 500;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .ai-box {
+      background: var(--ink);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 0;
+    }
+
+    .ai-box-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(247, 245, 241, 0.4);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .ai-insight {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+
+    .ai-insight:last-child {
+      margin-bottom: 0;
+    }
+
+    .ai-insight-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .ai-insight-text {
+      font-size: 11.5px;
+      color: rgba(247, 245, 241, 0.85);
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    /* Actions list */
+    .action-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .action-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      background: var(--section-bg);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .action-num {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      color: var(--ink-20);
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .action-content {
+      flex: 1;
+    }
+
+    .action-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1px;
+      line-height: 1.35;
+    }
+
+    .action-title .urgent-tag {
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 3px;
+    }
+
+    .action-detail {
+      font-size: 10.5px;
+      color: var(--ink-40);
+      font-weight: 400;
+    }
+
+    /* Counselor block */
+    .counselor-block {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--section-bg);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .counselor-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a2e4a 0%, #2d4a6e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: rgba(247, 245, 241, 0.9);
+      flex-shrink: 0;
+    }
+
+    .counselor-info {
+      flex: 1;
+    }
+
+    .counselor-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1px;
+    }
+
+    .counselor-title {
+      font-size: 10.5px;
+      color: var(--ink-40);
+      font-weight: 400;
+    }
+
+    .counselor-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--green);
+      background: var(--green-light);
+      border: 1px solid rgba(15, 110, 86, 0.2);
+      padding: 2px 7px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      height: 56px;
+      background: var(--panel-bg);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .footer-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    .status-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-60);
+    }
+
+    .status-text span {
+      color: var(--ink);
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+      background: var(--section-bg);
+      border-color: var(--ink-20);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #b04e38;
+      border-color: #b04e38;
+    }
+
+    /* ── UTILITY ── */
+    .mt-2 { margin-top: 2px; }
+    .mt-4 { margin-top: 4px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-10 { margin-top: 10px; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    /* Responsive safety — keep minimal scroll if viewport small */
+    @media (max-height: 700px) {
+      .conditions-count { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-nucleus">nucleus</span>
+        <span class="logo-plus">+</span>
+      </div>
+      <div class="header-sep"></div>
+      <span class="badge-medplus">Med+</span>
+    </div>
+
+    <div class="header-center">
+      <div class="patient-name">Mitchell, Sarah E. &nbsp;·&nbsp; F &nbsp;·&nbsp; 42 &nbsp;·&nbsp; MRN: 2847-NUC</div>
+      <div class="patient-sub">Ordered by: Dr. James Carter MD &nbsp;·&nbsp; Oncology &nbsp;·&nbsp; Memorial Hospital</div>
+    </div>
+
+    <div class="header-right">
+      <div class="report-date">March 23, 2026</div>
+      <a class="back-link" href="nucleus-investor.html">← Back to overview</a>
+    </div>
+  </header>
+
+  <!-- ══ CONTENT GRID ══ -->
+  <main class="content">
+
+    <!-- ── LEFT PANEL ── -->
+    <aside class="panel">
+
+      <div class="section">
+        <div class="section-label">Patient Summary</div>
+
+        <div class="patient-field">
+          <span class="field-label">DOB</span>
+          <span class="field-value">14 Apr 1983</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Sex</span>
+          <span class="field-value">Female</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Ethnicity</span>
+          <span class="field-value">European / Mixed</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field-block">
+          <span class="field-label">Indication</span>
+          <span class="field-value">Family history of BRCA-related cancer</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field-block">
+          <span class="field-label">Test</span>
+          <span class="field-value">Whole-genome sequencing (WGS)</span>
+        </div>
+        <div class="patient-field mt-4">
+          <span class="field-label">Coverage</span>
+          <span class="field-value">30×</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Variants analyzed</span>
+          <span class="field-value accent">3,221,847</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Risk by Body System</div>
+
+        <div class="risk-row">
+          <div class="risk-system">Oncology</div>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" style="width:68%; background: var(--accent);"></div>
+          </div>
+          <div class="risk-badge high">HIGH</div>
+        </div>
+
+        <div class="risk-row">
+          <div class="risk-system">Cardiovascular</div>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" style="width:35%; background: var(--amber);"></div>
+          </div>
+          <div class="risk-badge moderate">MODERATE</div>
+        </div>
+
+        <div class="risk-row">
+          <div class="risk-system">Neurological</div>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" style="width:12%; background: var(--green);"></div>
+          </div>
+          <div class="risk-badge low">LOW</div>
+        </div>
+
+        <div class="risk-row">
+          <div class="risk-system">Metabolic</div>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" style="width:28%; background: var(--amber);"></div>
+          </div>
+          <div class="risk-badge moderate">MODERATE</div>
+        </div>
+
+        <div class="risk-row">
+          <div class="risk-system">Immune</div>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" style="width:8%; background: var(--green);"></div>
+          </div>
+          <div class="risk-badge low">LOW</div>
+        </div>
+
+        <div class="risk-row">
+          <div class="risk-system">Reproductive</div>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill" style="width:22%; background: var(--amber);"></div>
+          </div>
+          <div class="risk-badge low-mod">LOW-MOD</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Conditions Screened</div>
+        <div class="conditions-count">2,048</div>
+        <div class="conditions-sub">conditions evaluated</div>
+        <div class="conditions-stats">
+          <div class="stat-pill">
+            <div class="stat-dot" style="background: var(--amber);"></div>
+            18 variants of interest identified
+          </div>
+          <div class="stat-pill">
+            <div class="stat-dot" style="background: var(--accent);"></div>
+            3 require clinical action
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ── CENTER PANEL ── -->
+    <section class="panel-center">
+
+      <div class="table-header">
+        <div class="table-title">Variant Report — ACMG Classification</div>
+        <div class="table-subtitle">Showing 8 of 18 variants of interest</div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="variantTable">
+          <thead>
+            <tr>
+              <th>Gene</th>
+              <th>Variant</th>
+              <th>Classification</th>
+              <th>Inheritance</th>
+              <th>Clinical Significance</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr class="row-urgent" data-row="0">
+              <td class="td-gene">BRCA2</td>
+              <td class="td-variant">c.5946delT</td>
+              <td><span class="badge badge-lp">Likely Pathogenic</span></td>
+              <td><span class="inheritance-tag">Autosomal Dom.</span></td>
+              <td class="td-significance">Hereditary breast / ovarian cancer</td>
+              <td><span class="action-badge action-urgent">Urgent Referral</span></td>
+            </tr>
+
+            <tr class="row-pathogenic" data-row="1">
+              <td class="td-gene">PALB2</td>
+              <td class="td-variant">rs180177102</td>
+              <td><span class="badge badge-path">Pathogenic</span></td>
+              <td><span class="inheritance-tag">Autosomal Dom.</span></td>
+              <td class="td-significance">Breast cancer risk elevation</td>
+              <td><span class="action-badge action-surveillance">Annual surveillance</span></td>
+            </tr>
+
+            <tr class="row-pathogenic" data-row="2">
+              <td class="td-gene">APOE</td>
+              <td class="td-variant">ε3/ε4</td>
+              <td><span class="badge badge-risk">Risk Allele</span></td>
+              <td><span class="inheritance-tag">Complex</span></td>
+              <td class="td-significance">Late-onset Alzheimer's moderate risk</td>
+              <td><span class="action-badge action-counseling">Counseling</span></td>
+            </tr>
+
+            <tr class="row-pathogenic" data-row="3">
+              <td class="td-gene">TCF7L2</td>
+              <td class="td-variant">rs7903146</td>
+              <td><span class="badge badge-path">Pathogenic</span></td>
+              <td><span class="inheritance-tag">Autosomal Dom.</span></td>
+              <td class="td-significance">Type 2 diabetes risk</td>
+              <td><span class="action-badge action-monitor">Lifestyle monitoring</span></td>
+            </tr>
+
+            <tr class="row-vus" data-row="4">
+              <td class="td-gene">MLH1</td>
+              <td class="td-variant">rs63750264</td>
+              <td><span class="badge badge-vus">VUS</span></td>
+              <td><span class="inheritance-tag">Autosomal Dom.</span></td>
+              <td class="td-significance">Lynch syndrome possible</td>
+              <td><span class="action-badge action-retest">12-month retest</span></td>
+            </tr>
+
+            <tr class="row-pathogenic" data-row="5">
+              <td class="td-gene">KCNQ1</td>
+              <td class="td-variant">rs2237895</td>
+              <td><span class="badge badge-path">Pathogenic</span></td>
+              <td><span class="inheritance-tag">Autosomal Dom.</span></td>
+              <td class="td-significance">Long QT syndrome risk</td>
+              <td><span class="action-badge action-referral">Cardiology referral</span></td>
+            </tr>
+
+            <tr class="row-protective" data-row="6">
+              <td class="td-gene">CETP</td>
+              <td class="td-variant">rs708272</td>
+              <td><span class="badge badge-protect">Protective</span></td>
+              <td><span class="inheritance-tag">Complex</span></td>
+              <td class="td-significance">High HDL cardiovascular protection</td>
+              <td><span class="action-badge action-favorable">Favorable</span></td>
+            </tr>
+
+            <tr class="row-protective" data-row="7">
+              <td class="td-gene">FOXO3</td>
+              <td class="td-variant">rs2802292</td>
+              <td><span class="badge badge-protect">Protective</span></td>
+              <td><span class="inheritance-tag">Complex</span></td>
+              <td class="td-significance">Longevity association</td>
+              <td><span class="action-badge action-favorable">Favorable</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- ── RIGHT PANEL ── -->
+    <aside class="panel">
+
+      <div class="section">
+        <div class="section-label">Origin AI Assessment</div>
+        <div class="ai-box">
+          <div class="ai-box-label">
+            <div class="ai-dot-pulse"></div>
+            AI-Generated Insights
+          </div>
+
+          <div class="ai-insight">
+            <div class="ai-insight-dot" style="background: var(--accent);"></div>
+            <div class="ai-insight-text">
+              BRCA2 + PALB2 co-occurrence elevates lifetime breast cancer risk to ~55%. Immediate referral to genetic oncologist recommended.
+            </div>
+          </div>
+
+          <div class="ai-insight">
+            <div class="ai-insight-dot" style="background: var(--amber);"></div>
+            <div class="ai-insight-text">
+              FOXO3 protective variant partially offsets cardiovascular risk from TCF7L2. Net metabolic risk: moderate.
+            </div>
+          </div>
+
+          <div class="ai-insight">
+            <div class="ai-insight-dot" style="background: var(--green);"></div>
+            <div class="ai-insight-text">
+              No APOE ε4/ε4 homozygosity — late-onset Alzheimer's risk remains sub-threshold for clinical intervention.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Recommended Actions</div>
+        <div class="action-list">
+
+          <div class="action-item">
+            <div class="action-num">1</div>
+            <div class="action-content">
+              <div class="action-title">
+                <span class="urgent-tag">[URGENT]</span>Refer to genetic oncology
+              </div>
+              <div class="action-detail">BRCA2 / PALB2 co-pathogenic findings</div>
+            </div>
+          </div>
+
+          <div class="action-item">
+            <div class="action-num">2</div>
+            <div class="action-content">
+              <div class="action-title">Annual mammography + MRI screening</div>
+              <div class="action-detail">Begin immediately per NCCN guidelines</div>
+            </div>
+          </div>
+
+          <div class="action-item">
+            <div class="action-num">3</div>
+            <div class="action-content">
+              <div class="action-title">Cardiology consultation</div>
+              <div class="action-detail">KCNQ1 long QT syndrome evaluation</div>
+            </div>
+          </div>
+
+          <div class="action-item">
+            <div class="action-num">4</div>
+            <div class="action-content">
+              <div class="action-title">Metabolic panel in 6 months</div>
+              <div class="action-detail">TCF7L2 type 2 diabetes risk follow-up</div>
+            </div>
+          </div>
+
+          <div class="action-item">
+            <div class="action-num">5</div>
+            <div class="action-content">
+              <div class="action-title">MLH1 VUS reclassification test</div>
+              <div class="action-detail">Reorder in 12 months — Lynch syndrome</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Genetic Counselor</div>
+        <div class="counselor-block">
+          <div class="counselor-avatar">NT</div>
+          <div class="counselor-info">
+            <div class="counselor-name">Dr. Nathan Treff PhD HCLD</div>
+            <div class="counselor-title">Chief Clinical Officer · Nucleus</div>
+          </div>
+          <div class="counselor-badge">Co-signed</div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer-status">
+      <div class="status-dot"></div>
+      <div class="status-text">
+        <span>Report Finalized</span> &nbsp;·&nbsp; March 23, 2026 &nbsp;·&nbsp; CLIA-compliant
+      </div>
+    </div>
+    <div class="footer-actions">
+      <button class="btn btn-ghost">Share with Patient</button>
+      <button class="btn btn-ghost">Export to EHR</button>
+      <button class="btn btn-primary">Download PDF</button>
+    </div>
+  </footer>
+
+  <script>
+    // Row click highlight
+    const rows = document.querySelectorAll('#variantTable tbody tr');
+    rows.forEach(function(row) {
+      row.addEventListener('click', function() {
+        var wasSelected = this.classList.contains('selected');
+        rows.forEach(function(r) { r.classList.remove('selected'); });
+        if (!wasSelected) {
+          this.classList.add('selected');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

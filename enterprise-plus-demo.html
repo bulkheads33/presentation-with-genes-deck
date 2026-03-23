@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nucleus Enterprise+ · Meridian Technology Corp · Population Genomics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #F7F5F1;
+      --card:     #FFFFFF;
+      --border:   rgba(10,9,8,0.09);
+      --ink:      #0A0908;
+      --muted:    #7A7670;
+      --blue:     #2E6FA3;
+      --blue-lt:  #EBF3FA;
+      --green:    #0F6E56;
+      --green-lt: #E6F4F0;
+      --amber:    #9A6E20;
+      --amber-lt: #FBF3E4;
+      --coral:    #C45840;
+      --coral-lt: #FAEEE9;
+      --lavender: #6B5EA8;
+      --teal:     #1A8080;
+      --radius-sm: 8px;
+      --radius:   12px;
+      --radius-lg: 20px;
+      --shadow:   0 1px 3px rgba(10,9,8,0.06), 0 4px 16px rgba(10,9,8,0.04);
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      height: 60px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-wordmark {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-plus {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-left: -4px;
+      margin-top: -6px;
+    }
+
+    .header-sep {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      margin: 0 14px;
+    }
+
+    .enterprise-badge {
+      background: var(--blue);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .header-center {
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-company {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
+
+    .header-subtitle {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .back-link {
+      font-size: 13px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 0.15s;
+    }
+
+    .back-link:hover { opacity: 0.7; }
+
+    .btn-export {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.2px;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-export:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-export:active { transform: translateY(0); }
+
+    /* ── ENROLLMENT BAR ── */
+    .enrollment-bar {
+      height: 48px;
+      background: var(--blue-lt);
+      border-bottom: 1px solid rgba(46,111,163,0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 20px;
+    }
+
+    .enroll-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .enroll-label span {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(46,111,163,0.15);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--blue);
+      border-radius: 999px;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .enroll-right {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .enroll-right strong {
+      color: var(--amber);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      padding: 24px 28px 28px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ── KPI TILES ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-tile {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px 20px;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .kpi-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(10,9,8,0.09);
+    }
+
+    .kpi-number {
+      font-family: 'Instrument Serif', serif;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+    }
+
+    .kpi-number.blue  { color: var(--blue); }
+    .kpi-number.amber { color: var(--amber); }
+    .kpi-number.green { color: var(--green); }
+    .kpi-number.coral { color: var(--coral); }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .kpi-trend {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .kpi-trend .up   { color: var(--green); font-weight: 600; }
+    .kpi-trend .note { color: var(--amber); }
+
+    /* ── BOTTOM GRID ── */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      gap: 16px;
+    }
+
+    /* ── CARD BASE ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 18px 24px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.1px;
+    }
+
+    .card-meta {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── DEPT TABLE ── */
+    .dept-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .dept-table thead tr {
+      background: #FAFAF8;
+    }
+
+    .dept-table th {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 10px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dept-table th:not(:first-child) { text-align: center; }
+
+    .dept-table td {
+      padding: 12px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(10,9,8,0.04);
+      vertical-align: middle;
+      transition: background 0.15s;
+    }
+
+    .dept-table td:not(:first-child) { text-align: center; }
+
+    .dept-table tbody tr {
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .dept-table tbody tr:hover { background: #F4F2EE; }
+    .dept-table tbody tr.active { background: var(--blue-lt); }
+
+    .dept-table tbody tr:last-child td { border-bottom: none; }
+
+    .dept-name { font-weight: 600; color: var(--ink); }
+
+    .risk-num { font-family: 'Instrument Serif', serif; font-size: 16px; }
+    .risk-num.low    { color: var(--green); }
+    .risk-num.mid    { color: var(--amber); }
+    .risk-num.high   { color: var(--coral); }
+
+    .high-pct { font-weight: 600; font-size: 12.5px; }
+    .high-pct.low  { color: var(--green); }
+    .high-pct.mid  { color: var(--amber); }
+    .high-pct.hi   { color: var(--coral); }
+
+    .condition-tag {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .status-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .status-badge.good    { background: var(--green-lt); color: var(--green); }
+    .status-badge.monitor { background: var(--amber-lt); color: var(--amber); }
+    .status-badge.action  { background: var(--coral-lt); color: var(--coral); }
+
+    /* ── RISK HEATMAP BAR ── */
+    .risk-dist-section {
+      padding: 16px 24px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .risk-dist-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .risk-stacked {
+      height: 28px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .risk-seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #fff;
+      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+      width: 0%;
+    }
+
+    .risk-seg.low  { background: var(--green); }
+    .risk-seg.mid  { background: var(--amber); }
+    .risk-seg.hi   { background: var(--coral); }
+
+    .risk-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── CONDITIONS PANEL ── */
+    .conditions-list {
+      padding: 6px 0 4px;
+    }
+
+    .condition-row {
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(10,9,8,0.04);
+    }
+
+    .condition-row:last-of-type { border-bottom: none; }
+
+    .cond-rank {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      width: 16px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .cond-info { flex: 1; min-width: 0; }
+
+    .cond-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cond-bar-track {
+      height: 4px;
+      background: rgba(10,9,8,0.07);
+      border-radius: 999px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .cond-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .cond-count {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px;
+      color: var(--ink);
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .cond-count small {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .gina-notice {
+      margin: 0 24px 18px;
+      padding: 10px 14px;
+      background: var(--green-lt);
+      border: 1px solid rgba(15,110,86,0.18);
+      border-radius: var(--radius-sm);
+      font-size: 11.5px;
+      color: var(--green);
+      font-weight: 500;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .gina-check {
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 0px;
+    }
+
+    /* ── ROI CALCULATOR ── */
+    .roi-body { padding: 20px 24px 24px; }
+
+    .roi-compare {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .roi-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    .roi-row.without {
+      background: #FAFAF8;
+    }
+
+    .roi-row.with {
+      background: var(--green-lt);
+      border-color: rgba(15,110,86,0.2);
+    }
+
+    .roi-row-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .roi-row.with .roi-row-label {
+      color: var(--green);
+    }
+
+    .roi-row-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .roi-row.with .roi-row-value {
+      color: var(--green);
+    }
+
+    .roi-divider {
+      border: none;
+      border-top: 1px dashed rgba(10,9,8,0.1);
+      margin: 4px 0 8px;
+    }
+
+    .roi-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .roi-metric {
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: #FAFAF8;
+    }
+
+    .roi-metric-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .roi-metric-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+    }
+
+    .roi-metric-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .roi-callout {
+      background: linear-gradient(135deg, #0F6E56 0%, #1A9070 100%);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .roi-callout-left {}
+
+    .roi-callout-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .roi-callout-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+
+    .roi-big-number {
+      font-family: 'Instrument Serif', serif;
+      font-size: 56px;
+      color: #fff;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    /* ── TOOLTIP ── */
+    .tooltip-overlay {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .tooltip-overlay.visible { opacity: 1; }
+
+    .tooltip-box {
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.6;
+      max-width: 220px;
+      box-shadow: 0 8px 24px rgba(10,9,8,0.2);
+    }
+
+    .tooltip-box strong {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+      font-size: 12.5px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      height: 52px;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      margin-top: 4px;
+    }
+
+    .footer-left {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-sep { color: var(--border); }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--green-lt);
+      color: var(--green);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .footer-right {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .footer-right strong {
+      color: var(--blue);
+    }
+
+    /* ── RESPONSIVE ADJUSTMENTS ── */
+    @media (max-width: 1100px) {
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .kpi-row { grid-template-columns: 1fr; }
+      .header-center { display: none; }
+      .roi-metrics { grid-template-columns: 1fr; }
+    }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .kpi-tile {
+      animation: fadeSlideUp 0.4s ease both;
+    }
+
+    .kpi-tile:nth-child(1) { animation-delay: 0.05s; }
+    .kpi-tile:nth-child(2) { animation-delay: 0.12s; }
+    .kpi-tile:nth-child(3) { animation-delay: 0.19s; }
+    .kpi-tile:nth-child(4) { animation-delay: 0.26s; }
+
+    .card {
+      animation: fadeSlideUp 0.45s ease both;
+      animation-delay: 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOOLTIP -->
+<div class="tooltip-overlay" id="tooltip">
+  <div class="tooltip-box" id="tooltip-content"></div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <span class="logo-wordmark">nucleus</span><span class="logo-plus">+</span>
+    <div class="header-sep"></div>
+    <span class="enterprise-badge">Enterprise+</span>
+  </div>
+
+  <div class="header-center">
+    <div class="header-company">Meridian Technology Corp</div>
+    <div class="header-subtitle">Population Genomics Dashboard &nbsp;·&nbsp; Q1 2026</div>
+  </div>
+
+  <div class="header-right">
+    <a href="nucleus-investor.html" class="back-link">← Back to overview</a>
+    <button class="btn-export" onclick="alert('Generating PDF report…\nThis would export a full population health report for HR/Benefits review.')">Export Report</button>
+  </div>
+</header>
+
+<!-- ENROLLMENT BAR -->
+<div class="enrollment-bar">
+  <div class="enroll-label"><span>847</span> employees enrolled of <span>1,200</span> eligible &nbsp;(70.6%)</div>
+  <div class="progress-track">
+    <div class="progress-fill" id="enrollProgress"></div>
+  </div>
+  <div class="enroll-right">Enrollment closes <strong>April 30, 2026</strong> &nbsp;·&nbsp; 353 remaining</div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- KPI TILES -->
+  <div class="kpi-row">
+    <div class="kpi-tile">
+      <div class="kpi-number blue">847</div>
+      <div class="kpi-label">Employees Enrolled</div>
+      <div class="kpi-trend"><span class="up">↑ +124</span> this month</div>
+    </div>
+
+    <div class="kpi-tile">
+      <div class="kpi-number amber">38<span style="font-size:24px;opacity:0.6">/100</span></div>
+      <div class="kpi-label">Average Genomic Risk Score</div>
+      <div class="kpi-trend"><span class="note">Lower is better</span> &nbsp;·&nbsp; Population avg: 42</div>
+    </div>
+
+    <div class="kpi-tile">
+      <div class="kpi-number green">$1.4M</div>
+      <div class="kpi-label">Projected Annual Savings</div>
+      <div class="kpi-trend">Based on early intervention model</div>
+    </div>
+
+    <div class="kpi-tile">
+      <div class="kpi-number coral">47</div>
+      <div class="kpi-label">Conditions Flagged</div>
+      <div class="kpi-trend">Across <strong>39</strong> employees &nbsp;·&nbsp; <span style="color:var(--coral);font-weight:600">Action recommended</span></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM GRID -->
+  <div class="bottom-grid">
+
+    <!-- LEFT: DEPT TABLE + RISK BAR -->
+    <div class="card" style="padding:0;">
+      <div class="card-header">
+        <div class="card-title">Risk Distribution by Department</div>
+        <div class="card-meta">847 employees across 7 departments</div>
+      </div>
+
+      <table class="dept-table" id="deptTable">
+        <thead>
+          <tr>
+            <th>Department</th>
+            <th>Enrolled</th>
+            <th>Avg Risk</th>
+            <th>High Risk %</th>
+            <th>Top Condition</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-dept="Engineering" data-enrolled="312" data-risk="35" data-high="8" data-condition="Cardiovascular" data-status="good">
+            <td><span class="dept-name">Engineering</span></td>
+            <td>312</td>
+            <td><span class="risk-num low">35</span></td>
+            <td><span class="high-pct low">8%</span></td>
+            <td><span class="condition-tag">Cardiovascular</span></td>
+            <td><span class="status-badge good">Good</span></td>
+          </tr>
+          <tr data-dept="Sales" data-enrolled="124" data-risk="44" data-high="18" data-condition="Metabolic" data-status="monitor">
+            <td><span class="dept-name">Sales</span></td>
+            <td>124</td>
+            <td><span class="risk-num mid">44</span></td>
+            <td><span class="high-pct hi">18%</span></td>
+            <td><span class="condition-tag">Metabolic</span></td>
+            <td><span class="status-badge monitor">Monitor</span></td>
+          </tr>
+          <tr data-dept="Leadership" data-enrolled="28" data-risk="41" data-high="14" data-condition="Cardiovascular" data-status="monitor">
+            <td><span class="dept-name">Leadership</span></td>
+            <td>28</td>
+            <td><span class="risk-num mid">41</span></td>
+            <td><span class="high-pct mid">14%</span></td>
+            <td><span class="condition-tag">Cardiovascular</span></td>
+            <td><span class="status-badge monitor">Monitor</span></td>
+          </tr>
+          <tr data-dept="Marketing" data-enrolled="89" data-risk="37" data-high="9" data-condition="Oncology" data-status="good">
+            <td><span class="dept-name">Marketing</span></td>
+            <td>89</td>
+            <td><span class="risk-num low">37</span></td>
+            <td><span class="high-pct low">9%</span></td>
+            <td><span class="condition-tag">Oncology</span></td>
+            <td><span class="status-badge good">Good</span></td>
+          </tr>
+          <tr data-dept="Operations" data-enrolled="156" data-risk="42" data-high="16" data-condition="Metabolic" data-status="monitor">
+            <td><span class="dept-name">Operations</span></td>
+            <td>156</td>
+            <td><span class="risk-num mid">42</span></td>
+            <td><span class="high-pct hi">16%</span></td>
+            <td><span class="condition-tag">Metabolic</span></td>
+            <td><span class="status-badge monitor">Monitor</span></td>
+          </tr>
+          <tr data-dept="Finance" data-enrolled="78" data-risk="33" data-high="7" data-condition="Neurological" data-status="good">
+            <td><span class="dept-name">Finance</span></td>
+            <td>78</td>
+            <td><span class="risk-num low">33</span></td>
+            <td><span class="high-pct low">7%</span></td>
+            <td><span class="condition-tag">Neurological</span></td>
+            <td><span class="status-badge good">Good</span></td>
+          </tr>
+          <tr data-dept="HR / People" data-enrolled="60" data-risk="38" data-high="11" data-condition="Various" data-status="good">
+            <td><span class="dept-name">HR / People</span></td>
+            <td>60</td>
+            <td><span class="risk-num low">38</span></td>
+            <td><span class="high-pct mid">11%</span></td>
+            <td><span class="condition-tag">Various</span></td>
+            <td><span class="status-badge good">Good</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="risk-dist-section">
+        <div class="risk-dist-label">Overall Risk Distribution — All Enrolled Employees</div>
+        <div class="risk-stacked">
+          <div class="risk-seg low" id="segLow">Low 58%</div>
+          <div class="risk-seg mid" id="segMid">Moderate 32%</div>
+          <div class="risk-seg hi"  id="segHi">High 10%</div>
+        </div>
+        <div class="risk-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Low Risk · 490 employees</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> Moderate Risk · 271 employees</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--coral)"></div> High Risk · 86 employees</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COL -->
+    <div class="right-col">
+
+      <!-- CONDITIONS PANEL -->
+      <div class="card" style="padding:0;">
+        <div class="card-header">
+          <div class="card-title">Top Conditions Identified</div>
+          <div class="card-meta">Aggregate · de-identified</div>
+        </div>
+
+        <div class="conditions-list">
+          <div class="condition-row">
+            <div class="cond-rank">1</div>
+            <div class="cond-info">
+              <div class="cond-name">Cardiovascular risk variants</div>
+              <div class="cond-bar-track"><div class="cond-bar-fill" data-width="40" style="background:var(--blue)"></div></div>
+            </div>
+            <div class="cond-count">127<small>employees</small></div>
+          </div>
+
+          <div class="condition-row">
+            <div class="cond-rank">2</div>
+            <div class="cond-info">
+              <div class="cond-name">Metabolic / T2D predisposition</div>
+              <div class="cond-bar-track"><div class="cond-bar-fill" data-width="31" style="background:var(--amber)"></div></div>
+            </div>
+            <div class="cond-count">98<small>employees</small></div>
+          </div>
+
+          <div class="condition-row">
+            <div class="cond-rank">3</div>
+            <div class="cond-info">
+              <div class="cond-name">Oncology predisposition</div>
+              <div class="cond-bar-track"><div class="cond-bar-fill" data-width="14" style="background:var(--coral)"></div></div>
+            </div>
+            <div class="cond-count">43<small>employees</small></div>
+          </div>
+
+          <div class="condition-row">
+            <div class="cond-rank">4</div>
+            <div class="cond-info">
+              <div class="cond-name">Neurological markers</div>
+              <div class="cond-bar-track"><div class="cond-bar-fill" data-width="10" style="background:#6B5EA8"></div></div>
+            </div>
+            <div class="cond-count">31<small>employees</small></div>
+          </div>
+
+          <div class="condition-row">
+            <div class="cond-rank">5</div>
+            <div class="cond-info">
+              <div class="cond-name">Immune system variants</div>
+              <div class="cond-bar-track"><div class="cond-bar-fill" data-width="6" style="background:var(--teal)"></div></div>
+            </div>
+            <div class="cond-count">18<small>employees</small></div>
+          </div>
+        </div>
+
+        <div class="gina-notice">
+          <span class="gina-check">✓</span>
+          <div><strong style="font-weight:700">GINA Compliance:</strong> All individual data encrypted and firewalled. Employer access: aggregate only. &nbsp;<span style="font-weight:700">✓ Compliant</span></div>
+        </div>
+      </div>
+
+      <!-- ROI CALCULATOR -->
+      <div class="card" style="padding:0;">
+        <div class="card-header">
+          <div class="card-title">Projected ROI — Year 1</div>
+          <div class="card-meta">Based on 847 enrolled employees</div>
+        </div>
+
+        <div class="roi-body">
+          <div class="roi-compare">
+            <div class="roi-row without">
+              <div>
+                <div class="roi-row-label">Without program</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;font-weight:500">Projected annual claims baseline</div>
+              </div>
+              <div class="roi-row-value">$4.2M</div>
+            </div>
+
+            <div class="roi-row with">
+              <div>
+                <div class="roi-row-label">With Nucleus Enterprise+</div>
+                <div style="font-size:11px;color:var(--green);opacity:0.75;margin-top:2px;font-weight:500">Projected with early intervention</div>
+              </div>
+              <div class="roi-row-value">$2.8M</div>
+            </div>
+          </div>
+
+          <div class="roi-metrics">
+            <div class="roi-metric">
+              <div class="roi-metric-label">Claims Savings</div>
+              <div class="roi-metric-value" style="color:var(--green)">$1.4M</div>
+              <div class="roi-metric-sub">33% reduction</div>
+            </div>
+
+            <div class="roi-metric">
+              <div class="roi-metric-label">Program Cost</div>
+              <div class="roi-metric-value">$423,500</div>
+              <div class="roi-metric-sub">$500 / employee</div>
+            </div>
+
+            <div class="roi-metric" style="background:var(--green-lt);border-color:rgba(15,110,86,0.2);">
+              <div class="roi-metric-label" style="color:var(--green)">Net Savings</div>
+              <div class="roi-metric-value" style="color:var(--green)">$976,500</div>
+              <div class="roi-metric-sub" style="color:var(--green);opacity:0.75">After program costs</div>
+            </div>
+
+            <div class="roi-metric" style="background:#FAFAF8">
+              <div class="roi-metric-label">Break-even</div>
+              <div class="roi-metric-value">~5.2 mo</div>
+              <div class="roi-metric-sub">Typical: 6–8 months</div>
+            </div>
+          </div>
+
+          <div class="roi-callout">
+            <div class="roi-callout-left">
+              <div class="roi-callout-label">Net Return on Investment</div>
+              <div class="roi-callout-sub">Year 1 · 847 enrolled employees</div>
+            </div>
+            <div>
+              <div style="font-family:'Instrument Serif',serif;font-size:11px;color:rgba(255,255,255,0.65);letter-spacing:0.3px;text-align:right;margin-bottom:2px;">ROI</div>
+              <div class="roi-big-number">2.3×</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /right-col -->
+  </div><!-- /bottom-grid -->
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-left">
+    <span>Data as of March 23, 2026</span>
+    <span class="footer-sep">&nbsp;·&nbsp;</span>
+    <span class="footer-badge">✓ HIPAA</span>
+    <span class="footer-badge">✓ GINA</span>
+    <span class="footer-sep">&nbsp;·&nbsp;</span>
+    <span>Individual data: employee-controlled</span>
+  </div>
+  <div class="footer-right">
+    <strong>847 genomes analyzed</strong> &nbsp;·&nbsp; Powered by Origin AI
+  </div>
+</footer>
+
+<script>
+  // ── ANIMATE BARS ON LOAD ──
+  window.addEventListener('load', function () {
+    // Enrollment progress bar
+    setTimeout(function () {
+      document.getElementById('enrollProgress').style.width = '70.6%';
+    }, 200);
+
+    // Risk segment bars
+    setTimeout(function () {
+      document.getElementById('segLow').style.width = '58%';
+      document.getElementById('segMid').style.width = '32%';
+      document.getElementById('segHi').style.width  = '10%';
+    }, 400);
+
+    // Condition bars
+    setTimeout(function () {
+      document.querySelectorAll('.cond-bar-fill').forEach(function (bar) {
+        bar.style.width = bar.getAttribute('data-width') + '%';
+      });
+    }, 600);
+  });
+
+  // ── TABLE ROW INTERACTIONS ──
+  const rows = document.querySelectorAll('#deptTable tbody tr');
+  const tooltip = document.getElementById('tooltip');
+  const tooltipContent = document.getElementById('tooltip-content');
+  let activeRow = null;
+
+  const statusLabels = {
+    good:    'This department is within healthy risk thresholds. No immediate action needed.',
+    monitor: 'Moderate risk profile detected. Consider targeted wellness programs.',
+    action:  'High-risk concentration. Immediate outreach and intervention recommended.'
+  };
+
+  rows.forEach(function (row) {
+    row.addEventListener('click', function () {
+      if (activeRow === row) {
+        row.classList.remove('active');
+        activeRow = null;
+        return;
+      }
+      if (activeRow) activeRow.classList.remove('active');
+      row.classList.add('active');
+      activeRow = row;
+    });
+
+    row.addEventListener('mouseenter', function (e) {
+      const dept      = row.getAttribute('data-dept');
+      const enrolled  = row.getAttribute('data-enrolled');
+      const risk      = row.getAttribute('data-risk');
+      const high      = row.getAttribute('data-high');
+      const condition = row.getAttribute('data-condition');
+      const status    = row.getAttribute('data-status');
+
+      tooltipContent.innerHTML =
+        '<strong>' + dept + '</strong>' +
+        enrolled + ' enrolled &nbsp;·&nbsp; Risk score: ' + risk + '<br>' +
+        'High risk: ' + high + '% &nbsp;·&nbsp; Top: ' + condition + '<br>' +
+        '<span style="opacity:0.8;font-size:11px;margin-top:4px;display:block">' + statusLabels[status] + '</span>';
+
+      positionTooltip(e);
+      tooltip.classList.add('visible');
+    });
+
+    row.addEventListener('mousemove', positionTooltip);
+
+    row.addEventListener('mouseleave', function () {
+      tooltip.classList.remove('visible');
+    });
+  });
+
+  function positionTooltip(e) {
+    var x = e.clientX + 16;
+    var y = e.clientY - 10;
+    var w = tooltipContent.offsetWidth  || 220;
+    var h = tooltipContent.offsetHeight || 80;
+    if (x + w > window.innerWidth  - 12) x = e.clientX - w - 16;
+    if (y + h > window.innerHeight - 12) y = e.clientY - h - 10;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top  = y + 'px';
+  }
+
+  // ── EXPORT BUTTON ──
+  document.querySelector('.btn-export').addEventListener('click', function () {
+    this.textContent = '✓ Generating…';
+    var btn = this;
+    setTimeout(function () {
+      btn.textContent = 'Export Report';
+    }, 2000);
+  });
+</script>
+</body>
+</html>

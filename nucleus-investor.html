@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nucleus — Series B · Investor Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:   #FFFFFF;
+  --off:     #F7F5F1;
+  --off2:    #EFECE6;
+  --ink:     #0A0908;
+  --ink2:    #3A3834;
+  --ink3:    #7A7670;
+  --green:   #0F6E56;
+  --green2:  #0A5240;
+  --green3:  #E8F3F0;
+  --green4:  #C8E8E0;
+  --coral:   #C45840;
+  --coral-bg:#FDF0EC;
+  --blue:    #2E6FA3;
+  --blue-bg: #EEF4FA;
+  --amber:   #9A6E20;
+  --amber-bg:#FBF5E8;
+  --lav:     #6B5FA0;
+  --lav-bg:  #F2F0FA;
+  --bdr:     rgba(10,9,8,0.09);
+  --bdr2:    rgba(10,9,8,0.18);
+  --r:       12px;
+  --r2:      20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{}
+body{
+  background:var(--white);
+  color:var(--ink);
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight:400;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:64px;
+}
+.nav-logo{display:flex;align-items:baseline;gap:4px;text-decoration:none}
+.nav-logo-word{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:22px;color:var(--ink);letter-spacing:-.01em}
+.nav-logo-plus{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.1em}
+.nav-links{display:flex;gap:32px}
+.nav-links a{
+  font-size:13px;font-weight:500;color:var(--ink2);
+  text-decoration:none;letter-spacing:.02em;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{
+  background:var(--ink);color:var(--white);
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;
+  padding:10px 22px;border-radius:100px;
+  text-decoration:none;letter-spacing:.02em;
+  transition:background .2s;
+}
+.nav-cta:hover{background:var(--green2)}
+
+/* ── SHARED ──────────────────────────────────────────── */
+section{padding:96px 48px}
+.label{
+  display:inline-block;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--green);margin-bottom:20px;
+}
+h1{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:clamp(52px,6vw,88px);font-weight:400;line-height:1.02;letter-spacing:-.02em;color:var(--ink)}
+h2{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:clamp(38px,4vw,58px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--ink)}
+h3{font-size:18px;font-weight:600;color:var(--ink);line-height:1.35}
+p.lead{font-size:18px;line-height:1.7;color:var(--ink2);max-width:600px}
+.divider{height:1px;background:var(--bdr);margin:0 48px}
+
+/* ── HERO ────────────────────────────────────────────── */
+#hero{
+  min-height:90vh;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  padding:120px 48px 96px;
+  background:var(--white);
+  position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;right:-200px;top:-200px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle, rgba(15,110,86,0.06) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:10px;margin-bottom:28px;
+}
+.hero-badge{
+  background:var(--green3);color:var(--green2);
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 14px;border-radius:100px;
+}
+.hero-press{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3);font-weight:500}
+.hero-press span{color:var(--ink);font-weight:600}
+.hero-h1{margin-bottom:28px}
+.hero-sub{font-size:20px;line-height:1.65;color:var(--ink2);margin-bottom:44px;max-width:520px}
+.hero-actions{display:flex;gap:14px;align-items:center}
+.btn-primary{
+  background:var(--ink);color:var(--white);
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;
+  padding:14px 28px;border-radius:100px;
+  text-decoration:none;letter-spacing:.02em;transition:all .2s;
+}
+.btn-primary:hover{background:var(--green2);transform:translateY(-1px)}
+.btn-ghost{
+  font-size:14px;font-weight:600;color:var(--ink2);
+  text-decoration:none;letter-spacing:.02em;
+  display:flex;align-items:center;gap:6px;
+  transition:color .2s;
+}
+.btn-ghost:hover{color:var(--green)}
+.btn-ghost::after{content:'→';transition:transform .2s}
+.btn-ghost:hover::after{transform:translateX(3px)}
+
+/* Hero right — stat grid */
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.hstat{
+  background:var(--off);padding:32px 28px;
+  transition:background .2s;
+}
+.hstat:first-child{border-radius:var(--r2) 0 0 0}
+.hstat:nth-child(2){border-radius:0 var(--r2) 0 0}
+.hstat:nth-child(3){border-radius:0 0 0 var(--r2)}
+.hstat:last-child{border-radius:0 0 var(--r2) 0}
+.hstat:hover{background:var(--green3)}
+.hstat-n{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:48px;color:var(--ink);line-height:1}
+.hstat-l{font-size:12px;font-weight:500;color:var(--ink3);margin-top:8px;letter-spacing:.03em}
+
+/* press ticker */
+.press-bar{
+  background:var(--off);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+  padding:14px 0;overflow:hidden;position:relative;
+}
+.press-track{
+  display:flex;gap:48px;width:max-content;
+  animation:ticker 28s linear infinite;
+}
+.press-track:hover{animation-play-state:paused}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.press-item{
+  font-size:13px;font-weight:600;color:var(--ink3);
+  white-space:nowrap;letter-spacing:.04em;
+  display:flex;align-items:center;gap:10px;
+}
+.press-item::before{content:'·';color:var(--green);font-size:18px}
+
+/* ── PROBLEM ─────────────────────────────────────────── */
+#problem{background:var(--off);padding:96px 48px}
+.problem-grid{
+  display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;margin-top:56px;
+}
+.stat-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.stat-card{
+  background:var(--white);border-radius:var(--r2);padding:36px 28px;
+  border:1px solid var(--bdr);
+  transition:transform .25s,box-shadow .25s;
+}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(10,9,8,0.07)}
+.stat-n{
+  font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:56px;line-height:1;
+  margin-bottom:12px;
+}
+.stat-n.coral{color:var(--coral)}
+.stat-n.green{color:var(--green)}
+.stat-n.amber{color:var(--amber)}
+.stat-label{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4}
+.stat-sub{font-size:13px;color:var(--ink3);line-height:1.5}
+
+/* ── SOLUTION ────────────────────────────────────────── */
+#solution{background:var(--white)}
+.solution-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px}
+.engine-box{
+  background:var(--off);border-radius:var(--r2);padding:44px;
+  border:1px solid var(--bdr);position:relative;
+}
+.engine-label{
+  display:inline-block;background:var(--ink);color:var(--white);
+  font-size:10px;font-weight:700;letter-spacing:.14em;
+  padding:5px 12px;border-radius:100px;margin-bottom:20px;
+}
+.engine-title{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:30px;color:var(--ink);margin-bottom:14px;line-height:1.2}
+.engine-sub{font-size:14px;color:var(--ink3);line-height:1.7;margin-bottom:28px}
+.engine-cost{
+  display:inline-flex;align-items:baseline;gap:4px;
+  background:var(--green3);border-radius:100px;padding:6px 18px;
+}
+.engine-cost-n{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:26px;color:var(--green2)}
+.engine-cost-l{font-size:12px;color:var(--green);font-weight:600}
+.channels-list{display:flex;flex-direction:column;gap:12px}
+.channel-row{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;background:var(--off);border-radius:var(--r);
+  border:1px solid var(--bdr);
+  transition:all .2s;cursor:default;
+}
+.channel-row:hover{background:var(--white);border-color:var(--bdr2);transform:translateX(4px)}
+.ch-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ch-name{font-size:15px;font-weight:600;color:var(--ink);flex:1}
+.ch-desc{font-size:13px;color:var(--ink3)}
+.ch-arrow{font-size:16px;color:var(--ink3);transition:transform .2s}
+.channel-row:hover .ch-arrow{transform:translateX(3px);color:var(--ink)}
+
+/* ── MOAT ────────────────────────────────────────────── */
+#moat{background:var(--ink);padding:96px 48px}
+#moat .label{color:rgba(255,255,255,0.4)}
+#moat h2{color:var(--white)}
+#moat p.lead{color:rgba(255,255,255,0.6)}
+.moat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px}
+.moat-card{background:#161412;padding:44px 40px;transition:background .2s}
+.moat-card:first-child{border-radius:var(--r2) 0 0 0}
+.moat-card:nth-child(2){border-radius:0 var(--r2) 0 0}
+.moat-card:nth-child(3){border-radius:0 0 0 var(--r2)}
+.moat-card:last-child{border-radius:0 0 var(--r2) 0}
+.moat-card:hover{background:#1A1715}
+.moat-icon{font-size:28px;margin-bottom:20px}
+.moat-head{font-size:17px;font-weight:700;color:var(--white);margin-bottom:10px}
+.moat-body{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7}
+.moat-vs{
+  margin-top:56px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  background:#161412;border-radius:var(--r2);overflow:hidden;
+}
+.vs-col{padding:28px 24px}
+.vs-col:not(:last-child){border-right:1px solid rgba(255,255,255,0.06)}
+.vs-head{font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:.1em;margin-bottom:20px}
+.vs-head.nucleus{color:var(--green)}
+.vs-row{font-size:13px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.5)}
+.vs-row:last-child{border-bottom:none}
+.vs-row.yes{color:rgba(255,255,255,0.85)}
+.vs-row.no{color:rgba(255,255,255,0.2)}
+.vs-row.nucleus-val{color:#4ABA9E;font-weight:600}
+
+/* ── CHANNELS DETAIL ─────────────────────────────────── */
+#channels{background:var(--white)}
+.channels-table{margin-top:56px;display:flex;flex-direction:column;gap:0;border-radius:var(--r2);overflow:hidden;border:1px solid var(--bdr)}
+.ct-header{
+  display:grid;grid-template-columns:200px 1fr 130px 110px 130px 110px;
+  padding:12px 28px;background:var(--off2);
+  font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--ink3);text-transform:uppercase;
+}
+.ct-row{
+  display:grid;grid-template-columns:200px 1fr 130px 110px 130px 110px;
+  padding:22px 28px;border-top:1px solid var(--bdr);
+  align-items:center;transition:background .15s;
+}
+.ct-row:hover{background:var(--off)}
+.ct-name{display:flex;align-items:center;gap:10px}
+.ct-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ct-ntext{font-size:15px;font-weight:700;color:var(--ink)}
+.ct-tag{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--ink3);background:var(--off2);padding:2px 8px;border-radius:100px;margin-top:2px}
+.ct-who{font-size:13px;color:var(--ink2)}
+.ct-price{font-size:13px;font-weight:600;color:var(--ink)}
+.ct-gm{font-size:15px;font-weight:700}
+.ct-yr{font-size:15px;font-weight:700;color:var(--ink)}
+.ct-status{
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  padding:4px 12px;border-radius:100px;text-align:center;
+}
+.status-live{background:var(--green3);color:var(--green2)}
+.status-q2{background:#FFF8E8;color:var(--amber)}
+.status-q3{background:#FEF0EC;color:var(--coral)}
+.status-q4{background:var(--blue-bg);color:var(--blue)}
+.ct-total{
+  padding:18px 28px;border-top:2px solid var(--ink);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ct-total-label{font-size:14px;font-weight:600;color:var(--ink2)}
+.ct-total-nums{display:flex;gap:32px}
+.ct-total-item{text-align:right}
+.ct-total-n{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:26px;color:var(--ink)}
+.ct-total-l{font-size:10px;color:var(--ink3);letter-spacing:.06em}
+
+/* ── HERITAGE SPOTLIGHT ──────────────────────────────── */
+#heritage{background:var(--off);padding:96px 48px}
+.heritage-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:56px}
+.heritage-reasons{display:flex;flex-direction:column;gap:2px}
+.reason{
+  display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--bdr);
+}
+.reason:last-child{border-bottom:none}
+.reason-n{
+  font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:32px;color:var(--green);
+  line-height:1;min-width:36px;
+}
+.reason-head{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.reason-body{font-size:13px;color:var(--ink3);line-height:1.6}
+.packages{display:flex;flex-direction:column;gap:14px}
+.pkg{
+  border-radius:var(--r2);padding:28px 28px;
+  border:1px solid var(--bdr);background:var(--white);
+  transition:transform .2s,box-shadow .2s;
+}
+.pkg:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(10,9,8,0.07)}
+.pkg.featured{background:var(--ink);border-color:var(--ink)}
+.pkg-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.pkg-name{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.pkg-name.dark{color:var(--white)}
+.pkg-name.light{color:var(--ink)}
+.pkg-badge{font-size:9px;font-weight:700;letter-spacing:.1em;background:var(--green);color:var(--white);padding:3px 10px;border-radius:100px}
+.pkg-price{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:34px;line-height:1}
+.pkg-price.dark{color:var(--white)}
+.pkg-price.light{color:var(--ink)}
+.pkg-sub{font-size:12px;margin-top:2px}
+.pkg-sub.dark{color:rgba(255,255,255,0.45)}
+.pkg-sub.light{color:var(--ink3)}
+.pkg-features{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.pkg-feat{font-size:13px;display:flex;gap:8px}
+.pkg-feat.dark{color:rgba(255,255,255,0.7)}
+.pkg-feat.light{color:var(--ink2)}
+.pkg-feat::before{content:'→';color:var(--green);flex-shrink:0}
+
+/* ── ECONOMICS ───────────────────────────────────────── */
+#economics{background:var(--white)}
+.econ-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:56px}
+.econ-left{}
+.cost-stack{display:flex;flex-direction:column;gap:2px;margin-bottom:32px}
+.cost-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;background:var(--off);
+}
+.cost-row:first-child{border-radius:var(--r) var(--r) 0 0}
+.cost-row:last-child{border-radius:0 0 var(--r) var(--r);background:var(--ink);color:var(--white)}
+.cost-row:last-child .cost-label{color:rgba(255,255,255,0.8)}
+.cost-label{font-size:14px;font-weight:500;color:var(--ink2)}
+.cost-val{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:22px;color:var(--ink)}
+.cost-row:last-child .cost-val{color:var(--white)}
+.margin-bars{display:flex;flex-direction:column;gap:14px}
+.mbar-row{display:grid;grid-template-columns:120px 1fr 60px;gap:12px;align-items:center}
+.mbar-name{font-size:13px;font-weight:600;color:var(--ink)}
+.mbar-track{height:10px;background:var(--off2);border-radius:5px;overflow:hidden}
+.mbar-fill{height:100%;border-radius:5px;transition:width 1s ease}
+.mbar-pct{font-size:13px;font-weight:700;text-align:right}
+
+/* ── FINANCIALS ──────────────────────────────────────── */
+#financials{background:var(--off);padding:96px 48px}
+.fin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.fin-year{
+  background:var(--white);border-radius:var(--r2);
+  border:1px solid var(--bdr);overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+}
+.fin-year:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(10,9,8,0.07)}
+.fin-year-head{padding:28px 28px 20px;border-bottom:1px solid var(--bdr)}
+.fin-year-label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.fin-year-total{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:52px;color:var(--ink);line-height:1}
+.fin-year-sub{font-size:13px;color:var(--ink3);margin-top:6px}
+.fin-bars{padding:20px 28px;display:flex;flex-direction:column;gap:8px}
+.fin-bar-row{display:flex;justify-content:space-between;align-items:center}
+.fin-bar-label{font-size:12px;font-weight:500;color:var(--ink2)}
+.fin-bar-val{font-size:12px;font-weight:700;color:var(--ink)}
+.fin-bar-track{height:4px;background:var(--off2);border-radius:2px;overflow:hidden;margin:3px 0 8px}
+.fin-bar-fill{height:100%;border-radius:2px}
+.fin-note{margin-top:48px;background:var(--white);border-radius:var(--r2);border:1px solid var(--bdr);padding:28px 32px;display:flex;gap:24px;align-items:center}
+.fin-note-icon{font-size:28px;flex-shrink:0}
+.fin-note-text{font-size:15px;color:var(--ink2);line-height:1.65}
+.fin-note-text strong{color:var(--ink)}
+
+/* ── TEAM ────────────────────────────────────────────── */
+#team{background:var(--white)}
+.leaders{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.leader-card{
+  border-radius:var(--r2);border:1px solid var(--bdr);
+  overflow:hidden;transition:transform .2s,box-shadow .2s;
+}
+.leader-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(10,9,8,0.07)}
+.leader-avatar{
+  height:200px;display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:56px;
+}
+.leader-info{padding:24px 24px 28px;border-top:1px solid var(--bdr)}
+.leader-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.leader-name{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.leader-title{font-size:13px;color:var(--ink3);margin-bottom:14px;font-weight:500}
+.leader-bio{font-size:13px;color:var(--ink2);line-height:1.65}
+.advisors{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.advisor{
+  padding:20px 20px;border:1px solid var(--bdr);border-radius:var(--r);
+  transition:background .2s;
+}
+.advisor:hover{background:var(--off)}
+.adv-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.adv-role{font-size:12px;color:var(--ink3);line-height:1.5}
+.hiring-row{
+  margin-top:20px;padding:20px 24px;background:var(--off);border-radius:var(--r);
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.hiring-label{font-size:12px;font-weight:700;color:var(--ink3);letter-spacing:.06em;white-space:nowrap}
+.hire-pill{
+  font-size:12px;font-weight:600;color:var(--ink);
+  background:var(--white);border:1px solid var(--bdr2);
+  padding:5px 14px;border-radius:100px;
+}
+
+/* ── THE ASK ─────────────────────────────────────────── */
+#ask{background:var(--off);padding:96px 48px}
+.ask-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:56px}
+.ask-amount{
+  font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:88px;
+  color:var(--ink);line-height:.95;margin-bottom:20px;
+}
+.ask-sub{font-size:18px;color:var(--ink2);margin-bottom:36px;line-height:1.6}
+.milestones{display:flex;flex-direction:column;gap:0}
+.milestone{display:flex;gap:20px;padding:16px 0;border-bottom:1px solid var(--bdr)}
+.milestone:last-child{border-bottom:none}
+.ms-time{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--green);min-width:88px;padding-top:2px;text-transform:uppercase}
+.ms-text{font-size:14px;color:var(--ink2);line-height:1.55}
+.ms-text strong{color:var(--ink)}
+.funds-grid{display:flex;flex-direction:column;gap:10px}
+.fund-row{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;background:var(--white);border-radius:var(--r);
+  border:1px solid var(--bdr);
+}
+.fund-bar-outer{flex:1;height:6px;background:var(--off2);border-radius:3px;overflow:hidden}
+.fund-bar-inner{height:100%;border-radius:3px}
+.fund-label{font-size:13px;font-weight:600;color:var(--ink);min-width:170px}
+.fund-amt{font-size:14px;font-weight:700;color:var(--ink);min-width:38px;text-align:right}
+
+/* ── CLOSE ───────────────────────────────────────────── */
+#close{
+  background:var(--ink);padding:120px 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+#close h2{color:var(--white);font-size:clamp(40px,4vw,62px)}
+#close .close-sub{font-size:18px;color:rgba(255,255,255,0.55);margin-top:20px;margin-bottom:44px;line-height:1.65}
+.close-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green);color:var(--white);
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;
+  padding:16px 32px;border-radius:100px;text-decoration:none;
+  transition:background .2s;
+}
+.close-cta:hover{background:var(--green2)}
+.close-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.cstat{background:#161412;padding:32px 28px;transition:background .2s}
+.cstat:first-child{border-radius:var(--r2) 0 0 0}
+.cstat:nth-child(2){border-radius:0 var(--r2) 0 0}
+.cstat:nth-child(3){border-radius:0 0 0 var(--r2)}
+.cstat:last-child{border-radius:0 0 var(--r2) 0}
+.cstat:hover{background:#1C1916}
+.cstat-n{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:44px;color:var(--white);line-height:1}
+.cstat-l{font-size:12px;color:rgba(255,255,255,0.35);margin-top:8px;letter-spacing:.04em}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer{
+  background:#0A0908;
+  padding:32px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.foot-logo{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:18px;color:rgba(255,255,255,0.4)}
+.foot-copy{font-size:12px;color:rgba(255,255,255,0.25);letter-spacing:.04em}
+.foot-link{font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;letter-spacing:.04em}
+.foot-link:hover{color:rgba(255,255,255,0.7)}
+
+/* ── ANIMATIONS ──────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .7s ease forwards}
+.fade-up.d1{animation-delay:.1s}.fade-up.d2{animation-delay:.2s}.fade-up.d3{animation-delay:.3s}.fade-up.d4{animation-delay:.4s}
+
+@media(max-width:900px){
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  section{padding:72px 24px}
+  #hero{grid-template-columns:1fr;padding:80px 24px 64px;gap:48px}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .problem-grid,.solution-inner,.heritage-inner,.ask-inner,#close,.econ-grid{grid-template-columns:1fr;gap:40px}
+  .stat-trio,.fin-grid,.leaders{grid-template-columns:1fr}
+  .advisors{grid-template-columns:1fr 1fr}
+  .moat-grid{grid-template-columns:1fr}
+  .moat-vs{grid-template-columns:1fr 1fr}
+  .ct-header,.ct-row{grid-template-columns:150px 1fr 100px 80px}
+  .ct-row .ct-yr,.ct-row .ct-status,.ct-header .ct-col:last-child,.ct-header .ct-col:nth-child(5){display:none}
+  .divider{margin:0 24px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px}
+  .close-stats{grid-template-columns:1fr 1fr}
+}
+
+/* nav/scroll buttons — look like links, no browser defaults */
+button.nav-links-btn, nav .nav-links button, button.nav-cta,
+button.btn-primary, button.btn-ghost, button.nav-logo {
+  background:none; border:none; padding:0; margin:0;
+  font-family:inherit; cursor:pointer; display:inline-flex;
+  align-items:center; text-align:left;
+}
+
+/* ── PRODUCT DEEP-DIVES ──────────────────────────────── */
+.pd-name-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.pd-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.pd-channel-name{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.pd-channel-name-dk{font-size:28px;font-weight:800;color:var(--white);letter-spacing:-.02em}
+.pd-status-pill{font-size:10px;font-weight:700;letter-spacing:.1em;padding:4px 12px;border-radius:100px;text-transform:uppercase}
+.pd-intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:56px}
+.pd-qs{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:56px}
+.pd-q{padding:22px 20px}
+.pd-q-n{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:32px;line-height:1;margin-bottom:6px}
+.pd-q-l{font-size:11px;color:var(--ink3);font-weight:500}
+.pd-q-l-dk{font-size:11px;color:rgba(255,255,255,.4);font-weight:500}
+.pd-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pd-box{border-radius:var(--r2);border:1px solid var(--bdr);overflow:hidden}
+.pd-box-dk{border-radius:var(--r2);border:1px solid rgba(255,255,255,.08);overflow:hidden;background:#161412}
+.pd-box-head{padding:14px 22px;border-bottom:1px solid var(--bdr);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.pd-box-head-dk{padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.06);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.pd-box-body{padding:20px 22px}
+.pf-list{display:flex;flex-direction:column}
+.pf-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--bdr)}
+.pf-item:last-child{border-bottom:none}
+.pf-item-dk{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.pf-item-dk:last-child{border-bottom:none}
+.pf-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.pf-head{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pf-body{font-size:12px;color:var(--ink3);line-height:1.5}
+.pf-head-dk{font-size:13px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:2px}
+.pf-body-dk{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5}
+.pl-list{display:flex;flex-direction:column}
+.pl-step{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--bdr)}
+.pl-step:last-child{border-bottom:none}
+.pl-step-dk{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.pl-step-dk:last-child{border-bottom:none}
+.pl-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--white);flex-shrink:0;margin-top:1px}
+.pl-head{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pl-body{font-size:12px;color:var(--ink3);line-height:1.5}
+.pl-head-dk{font-size:13px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:2px}
+.pl-body-dk{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5}
+.tam-hero{display:flex;align-items:baseline;gap:8px;margin-bottom:16px}
+.tam-big{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:48px;line-height:1}
+.tam-big-dk{font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:48px;line-height:1;color:var(--white)}
+.tam-lbl{font-size:13px;font-weight:500}
+.tam-lbl-dk{font-size:13px;color:rgba(255,255,255,.4);font-weight:500}
+.tam-rows{display:flex;flex-direction:column;gap:10px}
+.tam-r{display:flex;flex-direction:column;gap:2px}
+.tam-r-top{display:flex;justify-content:space-between}
+.tam-track{height:5px;background:var(--off2);border-radius:3px;overflow:hidden;margin-top:2px}
+.tam-track-dk{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:2px}
+.tam-fill{height:100%;border-radius:3px}
+.swot-4{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.sw{padding:16px 18px}
+.sw-lbl{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.sw-items{display:flex;flex-direction:column;gap:4px}
+.sw-item{font-size:12px;line-height:1.4;display:flex;gap:5px}
+.sw-item::before{content:'·';flex-shrink:0;font-size:14px;line-height:1.1}
+.sw-s{background:var(--green3)}.sw-s .sw-lbl,.sw-s .sw-item{color:var(--green2)}.sw-s .sw-item::before{color:var(--green)}
+.sw-w{background:var(--coral-bg)}.sw-w .sw-lbl,.sw-w .sw-item{color:var(--coral)}.sw-w .sw-item::before{color:var(--coral)}
+.sw-o{background:var(--blue-bg)}.sw-o .sw-lbl,.sw-o .sw-item{color:var(--blue)}.sw-o .sw-item::before{color:var(--blue)}
+.sw-t{background:var(--amber-bg)}.sw-t .sw-lbl,.sw-t .sw-item{color:var(--amber)}.sw-t .sw-item::before{color:var(--amber)}
+@media(max-width:900px){.pd-intro,.pd-cols{grid-template-columns:1fr;gap:24px}.pd-qs{grid-template-columns:1fr 1fr}}
+/* ── DEMO LINKS ──────────────────────────────────────── */
+.demo-link{
+  display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.04em;
+  padding:10px 22px;border-radius:100px;
+  border:1.5px solid;text-decoration:none;
+  transition:all .2s;
+}
+.demo-link:hover{transform:translateY(-1px)}
+.demo-link::after{content:'↗';font-size:11px;transition:transform .2s}
+.demo-link:hover::after{transform:translate(2px,-2px)}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════ -->
+<nav>
+  <button onclick="nav('hero')" class="nav-logo">
+    <span class="nav-logo-word">nucleus</span>
+    <span class="nav-logo-plus">+</span>
+  </button>
+  <div class="nav-links">
+    <button onclick="nav('problem')" class="">Problem</button>
+    <button onclick="nav('solution')" class="">Solution</button>
+    <button onclick="nav('channels')" class="">Channels</button>
+    <button onclick="nav('p-ivf')" class="">Products</button>
+    <button onclick="nav('team')" class="">Team</button>
+    <button onclick="nav('ask')" class="">The Ask</button>
+  </div>
+  <button onclick="nav('ask')" class="nav-cta">Series B · $45–50M</button>
+</nav>
+
+<!-- ═══ HERO ════════════════════════════════════════════════ -->
+<section id="hero">
+  <div>
+    <div class="hero-eyebrow fade-up">
+      <span class="hero-badge">Series B · 2026</span>
+      <span class="hero-press">As seen in <span>WSJ · WaPo · CNBC · Axios · Fortune</span></span>
+    </div>
+    <h1 class="hero-h1 fade-up d1">Your family's genes.<br><em>Now a business.</em></h1>
+    <p class="hero-sub fade-up d2">Five sales channels. One $110 test. The most advanced genomic intelligence platform ever built for families — and the physicians and researchers who serve them.</p>
+    <div class="hero-actions fade-up d3">
+      <button onclick="nav('ask')" class="btn-primary">View the ask →</button>
+      <button onclick="nav('solution')" class="btn-ghost">See how it works</button>
+    </div>
+  </div>
+  <div class="hero-stats fade-up d2">
+    <div class="hstat">
+      <div class="hstat-n">$110</div>
+      <div class="hstat-l">Cost per whole-genome test</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">$38B</div>
+      <div class="hstat-l">Total addressable market</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">2,000+</div>
+      <div class="hstat-l">Conditions screened per test</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">$80M</div>
+      <div class="hstat-l">Year 2 revenue target</div>
+    </div>
+  </div>
+</section>
+
+<!-- press ticker -->
+<div class="press-bar">
+  <div class="press-track">
+    <span class="press-item">Wall Street Journal</span>
+    <span class="press-item">Washington Post</span>
+    <span class="press-item">CNBC</span>
+    <span class="press-item">Axios</span>
+    <span class="press-item">Fortune</span>
+    <span class="press-item">Vanity Fair</span>
+    <span class="press-item">TechCrunch</span>
+    <span class="press-item">NY Post</span>
+    <span class="press-item">Ad Age</span>
+    <span class="press-item">Wall Street Journal</span>
+    <span class="press-item">Washington Post</span>
+    <span class="press-item">CNBC</span>
+    <span class="press-item">Axios</span>
+    <span class="press-item">Fortune</span>
+    <span class="press-item">Vanity Fair</span>
+    <span class="press-item">TechCrunch</span>
+    <span class="press-item">NY Post</span>
+    <span class="press-item">Ad Age</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ PROBLEM ═════════════════════════════════════════════ -->
+<section id="problem">
+  <div class="label">The problem</div>
+  <h2>Most families are<br>flying blind.</h2>
+  <div class="problem-grid">
+    <p class="lead">The genes you carry shape your children's lives — and their children's lives. But no one ever told you what you're passing down. Until now.</p>
+    <div class="stat-trio">
+      <div class="stat-card">
+        <div class="stat-n coral">1 in 25</div>
+        <div class="stat-label">Babies born with a genetic disorder</div>
+        <div class="stat-sub">Most are preventable with early knowledge</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n amber">95%</div>
+        <div class="stat-label">Of genetic carriers don't know it</div>
+        <div class="stat-sub">Whole-genome testing reveals what targeted panels miss</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-n green">$80B</div>
+        <div class="stat-label">Spent yearly on preventable conditions</div>
+        <div class="stat-sub">Genomic intelligence is the earliest possible intervention</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ SOLUTION ════════════════════════════════════════════ -->
+<section id="solution">
+  <div class="label">The solution</div>
+  <h2>One engine.<br>Five markets.</h2>
+  <div class="solution-inner">
+    <div class="engine-box">
+      <div class="engine-label">Nucleus Core Engine</div>
+      <div class="engine-title">The most advanced genetic intelligence platform in existence.</div>
+      <div class="engine-sub">Illumina whole-genome sequencing, processed through our Origin family of nine polygenic AI models, delivered with a human genetic counseling layer. One test. Endless applications.</div>
+      <div class="engine-cost">
+        <span class="engine-cost-n">$110</span>
+        <span class="engine-cost-l">per test · Illumina</span>
+      </div>
+    </div>
+    <div class="channels-list">
+      <div class="channel-row">
+        <div class="ch-dot" style="background:#C9A84C"></div>
+        <div class="ch-name">IVF+</div>
+        <div class="ch-desc">Fertility & embryo optimization · Live now</div>
+        <div class="ch-arrow">→</div>
+      </div>
+      <div class="channel-row">
+        <div class="ch-dot" style="background:#0F6E56"></div>
+        <div class="ch-name">Heritage+</div>
+        <div class="ch-desc">Family genome legacy · Launching Q2</div>
+        <div class="ch-arrow">→</div>
+      </div>
+      <div class="channel-row">
+        <div class="ch-dot" style="background:#C45840"></div>
+        <div class="ch-name">Med+</div>
+        <div class="ch-desc">Clinical decision support for physicians · Q3</div>
+        <div class="ch-arrow">→</div>
+      </div>
+      <div class="channel-row">
+        <div class="ch-dot" style="background:#2E6FA3"></div>
+        <div class="ch-name">Enterprise+</div>
+        <div class="ch-desc">Corporate health baselines · Q4</div>
+        <div class="ch-arrow">→</div>
+      </div>
+      <div class="channel-row">
+        <div class="ch-dot" style="background:#6B5FA0"></div>
+        <div class="ch-name">Research+</div>
+        <div class="ch-desc">Pharma & biotech data licensing · Q4</div>
+        <div class="ch-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MOAT ═════════════════════════════════════════════════ -->
+<section id="moat">
+  <div class="label">Competitive moat</div>
+  <h2>Origin: The AI<br>no one else has built.</h2>
+  <p class="lead" style="margin-top:16px">Nine proprietary polygenic models. Longevity prediction from embryonic DNA. More accurate than anything that commercially exists.</p>
+  <div class="moat-grid">
+    <div class="moat-card">
+      <div class="moat-icon">🧬</div>
+      <div class="moat-head">9 proprietary models</div>
+      <div class="moat-body">Covering longevity, chronic disease risk, cognitive traits, and physical markers. No competitor has built this depth of polygenic prediction.</div>
+    </div>
+    <div class="moat-card">
+      <div class="moat-icon">📊</div>
+      <div class="moat-head">2,000+ conditions screened</div>
+      <div class="moat-body">Traditional genetic panels cover 50–300 conditions. Nucleus whole-genome testing catches everything that everyone else misses — in a single test.</div>
+    </div>
+    <div class="moat-card">
+      <div class="moat-icon">⚡</div>
+      <div class="moat-head">Embryo selection software</div>
+      <div class="moat-body">A product, not just a report. The first genetic optimization software that lets parents compare and select embryos based on health, traits, and longevity.</div>
+    </div>
+    <div class="moat-card">
+      <div class="moat-icon">🌍</div>
+      <div class="moat-head">Expanding globally</div>
+      <div class="moat-body">First international expansion into Mexico already underway. IVF+ network growing with Beverly Hills Fertility, Neway NYC, and C de la F.</div>
+    </div>
+  </div>
+  <div class="moat-vs">
+    <div class="vs-col">
+      <div class="vs-head">Feature</div>
+      <div class="vs-row">Conditions screened</div>
+      <div class="vs-row">Whole genome</div>
+      <div class="vs-row">Polygenic longevity AI</div>
+      <div class="vs-row">Embryo optimization</div>
+      <div class="vs-row">Family tree visualization</div>
+      <div class="vs-row">B2B clinical channel</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-head">23andMe</div>
+      <div class="vs-row no">&lt;100</div>
+      <div class="vs-row no">No</div>
+      <div class="vs-row no">No</div>
+      <div class="vs-row no">No</div>
+      <div class="vs-row yes">Basic</div>
+      <div class="vs-row no">No</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-head">Natera</div>
+      <div class="vs-row yes">~500</div>
+      <div class="vs-row yes">Partial</div>
+      <div class="vs-row no">No</div>
+      <div class="vs-row no">No</div>
+      <div class="vs-row no">No</div>
+      <div class="vs-row yes">Yes</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-head nucleus">Nucleus</div>
+      <div class="vs-row nucleus-val">2,000+</div>
+      <div class="vs-row nucleus-val">Yes</div>
+      <div class="vs-row nucleus-val">Yes — Origin</div>
+      <div class="vs-row nucleus-val">Yes</div>
+      <div class="vs-row nucleus-val">Interactive</div>
+      <div class="vs-row nucleus-val">Yes</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHANNELS TABLE ══════════════════════════════════════ -->
+<section id="channels" style="background:var(--white)">
+  <div class="label">Five channels</div>
+  <h2>One test.<br>Five different buyers.</h2>
+  <div class="channels-table">
+    <div class="ct-header">
+      <div>Channel</div>
+      <div>Customer</div>
+      <div>Price</div>
+      <div>Gross margin</div>
+      <div>Year 1 target</div>
+      <div>Status</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-name">
+        <div class="ch-dot" style="background:#C9A84C"></div>
+        <div><div class="ct-ntext">IVF+</div><div class="ct-tag">Existing · Scaling</div></div>
+      </div>
+      <div class="ct-who">Couples planning families via IVF</div>
+      <div class="ct-price">$40,000 / cycle</div>
+      <div class="ct-gm" style="color:#C9A84C">~75%</div>
+      <div class="ct-yr">$12M</div>
+      <div><span class="ct-status status-live">Live</span></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-name">
+        <div class="ch-dot" style="background:#0F6E56"></div>
+        <div><div class="ct-ntext">Heritage+</div><div class="ct-tag">Launch first</div></div>
+      </div>
+      <div class="ct-who">Families, grandparents, gift-givers</div>
+      <div class="ct-price">$1,500–$4,000 / package</div>
+      <div class="ct-gm" style="color:#0F6E56">~70%</div>
+      <div class="ct-yr">$3M</div>
+      <div><span class="ct-status status-q2">Q2 Launch</span></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-name">
+        <div class="ch-dot" style="background:#C45840"></div>
+        <div><div class="ct-ntext">Med+</div><div class="ct-tag">Build Q2–Q3</div></div>
+      </div>
+      <div class="ct-who">Physicians, hospitals, specialists</div>
+      <div class="ct-price">$800–$2,500 / test</div>
+      <div class="ct-gm" style="color:#C45840">~60%</div>
+      <div class="ct-yr">$3.6M</div>
+      <div><span class="ct-status status-q3">Q3 Launch</span></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-name">
+        <div class="ch-dot" style="background:#2E6FA3"></div>
+        <div><div class="ct-ntext">Enterprise+</div><div class="ct-tag">Build Q3–Q4</div></div>
+      </div>
+      <div class="ct-who">Self-insured employers 250+ staff</div>
+      <div class="ct-price">$200–$500 / employee</div>
+      <div class="ct-gm" style="color:#2E6FA3">~65%</div>
+      <div class="ct-yr">$2.5M</div>
+      <div><span class="ct-status status-q4">Q4 Launch</span></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-name">
+        <div class="ch-dot" style="background:#6B5FA0"></div>
+        <div><div class="ct-ntext">Research+</div><div class="ct-tag">Build Q4</div></div>
+      </div>
+      <div class="ct-who">Pharma & biotech partners</div>
+      <div class="ct-price">$500K–$5M / yr deal</div>
+      <div class="ct-gm" style="color:#6B5FA0">~85%</div>
+      <div class="ct-yr">$3M</div>
+      <div><span class="ct-status status-q4">Q4 Pipeline</span></div>
+    </div>
+    <div class="ct-total">
+      <div class="ct-total-label">Combined Year 1 revenue target</div>
+      <div class="ct-total-nums">
+        <div class="ct-total-item">
+          <div class="ct-total-n">$24.1M</div>
+          <div class="ct-total-l">Year 1 (post-raise)</div>
+        </div>
+        <div class="ct-total-item">
+          <div class="ct-total-n">$60–80M</div>
+          <div class="ct-total-l">Year 2 target</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ PRODUCT DEEP-DIVES ═════════════════════════════════════ -->
+
+<!-- ── IVF+ ─────────────────────────────────────────────────── -->
+<section id="p-ivf" style="background:var(--white);padding:96px 48px;border-top:4px solid #C9A84C">
+  <div class="label">Channel 01 · Live Now</div>
+  <div class="pd-intro">
+    <div>
+      <div class="pd-name-row">
+        <div class="pd-dot" style="background:#C9A84C"></div>
+        <span class="pd-channel-name">IVF+</span>
+        <span class="pd-status-pill" style="background:#FFF8E8;color:#9A6E20">Live</span>
+      </div>
+      <h2>Embryo intelligence.<br><em>Perfected.</em></h2>
+      <p class="lead" style="margin-top:16px;max-width:480px">The only IVF platform combining whole-genome sequencing with nine polygenic AI models — giving parents and physicians the most complete embryo intelligence ever built. Already generating revenue. Expanding now.</p>
+      <a href="ivf-plus-demo.html" target="_blank" class="demo-link" style="color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,0.06)">View embryo selection demo</a>
+    </div>
+    <div style="font-size:14px;color:var(--ink2);line-height:1.75;padding-top:52px">Fertility is one of the most high-stakes, emotionally charged decisions a family will ever make — and it remains one of the least genomically optimised. Nucleus IVF+ changes that. With a single embryo biopsy and our Illumina pipeline, every embryo gets a full genetic identity. Origin AI scores each one across nine proprietary polygenic dimensions. The physician and the parents see the complete picture — and make a truly informed choice for the first time in human history.</div>
+  </div>
+  <div class="pd-qs">
+    <div class="pd-q" style="background:#FBF5E8;border-radius:var(--r) 0 0 var(--r)"><div class="pd-q-n" style="color:#C9A84C">$12B</div><div class="pd-q-l">Global IVF genomics TAM</div></div>
+    <div class="pd-q" style="background:#FBF5E8"><div class="pd-q-n" style="color:#C9A84C">~75%</div><div class="pd-q-l">Gross margin</div></div>
+    <div class="pd-q" style="background:#FBF5E8"><div class="pd-q-n" style="color:#C9A84C">$5M</div><div class="pd-q-l">2025 revenue (IVF+ only)</div></div>
+    <div class="pd-q" style="background:#FBF5E8;border-radius:0 var(--r) var(--r) 0"><div class="pd-q-n" style="color:#C9A84C">300K</div><div class="pd-q-l">US IVF cycles per year</div></div>
+  </div>
+  <div class="pd-cols">
+    <div class="pd-box" style="background:var(--off)">
+      <div class="pd-box-head">🧬 Product Breakdown</div>
+      <div class="pd-box-body">
+        <div class="pf-list">
+          <div class="pf-item"><div class="pf-icon" style="background:#FBF5E8">🔬</div><div><div class="pf-head">Whole-Genome Embryo Sequencing</div><div class="pf-body">Illumina-powered sequencing from embryo biopsy. 2,000+ conditions screened vs 50–300 for standard PGT-A panels. Full genome, not a partial panel.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:#FBF5E8">🤖</div><div><div class="pf-head">Origin AI — 9 Polygenic Models</div><div class="pf-body">Longevity prediction, chronic disease risk, cognitive traits, and physical markers. No competitor has built anything close to this model depth.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:#FBF5E8">📊</div><div><div class="pf-head">Embryo Comparison Software</div><div class="pf-body">Side-by-side embryo ranking for physicians and patients. Select by health profile, trait spectrum, and longevity outlook. A product, not just a report.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:#FBF5E8">👩‍⚕️</div><div><div class="pf-head">Genetic Counselor Co-Sign</div><div class="pf-body">Every report reviewed and co-signed by a certified genetic counselor. Medically sound, legally defensible, and human-first in delivery.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:#FBF5E8">🖥️</div><div><div class="pf-head">Clinic &amp; Patient Portals</div><div class="pf-body">Secure physician dashboard plus patient-facing results portal. Purpose-built for the workflow of busy reproductive endocrinologists.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--off)">
+      <div class="pd-box-head">🚀 Launch Strategy</div>
+      <div class="pd-box-body">
+        <div class="pl-list">
+          <div class="pl-step"><div class="pl-num" style="background:#C9A84C">1</div><div><div class="pl-head">Anchor Clinics Live — Done ✓</div><div class="pl-body">Beverly Hills Fertility, Neway NYC, C de la F Mexico onboarded. Revenue flowing. Product-market fit confirmed in the field.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C9A84C">2</div><div><div class="pl-head">Scale to 25 US Clinics by Q4</div><div class="pl-body">Direct outreach to reproductive endocrinologists. ASRM conference presence. Target: 10 clinics by Q2, 25 by Q4 2026.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C9A84C">3</div><div><div class="pl-head">Mexico Full Rollout Q2</div><div class="pl-body">C de la F partnership deepens. Mexico IVF market growing 20% annually. First international revenue hub and proof of global model.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C9A84C">4</div><div><div class="pl-head">Self-Serve Clinic Ordering Portal</div><div class="pl-body">Reduce friction for onboarding and test ordering. Enables passive channel growth without adding sales headcount per new clinic.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C9A84C">5</div><div><div class="pl-head">Insurance Pre-Auth Workflow Q4</div><div class="pl-body">Pilot pre-authorisation with 2 major payers. Reimbursement approval unlocks true mass-market IVF access beyond affluent early adopters.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--off)">
+      <div class="pd-box-head">📈 Market Opportunity</div>
+      <div class="pd-box-body">
+        <div class="tam-hero"><div class="tam-big" style="color:var(--ink)">$12B</div><div class="tam-lbl" style="color:var(--ink3)">Global IVF genomics TAM</div></div>
+        <div class="tam-rows">
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">US IVF market (total)</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$3.8B</span></div><div style="font-size:11px;color:var(--ink3)">~300,000 cycles/year · growing 10% annually</div><div class="tam-track"><div class="tam-fill" style="width:32%;background:#C9A84C"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Global IVF genomics market</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$12B</span></div><div style="font-size:11px;color:var(--ink3)">International expansion multiplies the opportunity 3×</div><div class="tam-track"><div class="tam-fill" style="width:100%;background:#C9A84C"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Polygenic selection software</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$1.2B</span></div><div style="font-size:11px;color:var(--ink3)">Emerging category — Nucleus is the only player at scale</div><div class="tam-track"><div class="tam-fill" style="width:10%;background:#C9A84C;opacity:.6"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--green)">Nucleus Year 1 target</span><span style="font-size:12px;font-weight:700;color:var(--green)">$12M</span></div><div style="font-size:11px;color:var(--ink3)">0.1% market penetration — conservative and achievable</div><div class="tam-track"><div class="tam-fill" style="width:3%;background:var(--green)"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="overflow:hidden;border:1px solid var(--bdr)">
+      <div class="pd-box-head">⚖️ SWOT Analysis</div>
+      <div class="swot-4">
+        <div class="sw sw-s" style="border-radius:0"><div class="sw-lbl">Strengths</div><div class="sw-items"><div class="sw-item">Only whole-genome PGT + polygenic platform at scale</div><div class="sw-item">$5M existing revenue — proven demand</div><div class="sw-item">Origin AI irreplicable in the near term</div><div class="sw-item">High switching costs once clinic integrates</div></div></div>
+        <div class="sw sw-w" style="border-radius:0"><div class="sw-lbl">Weaknesses</div><div class="sw-items"><div class="sw-item">Requires active clinic relationship management</div><div class="sw-item">Bioethics scrutiny on trait selection features</div><div class="sw-item">Complex per-patient consent workflow</div><div class="sw-item">High-touch model limits pure scale speed</div></div></div>
+        <div class="sw sw-o" style="border-radius:0"><div class="sw-lbl">Opportunities</div><div class="sw-items"><div class="sw-item">IVF demand growing 10% annually in US</div><div class="sw-item">Global market (Europe, LATAM) largely untapped</div><div class="sw-item">Insurance coverage for PGT steadily expanding</div><div class="sw-item">Heritage+ creates a natural IVF referral pipeline</div></div></div>
+        <div class="sw sw-t" style="border-radius:0"><div class="sw-lbl">Threats</div><div class="sw-items"><div class="sw-item">FDA may regulate polygenic embryo selection</div><div class="sw-item">Growing bioethics media backlash</div><div class="sw-item">Natera &amp; Invitae scaling competing PGT products</div><div class="sw-item">Clinic consolidation could reduce partner count</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ── Heritage+ ─────────────────────────────────────────── -->
+<section id="p-heritage" style="background:var(--off);padding:96px 48px;border-top:4px solid #0F6E56">
+  <div class="label">Channel 02 · Q2 Launch</div>
+  <div class="pd-intro">
+    <div>
+      <div class="pd-name-row">
+        <div class="pd-dot" style="background:#0F6E56"></div>
+        <span class="pd-channel-name">Heritage+</span>
+        <span class="pd-status-pill" style="background:var(--green3);color:var(--green2)">Q2 Launch</span>
+      </div>
+      <h2>The heirloom,<br>not the test kit.</h2>
+      <p class="lead" style="margin-top:16px;max-width:480px">23andMe sold commodities at $79. Heritage+ sells legacy at $2,800. A premium whole-genome family package — interactive, printable, beautiful — designed to be gifted across generations. No FDA pathway. No B2B sales cycle. The widest consumer TAM of all five channels.</p>
+      <a href="heritage-plus_1.html" target="_blank" class="demo-link" style="color:#0F6E56;border-color:#0F6E56;background:rgba(15,110,86,0.06)">View family genome demo</a>
+    </div>
+    <div style="font-size:14px;color:var(--ink2);line-height:1.75;padding-top:52px">The consumer genetics market is wide open. 23andMe's bankruptcy left 150 million potential customers with no credible premium option. Heritage+ fills that vacuum at 20× the price and 20× the depth. SNP arrays are the Kodak disposable camera. Whole-genome is the portrait studio. Every Heritage+ customer becomes a potential IVF+ referral. Every family that buys it shares it — because the interactive family tree is designed to be shown off, not filed away.</div>
+  </div>
+  <div class="pd-qs">
+    <div class="pd-q" style="background:var(--green3);border-radius:var(--r) 0 0 var(--r)"><div class="pd-q-n" style="color:var(--green2)">$3.1B</div><div class="pd-q-l">Consumer genetics TAM</div></div>
+    <div class="pd-q" style="background:var(--green3)"><div class="pd-q-n" style="color:var(--green2)">~70%</div><div class="pd-q-l">Gross margin</div></div>
+    <div class="pd-q" style="background:var(--green3)"><div class="pd-q-n" style="color:var(--green2)">150M+</div><div class="pd-q-l">US families addressable</div></div>
+    <div class="pd-q" style="background:var(--green3);border-radius:0 var(--r) var(--r) 0"><div class="pd-q-n" style="color:var(--green2)">$2,800</div><div class="pd-q-l">Average package price</div></div>
+  </div>
+  <div class="pd-cols">
+    <div class="pd-box" style="background:var(--white)">
+      <div class="pd-box-head">🧬 Product Breakdown</div>
+      <div class="pd-box-body">
+        <div class="pf-list">
+          <div class="pf-item"><div class="pf-icon" style="background:var(--green3)">🔬</div><div><div class="pf-head">True Whole-Genome Sequencing</div><div class="pf-body">Not a SNP array. Real full genome — 3 billion base pairs per person. 23andMe tests 0.02% of your genome. We test 100%.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--green3)">📄</div><div><div class="pf-head">Plain-English Genome Report</div><div class="pf-body">Medical-grade insights rewritten for families. No jargon. Carrier status, trait markers, health predispositions — all human-readable.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--green3)">🌳</div><div><div class="pf-head">Interactive Digital Family Tree</div><div class="pf-body">Web-based, shareable, and updated as science evolves. Built to be shown at Thanksgiving, not hidden in a drawer for ten years.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--green3)">📚</div><div><div class="pf-head">Printed Heirloom Heritage Book</div><div class="pf-body">Museum-quality printed keepsake in a premium gift box. The kind of thing you pass down to your children, not throw out.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--green3)">👩‍⚕️</div><div><div class="pf-head">Genetic Counselor 1:1 Session</div><div class="pf-body">45-minute video session with every package. Every question answered. Trust is the product. Science is the delivery mechanism.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--green3)">🔄</div><div><div class="pf-head">Ongoing Science Updates</div><div class="pf-body">12-month, 24-month, or lifetime update tiers. As genomic science advances, your report gets smarter automatically.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--white)">
+      <div class="pd-box-head">🚀 Launch Strategy</div>
+      <div class="pd-box-body">
+        <div class="pl-list">
+          <div class="pl-step"><div class="pl-num" style="background:var(--green)">1</div><div><div class="pl-head">DTC Shopify Store + Marketing Site Q2</div><div class="pl-body">Online-only launch. No retail, no intermediaries. Direct-to-consumer from day one; zero FDA pathway required. Fastest possible route to revenue.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:var(--green)">2</div><div><div class="pl-head">PR Blitz — "The 23andMe Counter"</div><div class="pl-body">Ride the 23andMe bankruptcy narrative hard. Position Heritage+ as the premium replacement. Target WSJ, WaPo, Axios, NYT Parenting.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:var(--green)">3</div><div><div class="pl-head">Mother's Day + Father's Day Campaigns</div><div class="pl-body">Q2 gifting windows are the perfect launch moment. Grandparents are the #1 gift-buyer archetype. Emotional resonance is built in.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:var(--green)">4</div><div><div class="pl-head">Holiday Q4 Dynasty Push</div><div class="pl-body">Dynasty package ($4,200) targets premium holiday gifting. Three-generation testing. The heirloom gift at Christmas.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:var(--green)">5</div><div><div class="pl-head">Referral Architecture Built In</div><div class="pl-body">Interactive family trees are inherently shareable. Every customer generates social proof. Target: each customer drives 3 organic referrals.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--white)">
+      <div class="pd-box-head">📈 Market Opportunity</div>
+      <div class="pd-box-body">
+        <div class="tam-hero"><div class="tam-big" style="color:var(--ink)">$3.1B</div><div class="tam-lbl" style="color:var(--ink3)">Consumer genetics TAM · growing</div></div>
+        <div class="tam-rows">
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">US consumer genetics market</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$1.3B</span></div><div style="font-size:11px;color:var(--ink3)">Growing to $3.1B by 2028 · 23andMe vacuum accelerates this</div><div class="tam-track"><div class="tam-fill" style="width:42%;background:var(--green)"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">23andMe displaced demand</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$500M+</span></div><div style="font-size:11px;color:var(--ink3)">Customers actively looking for a credible premium replacement</div><div class="tam-track"><div class="tam-fill" style="width:16%;background:var(--green)"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Premium wellness genomics</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$800M</span></div><div style="font-size:11px;color:var(--ink3)">High-net-worth gifting and concierge wellness spend</div><div class="tam-track"><div class="tam-fill" style="width:26%;background:var(--green)"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--green)">Nucleus Year 1 target</span><span style="font-size:12px;font-weight:700;color:var(--green)">$3M</span></div><div style="font-size:11px;color:var(--ink3)">~1,000 packages sold · 0.2% of displaced demand alone</div><div class="tam-track"><div class="tam-fill" style="width:2%;background:var(--green)"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="overflow:hidden;border:1px solid var(--bdr)">
+      <div class="pd-box-head">⚖️ SWOT Analysis</div>
+      <div class="swot-4">
+        <div class="sw sw-s" style="border-radius:0"><div class="sw-lbl">Strengths</div><div class="sw-items"><div class="sw-item">No FDA pathway — pure DTC consumer product</div><div class="sw-item">23andMe vacuum creates an open playing field</div><div class="sw-item">Shareable interactive tree = organic distribution</div><div class="sw-item">Natural funnel into the IVF+ channel</div></div></div>
+        <div class="sw sw-w" style="border-radius:0"><div class="sw-lbl">Weaknesses</div><div class="sw-items"><div class="sw-item">Consumer CAC can be expensive at scale</div><div class="sw-item">DNA brand trust low post-23andMe collapse</div><div class="sw-item">Market education cost is high in Year 1</div><div class="sw-item">Seasonal revenue concentration risk</div></div></div>
+        <div class="sw sw-o" style="border-radius:0"><div class="sw-lbl">Opportunities</div><div class="sw-items"><div class="sw-item">$300B gifting market — grandparents buy gifts</div><div class="sw-item">Holiday Q4 spike potential is enormous</div><div class="sw-item">Influencer content in parenthood and family niche</div><div class="sw-item">Brand becomes the premium default post-23andMe</div></div></div>
+        <div class="sw sw-t" style="border-radius:0"><div class="sw-lbl">Threats</div><div class="sw-items"><div class="sw-item">Privacy concerns and data breach perception</div><div class="sw-item">FTC scrutiny of genetic data commercial practices</div><div class="sw-item">Copycat products from well-funded competitors</div><div class="sw-item">Negative media cycle could chill demand quickly</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ── Med+ ──────────────────────────────────────────────── -->
+<section id="p-med" style="background:var(--white);padding:96px 48px;border-top:4px solid #C45840">
+  <div class="label">Channel 03 · Q3 Launch</div>
+  <div class="pd-intro">
+    <div>
+      <div class="pd-name-row">
+        <div class="pd-dot" style="background:#C45840"></div>
+        <span class="pd-channel-name">Med+</span>
+        <span class="pd-status-pill" style="background:var(--coral-bg);color:var(--coral)">Q3 Launch</span>
+      </div>
+      <h2>Clinical-grade genomics<br>for every physician.</h2>
+      <p class="lead" style="margin-top:16px;max-width:480px">A CLIA-compliant, physician-ordered whole-genome test with EHR-ready reports, ACMG-classified variants, and a genetic counselor on every case. The tool every oncologist, cardiologist, and OB/GYN has been waiting for — at a price that makes clinical sense.</p>
+      <a href="med-plus-demo.html" target="_blank" class="demo-link" style="color:#C45840;border-color:#C45840;background:rgba(196,88,64,0.06)">View clinical report demo</a>
+    </div>
+    <div style="font-size:14px;color:var(--ink2);line-height:1.75;padding-top:52px">The clinical genetics market is dominated by narrow panels that miss the majority of actionable variants. Physicians order Myriad or Invitae panels covering 50–500 genes and call it done. Nucleus Med+ delivers the full picture — 2,000+ conditions, ACMG-compliant variant classifications, a genetic counselor co-signing every report, and direct EHR integration. The physician gets a superior product. The patient gets answers. And Nucleus gets a recurring, high-value clinical relationship with a natural reimbursement pathway.</div>
+  </div>
+  <div class="pd-qs">
+    <div class="pd-q" style="background:var(--coral-bg);border-radius:var(--r) 0 0 var(--r)"><div class="pd-q-n" style="color:var(--coral)">$8.4B</div><div class="pd-q-l">Clinical genetics TAM</div></div>
+    <div class="pd-q" style="background:var(--coral-bg)"><div class="pd-q-n" style="color:var(--coral)">~60%</div><div class="pd-q-l">Gross margin</div></div>
+    <div class="pd-q" style="background:var(--coral-bg)"><div class="pd-q-n" style="color:var(--coral)">18%</div><div class="pd-q-l">Preventive genomics CAGR</div></div>
+    <div class="pd-q" style="background:var(--coral-bg);border-radius:0 var(--r) var(--r) 0"><div class="pd-q-n" style="color:var(--coral)">$2,500</div><div class="pd-q-l">Max price per test</div></div>
+  </div>
+  <div class="pd-cols">
+    <div class="pd-box" style="background:var(--off)">
+      <div class="pd-box-head">🧬 Product Breakdown</div>
+      <div class="pd-box-body">
+        <div class="pf-list">
+          <div class="pf-item"><div class="pf-icon" style="background:var(--coral-bg)">🏥</div><div><div class="pf-head">CLIA-Compliant Whole-Genome Test</div><div class="pf-body">Physician-ordered. Full CLIA compliance via certified lab partner. Nucleus provides the software, AI, counseling, and reporting layer — zero capital outlay.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--coral-bg)">📋</div><div><div class="pf-head">ICD-10 Coded Clinical Report</div><div class="pf-body">Actionable findings mapped to standard billing and diagnostic codes. Reimbursement-ready from the moment the report is delivered.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--coral-bg)">💻</div><div><div class="pf-head">Epic &amp; Cerner EHR Integration</div><div class="pf-body">Reports surface directly inside the physician's existing workflow. No new login, no portal fatigue. Adoption friction is eliminated at the point of order.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--coral-bg)">📊</div><div><div class="pf-head">Real-Time Physician Dashboard</div><div class="pf-body">Order status, patient cohort view, and population health trends. The data layer that turns genomics into an ongoing clinical intelligence tool.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--coral-bg)">✅</div><div><div class="pf-head">ACMG Variant Classification</div><div class="pf-body">All variants classified to ACMG gold-standard guidelines. Pathogenic, likely pathogenic, VUS — every finding is clinically defensible.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--off)">
+      <div class="pd-box-head">🚀 Launch Strategy</div>
+      <div class="pd-box-body">
+        <div class="pl-list">
+          <div class="pl-step"><div class="pl-num" style="background:#C45840">1</div><div><div class="pl-head">CLIA Lab Partnership Signed Q2</div><div class="pl-body">Outsource sequencing to certified lab partner. Nucleus provides software, AI, counseling, and reporting. Pure margin — zero capital equipment outlay.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C45840">2</div><div><div class="pl-head">5 Pilot Clinics Q3 — Oncology + Cardiology</div><div class="pl-body">Soft launch with academic medical center partners. Oncology and cardiology are the highest-volume genetic testing specialties to capture first.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C45840">3</div><div><div class="pl-head">CPT Billing Guide for Physicians</div><div class="pl-body">Reduce reimbursement friction. Provide a complete CPT code mapping guide for billing staff. Adoption follows when billing is painless.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C45840">4</div><div><div class="pl-head">Epic Integration Live Q3</div><div class="pl-body">Required for academic hospital adoption. EHR integration is the single biggest unlock for physician-ordered genomic testing volume.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#C45840">5</div><div><div class="pl-head">2-Payer Pre-Auth Pilot Q4</div><div class="pl-body">Build pre-authorisation with 2 major payers. Reimbursement approval converts Med+ from a specialty product to a mainstream clinical standard.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--off)">
+      <div class="pd-box-head">📈 Market Opportunity</div>
+      <div class="pd-box-body">
+        <div class="tam-hero"><div class="tam-big" style="color:var(--ink)">$8.4B</div><div class="tam-lbl" style="color:var(--ink3)">Clinical genetics testing TAM</div></div>
+        <div class="tam-rows">
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Physician-ordered genetic tests</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$4.2B</span></div><div style="font-size:11px;color:var(--ink3)">Currently dominated by Invitae and Myriad — ripe for disruption</div><div class="tam-track"><div class="tam-fill" style="width:50%;background:#C45840"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Preventive genomics segment</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$2.1B</span></div><div style="font-size:11px;color:var(--ink3)">Growing 18% annually · Medicare expansion driving demand</div><div class="tam-track"><div class="tam-fill" style="width:25%;background:#C45840"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Oncology genomics alone</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$5.8B</span></div><div style="font-size:11px;color:var(--ink3)">Largest single specialty; Foundation Medicine, Tempus dominate now</div><div class="tam-track"><div class="tam-fill" style="width:69%;background:#C45840;opacity:.6"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--green)">Nucleus Year 1 target</span><span style="font-size:12px;font-weight:700;color:var(--green)">$3.6M</span></div><div style="font-size:11px;color:var(--ink3)">5 pilot clinics · ~1,440 tests · sub-0.1% penetration</div><div class="tam-track"><div class="tam-fill" style="width:1%;background:var(--green)"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="overflow:hidden;border:1px solid var(--bdr)">
+      <div class="pd-box-head">⚖️ SWOT Analysis</div>
+      <div class="swot-4">
+        <div class="sw sw-s" style="border-radius:0"><div class="sw-lbl">Strengths</div><div class="sw-items"><div class="sw-item">Physician ordering creates reimbursement pathway</div><div class="sw-item">Origin AI adds insights no targeted panel can match</div><div class="sw-item">2,000+ conditions screen differentiates from all panels</div><div class="sw-item">Genetic counselor layer = clinical-grade trust signal</div></div></div>
+        <div class="sw sw-w" style="border-radius:0"><div class="sw-lbl">Weaknesses</div><div class="sw-items"><div class="sw-item">6–12 month B2B sales cycle per clinic</div><div class="sw-item">LDT regulatory complexity and compliance overhead</div><div class="sw-item">Physician education investment required before sale</div><div class="sw-item">CLIA lab dependency adds a cost layer to every test</div></div></div>
+        <div class="sw sw-o" style="border-radius:0"><div class="sw-lbl">Opportunities</div><div class="sw-items"><div class="sw-item">Medicare expanding genomics reimbursement coverage</div><div class="sw-item">Precision medicine mandates increasing at hospital level</div><div class="sw-item">Epic/Cerner integration creates durable network moat</div><div class="sw-item">Post-COVID preventive health investment still surging</div></div></div>
+        <div class="sw sw-t" style="border-radius:0"><div class="sw-lbl">Threats</div><div class="sw-items"><div class="sw-item">FDA LDT rule creates significant compliance overhead</div><div class="sw-item">Reimbursement approval timelines are unpredictable</div><div class="sw-item">Invitae &amp; Myriad are already embedded in top clinics</div><div class="sw-item">Physician inertia is the number one adoption barrier</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ── Enterprise+ ───────────────────────────────────────── -->
+<section id="p-enterprise" style="background:var(--off);padding:96px 48px;border-top:4px solid #2E6FA3">
+  <div class="label">Channel 04 · Q4 Launch</div>
+  <div class="pd-intro">
+    <div>
+      <div class="pd-name-row">
+        <div class="pd-dot" style="background:#2E6FA3"></div>
+        <span class="pd-channel-name">Enterprise+</span>
+        <span class="pd-status-pill" style="background:var(--blue-bg);color:var(--blue)">Q4 Launch</span>
+      </div>
+      <h2>The smartest thing<br>your HR team<br>ever bought.</h2>
+      <p class="lead" style="margin-top:16px;max-width:480px">Employer-sponsored whole-genome screening for self-insured companies. Opt-in, GINA-compliant, and built around the one question every CFO actually cares about: what does this cost us now, and how much does it save us later?</p>
+      <a href="enterprise-plus-demo.html" target="_blank" class="demo-link" style="color:#2E6FA3;border-color:#2E6FA3;background:rgba(46,111,163,0.06)">View HR dashboard demo</a>
+    </div>
+    <div style="font-size:14px;color:var(--ink2);line-height:1.75;padding-top:52px">Self-insured employers are sitting on a $14,000-per-employee health cost problem with almost zero genomic intelligence to manage it. Nucleus Enterprise+ gives HR directors the population health data they need to negotiate with insurers, predict costly conditions before they become catastrophic, and offer employees a benefit with genuine personal value. A GINA firewall ensures employee privacy is absolute — the employer sees only population trends. Employees keep their own genomic data, forever.</div>
+  </div>
+  <div class="pd-qs">
+    <div class="pd-q" style="background:var(--blue-bg);border-radius:var(--r) 0 0 var(--r)"><div class="pd-q-n" style="color:var(--blue)">$4.2B</div><div class="pd-q-l">Employer genomics TAM</div></div>
+    <div class="pd-q" style="background:var(--blue-bg)"><div class="pd-q-n" style="color:var(--blue)">~65%</div><div class="pd-q-l">Gross margin</div></div>
+    <div class="pd-q" style="background:var(--blue-bg)"><div class="pd-q-n" style="color:var(--blue)">22,000</div><div class="pd-q-l">Self-insured US employers</div></div>
+    <div class="pd-q" style="background:var(--blue-bg);border-radius:0 var(--r) var(--r) 0"><div class="pd-q-n" style="color:var(--blue)">$2M</div><div class="pd-q-l">Max LTV per enterprise deal</div></div>
+  </div>
+  <div class="pd-cols">
+    <div class="pd-box" style="background:var(--white)">
+      <div class="pd-box-head">🧬 Product Breakdown</div>
+      <div class="pd-box-body">
+        <div class="pf-list">
+          <div class="pf-item"><div class="pf-icon" style="background:var(--blue-bg)">🏢</div><div><div class="pf-head">Opt-In Employee Genome Benefit</div><div class="pf-body">100% voluntary whole-genome screening for eligible employees. Positioned as a premium health benefit, never as a surveillance tool.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--blue-bg)">📊</div><div><div class="pf-head">Aggregate HR/Benefits Dashboard</div><div class="pf-body">Population health trends, disease burden mapping, and cost projections for the benefits team. The population-level data layer HR has never had access to.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--blue-bg)">👤</div><div><div class="pf-head">Individual Report + Counseling</div><div class="pf-body">Private, GINA-compliant delivery direct to each employee. Includes a genetic counselor session. The employer never sees individual data — ever.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--blue-bg)">💰</div><div><div class="pf-head">ROI Calculator + CFO Deck</div><div class="pf-body">Projected healthcare cost savings vs program investment. Third-party validated model. Designed to close the CFO conversation in a single meeting.</div></div></div>
+          <div class="pf-item"><div class="pf-icon" style="background:var(--blue-bg)">🔒</div><div><div class="pf-head">GINA Firewall — Hard Technical Separation</div><div class="pf-body">Employer receives only aggregate population data. Individual genome data is employee-owned, always. Compliance is architectural, not just contractual.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--white)">
+      <div class="pd-box-head">🚀 Launch Strategy</div>
+      <div class="pd-box-body">
+        <div class="pl-list">
+          <div class="pl-step"><div class="pl-num" style="background:#2E6FA3">1</div><div><div class="pl-head">Hire Head of Enterprise Sales Q2</div><div class="pl-body">This is a Series B hire. Enterprise genomics requires a dedicated, relationship-driven sales motion. This channel does not build itself.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#2E6FA3">2</div><div><div class="pl-head">3 Benefits Broker Partnerships Q3</div><div class="pl-body">Benefits brokers already own the CFO and HR relationship. A commission model turns them into a distribution channel with zero extra Nucleus headcount.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#2E6FA3">3</div><div><div class="pl-head">3 Corporate Pilots Q4</div><div class="pl-body">Target: tech and pharma companies with 500–2,000 employees. Progressive HR culture. High health spend per head. Ideal first customer profile.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#2E6FA3">4</div><div><div class="pl-head">HSA/FSA Eligible Certification</div><div class="pl-body">Unlocks $4,000+ of pre-tax employee budget per person. Eliminates the single biggest objection in the employee benefits conversation.</div></div></div>
+          <div class="pl-step"><div class="pl-num" style="background:#2E6FA3">5</div><div><div class="pl-head">Public ROI Case Study Post-Pilot</div><div class="pl-body">Third-party validated healthcare cost savings from pilot data. A publishable case study becomes the primary enterprise sales asset for Year 2.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="background:var(--white)">
+      <div class="pd-box-head">📈 Market Opportunity</div>
+      <div class="pd-box-body">
+        <div class="tam-hero"><div class="tam-big" style="color:var(--ink)">$4.2B</div><div class="tam-lbl" style="color:var(--ink3)">Employer health genomics TAM</div></div>
+        <div class="tam-rows">
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">Self-insured employers (250+ staff)</span><span style="font-size:12px;font-weight:700;color:var(--ink)">22,000 cos.</span></div><div style="font-size:11px;color:var(--ink3)">Avg health spend $14,000/employee/year — enormous pain point to solve</div><div class="tam-track"><div class="tam-fill" style="width:100%;background:#2E6FA3;opacity:.35"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">1% genomics penetration = immediate TAM</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$3.1B</span></div><div style="font-size:11px;color:var(--ink3)">Conservative: just 1% of employer health spend moving to genomics</div><div class="tam-track"><div class="tam-fill" style="width:74%;background:#2E6FA3"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--ink)">US benefits broker market</span><span style="font-size:12px;font-weight:700;color:var(--ink)">$30B+</span></div><div style="font-size:11px;color:var(--ink3)">Distribution channel that already owns every CFO relationship we need</div><div class="tam-track"><div class="tam-fill" style="width:100%;background:#2E6FA3;opacity:.15"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:var(--green)">Nucleus Year 1 target</span><span style="font-size:12px;font-weight:700;color:var(--green)">$2.5M</span></div><div style="font-size:11px;color:var(--ink3)">3 corporate pilots · ~5,000 employees screened in Year 1</div><div class="tam-track"><div class="tam-fill" style="width:1%;background:var(--green)"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box" style="overflow:hidden;border:1px solid var(--bdr)">
+      <div class="pd-box-head">⚖️ SWOT Analysis</div>
+      <div class="swot-4">
+        <div class="sw sw-s" style="border-radius:0"><div class="sw-lbl">Strengths</div><div class="sw-items"><div class="sw-item">High LTV per deal: $500K–$2M per company</div><div class="sw-item">Recurring annual contract structure</div><div class="sw-item">CFO cost-savings narrative is financially compelling</div><div class="sw-item">GINA firewall eliminates top privacy objection</div></div></div>
+        <div class="sw sw-w" style="border-radius:0"><div class="sw-lbl">Weaknesses</div><div class="sw-items"><div class="sw-item">6–12 month procurement cycle per deal</div><div class="sw-item">Requires dedicated enterprise sales team to function</div><div class="sw-item">Employee privacy sensitivity requires careful framing</div><div class="sw-item">Benefits committee approval adds decision layers</div></div></div>
+        <div class="sw sw-o" style="border-radius:0"><div class="sw-lbl">Opportunities</div><div class="sw-items"><div class="sw-item">Post-COVID employer wellness investment surging</div><div class="sw-item">HSA/FSA eligible products in extremely high demand</div><div class="sw-item">Health equity and DE&amp;I budget available at large cos</div><div class="sw-item">Tech and pharma companies as ideal early adopters</div></div></div>
+        <div class="sw sw-t" style="border-radius:0"><div class="sw-lbl">Threats</div><div class="sw-items"><div class="sw-item">GINA compliance complexity adds legal overhead</div><div class="sw-item">Employee backlash risk if positioning is mishandled</div><div class="sw-item">Economic downturn can freeze benefits budgets fast</div><div class="sw-item">Data liability exposure grows at enterprise scale</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ── Research+ ─────────────────────────────────────────── -->
+<section id="p-research" style="background:var(--ink);padding:96px 48px;border-top:4px solid #6B5FA0">
+  <div class="label" style="color:rgba(255,255,255,.4)">Channel 05 · Q4 Launch</div>
+  <div class="pd-intro">
+    <div>
+      <div class="pd-name-row">
+        <div class="pd-dot" style="background:#6B5FA0"></div>
+        <span class="pd-channel-name-dk">Research+</span>
+        <span class="pd-status-pill" style="background:var(--lav-bg);color:var(--lav)">Q4 Pipeline</span>
+      </div>
+      <h2 style="color:var(--white)">The data flywheel<br>no one else<br>can build.</h2>
+      <p class="lead" style="margin-top:16px;max-width:480px;color:rgba(255,255,255,.6)">Every genome Nucleus sequences makes our dataset more valuable. Research+ licenses that dataset — and the Origin AI that interprets it — to the pharma and biotech companies that will pay millions for insights they cannot build themselves.</p>
+      <a href="research-plus-demo.html" target="_blank" class="demo-link" style="color:#9B89D4;border-color:#6B5FA0;background:rgba(107,95,160,0.12)">View pharma data portal demo</a>
+    </div>
+    <div style="font-size:14px;color:rgba(255,255,255,.5);line-height:1.75;padding-top:52px">85% gross margin. Recurring licensing revenue. A compounding data flywheel that grows more valuable with every new test Nucleus runs across any of its five channels. Research+ is the channel where the other four channels become a strategic asset. The more genomes we collect through IVF+, Heritage+, Med+, and Enterprise+ — the more valuable our pharma licensing deals become. At 10,000 consented genomes we cross the pharma credibility threshold. At 50,000 we are a tier-one genomic data asset. At 100,000 we become the data layer the entire industry builds on.</div>
+  </div>
+  <div class="pd-qs">
+    <div class="pd-q" style="background:#161412;border-radius:var(--r) 0 0 var(--r)"><div class="pd-q-n" style="color:#9B89D4">$8.7B</div><div class="pd-q-l-dk">Genomic data TAM by 2030</div></div>
+    <div class="pd-q" style="background:#161412"><div class="pd-q-n" style="color:#9B89D4">~85%</div><div class="pd-q-l-dk">Gross margin — highest channel</div></div>
+    <div class="pd-q" style="background:#161412"><div class="pd-q-n" style="color:#9B89D4">26%</div><div class="pd-q-l-dk">Market CAGR through 2030</div></div>
+    <div class="pd-q" style="background:#161412;border-radius:0 var(--r) var(--r) 0"><div class="pd-q-n" style="color:#9B89D4">$5M</div><div class="pd-q-l-dk">Max single deal value</div></div>
+  </div>
+  <div class="pd-cols">
+    <div class="pd-box-dk">
+      <div class="pd-box-head-dk">🧬 Product Breakdown</div>
+      <div class="pd-box-body">
+        <div class="pf-list">
+          <div class="pf-item-dk"><div class="pf-icon" style="background:var(--lav-bg)">🔗</div><div><div class="pf-head-dk">De-Identified Genomic Dataset Licensing</div><div class="pf-body-dk">GDPR/CCPA compliant, IRB-approved phenotype + genotype datasets. Consented for commercial research. Priced per genome or per custom cohort study.</div></div></div>
+          <div class="pf-item-dk"><div class="pf-icon" style="background:var(--lav-bg)">🧪</div><div><div class="pf-head-dk">Custom Cohort Studies</div><div class="pf-body-dk">Pharma-specified patient populations built from the Nucleus dataset. Enriched with health outcome data from clinical partners. Delivered as research-ready datasets.</div></div></div>
+          <div class="pf-item-dk"><div class="pf-icon" style="background:var(--lav-bg)">⚡</div><div><div class="pf-head-dk">Origin Model API Access</div><div class="pf-body-dk">Programmatic access to our nine polygenic prediction models for drug discovery and R&amp;D applications. No competitor offers this API. It does not exist elsewhere.</div></div></div>
+          <div class="pf-item-dk"><div class="pf-icon" style="background:var(--lav-bg)">📈</div><div><div class="pf-head-dk">Real-World Evidence Reports</div><div class="pf-body-dk">FDA-grade evidence packages for drug development and label expansion. Longitudinal health outcome tracking across patient cohorts over years.</div></div></div>
+          <div class="pf-item-dk"><div class="pf-icon" style="background:var(--lav-bg)">🤝</div><div><div class="pf-head-dk">Co-Development Revenue Share</div><div class="pf-body-dk">Milestone-based deals on drug candidates informed by Nucleus genomic data. Upside participation in pharma R&amp;D success — no capital outlay required from Nucleus.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box-dk">
+      <div class="pd-box-head-dk">🚀 Launch Strategy</div>
+      <div class="pd-box-body">
+        <div class="pl-list">
+          <div class="pl-step-dk"><div class="pl-num" style="background:#6B5FA0">1</div><div><div class="pl-head-dk">10,000+ Consented Genomes by Q3</div><div class="pl-body-dk">The pharma credibility threshold. Drive genome volume through IVF+, Heritage+, and Med+ simultaneously — every channel feeds this flywheel.</div></div></div>
+          <div class="pl-step-dk"><div class="pl-num" style="background:#6B5FA0">2</div><div><div class="pl-head-dk">Consent Framework + DUA Templates Q2</div><div class="pl-body-dk">Legal infrastructure for commercial licensing must be in place before the first pharma conversation starts. Data use agreement templates ready to sign.</div></div></div>
+          <div class="pl-step-dk"><div class="pl-num" style="background:#6B5FA0">3</div><div><div class="pl-head-dk">Anchor Pharma Partner LOI Q3</div><div class="pl-body-dk">First letter of intent validates commercial demand. Target: top-20 pharma with active interest in metabolic, oncology, or rare disease genomics.</div></div></div>
+          <div class="pl-step-dk"><div class="pl-num" style="background:#6B5FA0">4</div><div><div class="pl-head-dk">First Licensing Deal Closed Q4</div><div class="pl-body-dk">$500K+ minimum first deal. Proof of economics. Public announcement accelerates the full pharma pipeline. This is the flywheel ignition moment.</div></div></div>
+          <div class="pl-step-dk"><div class="pl-num" style="background:#6B5FA0">5</div><div><div class="pl-head-dk">Research Portal + API v1 Q4</div><div class="pl-body-dk">Self-serve access for biotech partners. Enables deal sizes starting at $50K. Reduces friction and allows Research+ to scale without a large sales team.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box-dk">
+      <div class="pd-box-head-dk">📈 Market Opportunity</div>
+      <div class="pd-box-body">
+        <div class="tam-hero"><div class="tam-big-dk">$8.7B</div><div class="tam-lbl-dk">Genomic data market by 2030</div></div>
+        <div class="tam-rows">
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7)">Current genomic data market</span><span style="font-size:12px;font-weight:700;color:rgba(255,255,255,.85)">$3.2B</span></div><div style="font-size:11px;color:rgba(255,255,255,.3)">Growing at 26% CAGR — driven by AI drug discovery demand</div><div class="tam-track-dk"><div class="tam-fill" style="width:37%;background:#6B5FA0"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7)">Pharma annual R&amp;D data spend</span><span style="font-size:12px;font-weight:700;color:rgba(255,255,255,.85)">$50B+</span></div><div style="font-size:11px;color:rgba(255,255,255,.3)">Top 10 pharma combined — genomic data is still a tiny fraction of this</div><div class="tam-track-dk"><div class="tam-fill" style="width:100%;background:#6B5FA0;opacity:.25"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7)">Per-genome pharma data value</span><span style="font-size:12px;font-weight:700;color:rgba(255,255,255,.85)">$1,500–$5K</span></div><div style="font-size:11px;color:rgba(255,255,255,.3)">Industry benchmark for consented whole-genome data in pharma research</div><div class="tam-track-dk"><div class="tam-fill" style="width:60%;background:#6B5FA0;opacity:.7"></div></div></div>
+          <div class="tam-r"><div class="tam-r-top"><span style="font-size:12px;font-weight:600;color:#4ABA9E">Nucleus Year 1 target</span><span style="font-size:12px;font-weight:700;color:#4ABA9E">$3M</span></div><div style="font-size:11px;color:rgba(255,255,255,.3)">First 2 pharma licensing deals · sub-0.1% of the market</div><div class="tam-track-dk"><div class="tam-fill" style="width:1%;background:#4ABA9E"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-box-dk" style="overflow:hidden">
+      <div class="pd-box-head-dk">⚖️ SWOT Analysis</div>
+      <div class="swot-4">
+        <div class="sw sw-s" style="border-radius:0"><div class="sw-lbl">Strengths</div><div class="sw-items"><div class="sw-item">85% gross margin — highest of all five channels</div><div class="sw-item">Compounding data flywheel across all channels</div><div class="sw-item">Origin API creates insights no competitor has</div><div class="sw-item">Recurring licensing revenue once deals close</div></div></div>
+        <div class="sw sw-w" style="border-radius:0"><div class="sw-lbl">Weaknesses</div><div class="sw-items"><div class="sw-item">Needs 10,000+ genomes before pharma takes it seriously</div><div class="sw-item">12–18 month pharma deal cycles</div><div class="sw-item">Complex consent and de-identification infrastructure</div><div class="sw-item">Sales requires scientific credibility, not just revenue motion</div></div></div>
+        <div class="sw sw-o" style="border-radius:0"><div class="sw-lbl">Opportunities</div><div class="sw-items"><div class="sw-item">AI drug discovery boom — GLP-1, oncology, rare disease</div><div class="sw-item">Each genome valued at $1,500–$5,000 by pharma today</div><div class="sw-item">Pharma M&amp;A interest in genomic data assets is rising fast</div><div class="sw-item">No commercial-grade polygenic API exists anywhere yet</div></div></div>
+        <div class="sw sw-t" style="border-radius:0"><div class="sw-lbl">Threats</div><div class="sw-items"><div class="sw-item">GDPR/CCPA tightening on genomic data commercial use</div><div class="sw-item">Patient advocacy backlash on DNA commercialisation</div><div class="sw-item">NIH All of Us public dataset competes on volume</div><div class="sw-item">IRB and ethics board complexity at scale</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- ═══ HERITAGE SPOTLIGHT ════════════════════════════════════ -->
+<section id="heritage">
+  <div class="label">First to launch · Heritage+</div>
+  <h2>Your genes.<br>Your story.<br>Your family's future.</h2>
+  <div class="heritage-inner">
+    <div>
+      <p class="lead" style="margin-bottom:32px">The 23andMe counter. A premium family genome package — interactive, beautiful, and designed to be gifted across generations. No FDA pathway. No B2B sales cycle. Launches Q2.</p>
+      <div class="heritage-reasons">
+        <div class="reason"><div class="reason-n">1</div><div><div class="reason-head">No regulatory barrier</div><div class="reason-body">Pure consumer product — sold online from day one. Zero FDA pathway required.</div></div></div>
+        <div class="reason"><div class="reason-n">2</div><div><div class="reason-head">Widest TAM of all five channels</div><div class="reason-body">150M+ US families. Any generation. Grandparents are natural gift-buyers.</div></div></div>
+        <div class="reason"><div class="reason-n">3</div><div><div class="reason-head">Premium vs. 23andMe</div><div class="reason-body">20× the depth, 20× the price. The heirloom, not the test kit.</div></div></div>
+        <div class="reason"><div class="reason-n">4</div><div><div class="reason-head">Natural IVF+ funnel</div><div class="reason-body">Every Heritage+ family is a future IVF+ prospect. The journey starts here.</div></div></div>
+        <div class="reason"><div class="reason-n">5</div><div><div class="reason-head">Shareable by design</div><div class="reason-body">Interactive family trees people want to show off — organic social built in.</div></div></div>
+      </div>
+    </div>
+    <div class="packages">
+      <div class="pkg">
+        <div class="pkg-row">
+          <div class="pkg-name light">Origin</div>
+          <div class="pkg-price light">$1,500</div>
+        </div>
+        <div class="pkg-sub light">2 people tested · Single generation</div>
+        <div class="pkg-features">
+          <div class="pkg-feat light">Plain English genome report</div>
+          <div class="pkg-feat light">Digital family tree</div>
+          <div class="pkg-feat light">12-month science updates</div>
+        </div>
+      </div>
+      <div class="pkg featured">
+        <div class="pkg-row">
+          <div class="pkg-name dark">Legacy<span style="margin-left:10px" class="pkg-badge">Most popular</span></div>
+          <div class="pkg-price dark">$2,800</div>
+        </div>
+        <div class="pkg-sub dark">4 people tested · Two generations</div>
+        <div class="pkg-features">
+          <div class="pkg-feat dark">Full interactive genome tree</div>
+          <div class="pkg-feat dark">Printed heritage book</div>
+          <div class="pkg-feat dark">Genetic counselor session</div>
+          <div class="pkg-feat dark">24-month science updates</div>
+        </div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-row">
+          <div class="pkg-name light">Dynasty</div>
+          <div class="pkg-price light">$4,200</div>
+        </div>
+        <div class="pkg-sub light">8 people tested · Three+ generations</div>
+        <div class="pkg-features">
+          <div class="pkg-feat light">Complete family genome archive</div>
+          <div class="pkg-feat light">Premium printed heirloom box</div>
+          <div class="pkg-feat light">Unlimited genetic counseling</div>
+          <div class="pkg-feat light">Lifetime science updates</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ ECONOMICS ════════════════════════════════════════════ -->
+<section id="economics">
+  <div class="label">Unit economics</div>
+  <h2>$110 in.<br>Hundreds out.</h2>
+  <div class="econ-grid">
+    <div class="econ-left">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin-bottom:14px">Cost per test</div>
+      <div class="cost-stack">
+        <div class="cost-row"><span class="cost-label">Illumina raw data</span><span class="cost-val">$110</span></div>
+        <div class="cost-row"><span class="cost-label">Processing & analysis</span><span class="cost-val">$80</span></div>
+        <div class="cost-row"><span class="cost-label">Counseling & report</span><span class="cost-val">$60</span></div>
+        <div class="cost-row"><span class="cost-label">Total COGS per test</span><span class="cost-val">$250</span></div>
+      </div>
+      <div style="background:var(--green3);border-radius:var(--r);padding:20px 22px;margin-top:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--green2);letter-spacing:.08em;margin-bottom:6px">CURRENT OVERHEAD</div>
+        <div style="font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:36px;color:var(--green2)">$800K / month</div>
+        <div style="font-size:13px;color:var(--green);margin-top:4px">Scales to ~$1.5M/mo at full build-out</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin-bottom:14px">Gross margin by channel</div>
+      <div class="margin-bars">
+        <div class="mbar-row">
+          <div class="mbar-name">IVF+</div>
+          <div><div class="mbar-track"><div class="mbar-fill" style="width:78%;background:#C9A84C"></div></div></div>
+          <div class="mbar-pct" style="color:#C9A84C">~75%</div>
+        </div>
+        <div class="mbar-row">
+          <div class="mbar-name">Heritage+</div>
+          <div><div class="mbar-track"><div class="mbar-fill" style="width:70%;background:#0F6E56"></div></div></div>
+          <div class="mbar-pct" style="color:#0F6E56">~70%</div>
+        </div>
+        <div class="mbar-row">
+          <div class="mbar-name">Med+</div>
+          <div><div class="mbar-track"><div class="mbar-fill" style="width:60%;background:#C45840"></div></div></div>
+          <div class="mbar-pct" style="color:#C45840">~60%</div>
+        </div>
+        <div class="mbar-row">
+          <div class="mbar-name">Enterprise+</div>
+          <div><div class="mbar-track"><div class="mbar-fill" style="width:65%;background:#2E6FA3"></div></div></div>
+          <div class="mbar-pct" style="color:#2E6FA3">~65%</div>
+        </div>
+        <div class="mbar-row">
+          <div class="mbar-name">Research+</div>
+          <div><div class="mbar-track"><div class="mbar-fill" style="width:85%;background:#6B5FA0"></div></div></div>
+          <div class="mbar-pct" style="color:#6B5FA0">~85%</div>
+        </div>
+      </div>
+      <div style="margin-top:28px;padding:22px 24px;border:1.5px solid var(--ink);border-radius:var(--r);display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:14px;font-weight:600;color:var(--ink2)">Break-even monthly revenue</div>
+        <div style="font-family:'Instrument Serif','Georgia',Georgia,serif;font-size:30px;color:var(--ink)">$1.6M</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINANCIALS ═══════════════════════════════════════════ -->
+<section id="financials">
+  <div class="label">Financial model</div>
+  <h2>Path to $80M ARR.</h2>
+  <div class="fin-grid">
+    <div class="fin-year">
+      <div class="fin-year-head">
+        <div class="fin-year-label">2025 · Current</div>
+        <div class="fin-year-total">$5M</div>
+        <div class="fin-year-sub">IVF+ channel only</div>
+      </div>
+      <div class="fin-bars">
+        <div class="fin-bar-row"><div class="fin-bar-label">IVF+</div><div class="fin-bar-val">$5M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:100%;background:#C9A84C"></div></div>
+      </div>
+    </div>
+    <div class="fin-year">
+      <div class="fin-year-head" style="background:var(--green3)">
+        <div class="fin-year-label" style="color:var(--green)">2026 · Post-raise</div>
+        <div class="fin-year-total" style="color:var(--green2)">$24.1M</div>
+        <div class="fin-year-sub" style="color:var(--green)">All 5 channels launched</div>
+      </div>
+      <div class="fin-bars">
+        <div class="fin-bar-row"><div class="fin-bar-label">IVF+</div><div class="fin-bar-val">$12M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:100%;background:#C9A84C"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Heritage+</div><div class="fin-bar-val">$3M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:25%;background:#0F6E56"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Med+</div><div class="fin-bar-val">$3.6M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:30%;background:#C45840"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Enterprise+</div><div class="fin-bar-val">$2.5M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:21%;background:#2E6FA3"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Research+</div><div class="fin-bar-val">$3M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:25%;background:#6B5FA0"></div></div>
+      </div>
+    </div>
+    <div class="fin-year">
+      <div class="fin-year-head">
+        <div class="fin-year-label">2027 · Target</div>
+        <div class="fin-year-total">$80M</div>
+        <div class="fin-year-sub">Profitable · Series C ready</div>
+      </div>
+      <div class="fin-bars">
+        <div class="fin-bar-row"><div class="fin-bar-label">IVF+</div><div class="fin-bar-val">$28M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:100%;background:#C9A84C"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Heritage+</div><div class="fin-bar-val">$12M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:43%;background:#0F6E56"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Med+</div><div class="fin-bar-val">$14M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:50%;background:#C45840"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Enterprise+</div><div class="fin-bar-val">$10M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:36%;background:#2E6FA3"></div></div>
+        <div class="fin-bar-row"><div class="fin-bar-label">Research+</div><div class="fin-bar-val">$16M</div></div>
+        <div class="fin-bar-track"><div class="fin-bar-fill" style="width:57%;background:#6B5FA0"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="fin-note">
+    <div class="fin-note-icon">💡</div>
+    <div class="fin-note-text">Overhead scales to <strong>$1.5M/month</strong> at full build-out. The business becomes <strong>operationally profitable</strong> at ~450 IVF+ customers/month — or the equivalent revenue mix across all five channels. Series C readiness at <strong>$80M ARR</strong>.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ TEAM ═════════════════════════════════════════════════ -->
+<section id="team">
+  <div class="label">The team</div>
+  <h2>Science-first.<br>Builder-led.<br>Media-validated.</h2>
+  <div class="leaders">
+    <div class="leader-card">
+      <div class="leader-avatar" style="background:#FBF5E8">KS</div>
+      <div class="leader-info">
+        <div class="leader-tag" style="color:#C9A84C">Founder</div>
+        <div class="leader-name">Kian Sadeghi</div>
+        <div class="leader-title">CEO & Co-founder</div>
+        <div class="leader-bio">Built Nucleus from zero to national press coverage across WSJ, WaPo, CNBC & 8 other major outlets. Leads product, fundraising, and clinical partnerships.</div>
+      </div>
+    </div>
+    <div class="leader-card">
+      <div class="leader-avatar" style="background:#E8F3F0">LF</div>
+      <div class="leader-info">
+        <div class="leader-tag" style="color:#0F6E56">Science</div>
+        <div class="leader-name">Lasse Folkersen, Ph.D.</div>
+        <div class="leader-title">Chief Scientific Officer</div>
+        <div class="leader-bio">Former lead scientist, Danish National Genome Center. Author of 100+ peer-reviewed publications. Architect of the Origin polygenic model family.</div>
+      </div>
+    </div>
+    <div class="leader-card">
+      <div class="leader-avatar" style="background:#FDF0EC">NT</div>
+      <div class="leader-info">
+        <div class="leader-tag" style="color:#C45840">Clinical</div>
+        <div class="leader-name">Nathan Treff, Ph.D., HCLD</div>
+        <div class="leader-title">Chief Clinical Officer</div>
+        <div class="leader-bio">Decades advancing genetic testing in the IVF industry. Leads clinical translation of Origin models into real patient outcomes.</div>
+      </div>
+    </div>
+  </div>
+  <div class="advisors">
+    <div class="advisor">
+      <div class="adv-name" style="color:#2E6FA3">Barry Starr, Ph.D.</div>
+      <div class="adv-role">Dir. Scientific Communications · Former Stanford Genetics</div>
+    </div>
+    <div class="advisor">
+      <div class="adv-name" style="color:#6B5FA0">Jerry Lanchbury, Ph.D.</div>
+      <div class="adv-role">Scientific Advisor · Former CSO, Myriad Genetics</div>
+    </div>
+    <div class="advisor">
+      <div class="adv-name" style="color:#C9A84C">Ellen H. Goldstein, MD</div>
+      <div class="adv-role">Clinical Partner · Co-founder, Beverly Hills Fertility</div>
+    </div>
+    <div class="advisor">
+      <div class="adv-name" style="color:#0F6E56">Enrique Cervantes, MD</div>
+      <div class="adv-role">Clinical Partner · Co-founder, C de la F Mexico</div>
+    </div>
+  </div>
+  <div class="hiring-row">
+    <div class="hiring-label">Hiring with this raise →</div>
+    <div class="hire-pill">CFO</div>
+    <div class="hire-pill">CMO</div>
+    <div class="hire-pill">Head of Enterprise Sales</div>
+    <div class="hire-pill">VP Clinical Affairs</div>
+    <div class="hire-pill">Head of Heritage+ Product</div>
+  </div>
+</section>
+
+<!-- ═══ THE ASK ════════════════════════════════════════════════ -->
+<section id="ask">
+  <div class="label">The ask</div>
+  <div class="ask-inner">
+    <div>
+      <div class="ask-amount">$45–50M<br>Series B.</div>
+      <div class="ask-sub">24 months. Five channels launched. Rocket fuel to revenue.</div>
+      <div class="funds-grid">
+        <div class="fund-row">
+          <div class="fund-label">Overhead runway (24 mo)</div>
+          <div class="fund-bar-outer"><div class="fund-bar-inner" style="width:34%;background:#0F6E56"></div></div>
+          <div class="fund-amt">$16M</div>
+        </div>
+        <div class="fund-row">
+          <div class="fund-label">Sales & marketing</div>
+          <div class="fund-bar-outer"><div class="fund-bar-inner" style="width:26%;background:#2E6FA3"></div></div>
+          <div class="fund-amt">$12M</div>
+        </div>
+        <div class="fund-row">
+          <div class="fund-label">Channel builds (4 new)</div>
+          <div class="fund-bar-outer"><div class="fund-bar-inner" style="width:17%;background:#C9A84C"></div></div>
+          <div class="fund-amt">$8M</div>
+        </div>
+        <div class="fund-row">
+          <div class="fund-label">Clinical & regulatory</div>
+          <div class="fund-bar-outer"><div class="fund-bar-inner" style="width:9%;background:#C45840"></div></div>
+          <div class="fund-amt">$4M</div>
+        </div>
+        <div class="fund-row">
+          <div class="fund-label">Research & data infra</div>
+          <div class="fund-bar-outer"><div class="fund-bar-inner" style="width:4%;background:#6B5FA0"></div></div>
+          <div class="fund-amt">$2M</div>
+        </div>
+        <div class="fund-row">
+          <div class="fund-label">Working capital buffer</div>
+          <div class="fund-bar-outer"><div class="fund-bar-inner" style="width:13%;background:var(--ink3)"></div></div>
+          <div class="fund-amt">$6M</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin-bottom:20px">24-Month milestones</div>
+      <div class="milestones">
+        <div class="milestone"><div class="ms-time">Month 1–3</div><div class="ms-text"><strong>Heritage+ launch</strong> · IVF+ to 100+ customers/month</div></div>
+        <div class="milestone"><div class="ms-time">Month 3–6</div><div class="ms-text"><strong>Med+ clinical pilot</strong> · 5 partner clinics onboarded</div></div>
+        <div class="milestone"><div class="ms-time">Month 6–9</div><div class="ms-text"><strong>Heritage+ at scale</strong> · 500 packages/month</div></div>
+        <div class="milestone"><div class="ms-time">Month 9–12</div><div class="ms-text"><strong>Enterprise+ pilot</strong> · 3 corporate deals signed</div></div>
+        <div class="milestone"><div class="ms-time">Month 12</div><div class="ms-text">Series B milestone: <strong>$3M MRR</strong></div></div>
+        <div class="milestone"><div class="ms-time">Month 18</div><div class="ms-text"><strong>Research+ first</strong> pharma partnership closed</div></div>
+        <div class="milestone"><div class="ms-time">Month 24</div><div class="ms-text"><strong>$80M ARR run rate</strong> · Series C ready</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSE ═════════════════════════════════════════════════ -->
+<section id="close">
+  <div>
+    <h2>Don't let your family history define your family's future.</h2>
+    <p class="close-sub">The science exists. The product works. The press has validated it. The team is built. The five channels are ready. All we need is the capital to move fast.</p>
+    <span class="close-cta" onclick="nav('ask')" style="cursor:pointer">Request full deck →</span>
+  </div>
+  <div class="close-stats">
+    <div class="cstat"><div class="cstat-n">$110</div><div class="cstat-l">Cost per test</div></div>
+    <div class="cstat"><div class="cstat-n">$38B</div><div class="cstat-l">Total market</div></div>
+    <div class="cstat"><div class="cstat-n">5</div><div class="cstat-l">Revenue channels</div></div>
+    <div class="cstat"><div class="cstat-n">$45M</div><div class="cstat-l">Series B raise</div></div>
+  </div>
+</section>
+
+<footer>
+  <span class="foot-logo">nucleus+</span>
+  <span class="foot-copy">CONFIDENTIAL · NUCLEUS GENOMICS, INC. · 2026</span>
+  <span class="foot-link">mynucleus.com</span>
+</footer>
+
+<script>
+// ── Smooth scroll via JS (works in iframe sandboxes) ──────
+function nav(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Active nav highlight ───────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav .nav-links button');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.style.color = '');
+      navLinks.forEach(l => {
+        if (l.getAttribute('onclick') === "nav('"+e.target.id+"')") {
+          l.style.color = 'var(--green)';
+        }
+      });
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => navObs.observe(s));
+// Animate elements in on scroll
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('h2, .stat-card, .moat-card, .fin-year, .leader-card, .advisor, .channel-row, .pkg, .reason, .milestone, .fund-row, .hstat, .pd-box, .pd-box-dk, .pd-q').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(18px)';
+  el.style.transition = 'opacity .6s ease, transform .6s ease';
+  obs.observe(el);
+});
+
+// Stagger children
+document.querySelectorAll('.stat-trio, .fin-grid, .leaders, .advisors, .moat-grid, .packages, .heritage-reasons, .milestones, .funds-grid, .hero-stats, .moat-vs').forEach(parent => {
+  Array.from(parent.children).forEach((child, i) => {
+    child.style.transitionDelay = (i * 0.08) + 's';
+  });
+});
+</script>
+</body>
+</html>

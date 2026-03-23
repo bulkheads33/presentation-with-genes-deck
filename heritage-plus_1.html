@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nucleus · Heritage+ · The Leroux — Russo Family Genome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0C0B09;
+  --bg2:     #141210;
+  --bg3:     #1C1916;
+  --gold:    #C9A84C;
+  --gold-lt: #E8C96A;
+  --gold-dm: #7A6530;
+  --cream:   #F0EBE0;
+  --cream2:  #A09880;
+  --coral:   #D4705A;
+  --teal:    #4A9B8E;
+  --blue:    #6B9EC4;
+  --lav:     #9B8CC4;
+  --bdr:     rgba(201,168,76,0.12);
+  --bdr2:    rgba(201,168,76,0.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;
+  display:flex;flex-direction:column;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* subtle grain */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:500;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.35;
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.top-accent{height:3px;background:linear-gradient(90deg,#0F6E56,#C9A84C);flex-shrink:0}
+header{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 40px;
+  border-bottom:1px solid var(--bdr);
+  position:relative;
+  gap:20px;
+}
+.header-left{display:flex;align-items:center;gap:18px}
+.back-link{font-size:11px;font-weight:600;color:var(--cream2);text-decoration:none;letter-spacing:.08em;opacity:.55;transition:opacity .2s;white-space:nowrap}
+.back-link:hover{opacity:1}
+.logo{display:flex;align-items:baseline;gap:5px}
+.logo-nucleus{font-family:'Instrument Serif','Georgia',serif;font-size:20px;color:rgba(240,235,224,0.45);letter-spacing:.02em}
+.logo-sep{font-size:14px;color:rgba(201,168,76,0.25);margin:0 3px}
+.logo-word{font-family:'Instrument Serif','Georgia',serif;font-size:22px;font-weight:400;color:var(--gold);letter-spacing:.04em}
+.logo-plus{font-size:11px;font-weight:700;color:var(--gold-dm);letter-spacing:.12em}
+.demo-badge{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(201,168,76,0.1);color:var(--gold-dm);border:1px solid var(--bdr);padding:3px 10px;border-radius:100px;margin-left:4px}
+.tagline{font-size:10px;color:var(--cream2);letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+.family-id{text-align:right}
+.family-name{font-family:'Instrument Serif','Georgia',serif;font-size:19px;font-weight:400;color:var(--cream);letter-spacing:.03em}
+.family-meta{font-size:10px;color:var(--cream2);letter-spacing:.08em;margin-top:3px}
+
+/* ─── MAIN CONTENT ───────────────────────────────────── */
+.main{display:grid;grid-template-columns:1fr 380px;flex:1;overflow:hidden;min-height:0}
+
+/* ─── TREE PANEL ─────────────────────────────────────── */
+.tree-panel{
+  display:flex;flex-direction:column;
+  padding:28px 32px;
+  overflow:hidden;
+  position:relative;
+}
+
+/* subtle radial bg glow at center */
+.tree-panel::before{
+  content:'';position:absolute;
+  left:50%;top:55%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.filters{display:flex;gap:7px;margin-bottom:20px;flex-shrink:0;flex-wrap:wrap}
+.f-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 13px;
+  border:1px solid var(--bdr);border-radius:20px;
+  background:transparent;
+  color:var(--cream2);
+  font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;
+}
+.f-btn:hover,.f-btn.active{border-color:var(--gold-dm);color:var(--gold)}
+.f-btn.active{background:rgba(201,168,76,0.06)}
+.f-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+.tree-scroll{flex:1;overflow:hidden;position:relative}
+#tree-svg{width:100%;height:100%;min-height:460px}
+
+/* ─── SVG INTERNALS ─────────────────────────────────── */
+@keyframes flow{from{stroke-dashoffset:36}to{stroke-dashoffset:0}}
+@keyframes flowslow{from{stroke-dashoffset:48}to{stroke-dashoffset:0}}
+@keyframes spinring{from{stroke-dashoffset:0}to{stroke-dashoffset:-251}}
+@keyframes pulsenode{0%,100%{opacity:.7}50%{opacity:1}}
+
+.base-path{fill:none;stroke:rgba(201,168,76,0.07);stroke-width:1}
+.flow-path{fill:none;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:4 9;animation:flow 3.5s linear infinite}
+.flow-path.d1{animation-delay:-1.2s}
+.flow-path.d2{animation-delay:-2.4s}
+.flow-path.slow{stroke-dasharray:5 11;animation:flowslow 5s linear infinite}
+.spin-ring{fill:none;stroke-width:1;stroke-dasharray:4 5;animation:spinring 30s linear infinite}
+.node-g{cursor:pointer}
+.node-g:hover .node-outer{filter:url(#f-glow)}
+.gen-lbl{font-family:'DM Mono',monospace;font-size:9px;fill:rgba(201,168,76,0.25);letter-spacing:.14em;text-transform:uppercase}
+.nm{font-family:'Instrument Serif','Georgia',serif;font-size:12px;fill:var(--cream);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.nl{font-family:'Instrument Serif','Georgia',serif;font-size:9px;fill:rgba(240,235,224,0.55);text-anchor:middle;pointer-events:none;letter-spacing:.06em}
+.nm-you{font-size:15px;fill:var(--gold)}
+
+/* ─── DETAIL PANEL ───────────────────────────────────── */
+.detail{
+  border-left:1px solid var(--bdr);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  padding:30px 28px;
+  gap:20px;
+}
+.detail::-webkit-scrollbar{width:4px}
+.detail::-webkit-scrollbar-track{background:transparent}
+.detail::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
+
+.d-person{display:flex;align-items:center;gap:14px}
+.d-avatar{
+  width:50px;height:50px;border-radius:50%;
+  border:1.5px solid var(--gold-dm);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Instrument Serif','Georgia',serif;font-size:17px;color:var(--gold);
+  background:rgba(201,168,76,0.05);
+  flex-shrink:0;
+  transition:all .3s;
+}
+.d-info h2{font-family:'Instrument Serif','Georgia',serif;font-size:21px;font-weight:400;color:var(--cream);line-height:1.15}
+.d-info p{font-size:10px;color:var(--cream2);letter-spacing:.09em;text-transform:uppercase;margin-top:3px}
+
+.divider{height:1px;background:var(--bdr);flex-shrink:0}
+
+.ts-head{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dm);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ts-head::after{content:'';flex:1;height:1px;background:var(--bdr)}
+
+.t-list{display:flex;flex-direction:column;gap:7px}
+.t-item{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 11px;
+  background:var(--bg2);
+  border:1px solid var(--bdr);border-radius:8px;
+  transition:border-color .2s;
+}
+.t-item:hover{border-color:var(--bdr2)}
+.t-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.t-txt{flex:1}
+.t-name{font-size:11.5px;font-weight:500;color:var(--cream);letter-spacing:.01em;line-height:1.3}
+.t-desc{font-size:10px;color:var(--cream2);margin-top:1px;line-height:1.3}
+.t-badge{
+  font-size:9px;font-family:'DM Mono',monospace;
+  padding:2px 7px;border-radius:4px;letter-spacing:.05em;
+  white-space:nowrap;flex-shrink:0;
+}
+.fav{background:rgba(74,155,142,.14);color:var(--teal);border:1px solid rgba(74,155,142,.22)}
+.mon{background:rgba(212,112,90,.11);color:var(--coral);border:1px solid rgba(212,112,90,.2)}
+.tri{background:rgba(107,158,196,.11);color:var(--blue);border:1px solid rgba(107,158,196,.2)}
+.lav-b{background:rgba(155,140,196,.11);color:var(--lav);border:1px solid rgba(155,140,196,.2)}
+.empty-note{font-size:11px;color:var(--cream2);padding:6px 2px;font-style:italic}
+/* score summary */
+.score-row{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:4px}
+.score-cell{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;padding:10px 12px}
+.score-cell-n{font-family:'Instrument Serif','Georgia',serif;font-size:22px;line-height:1}
+.score-cell-l{font-size:9px;color:var(--cream2);letter-spacing:.08em;margin-top:3px}
+.origin-box{background:linear-gradient(135deg,rgba(201,168,76,0.06),rgba(74,155,142,0.06));border:1px solid var(--bdr2);border-radius:10px;padding:12px 14px;margin-bottom:4px}
+.origin-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dm);margin-bottom:6px}
+.origin-score{font-family:'Instrument Serif','Georgia',serif;font-size:36px;color:var(--gold);line-height:1}
+.origin-sub{font-size:10px;color:var(--cream2);margin-top:4px;line-height:1.4}
+
+/* ─── SUMMARY BAR ────────────────────────────────────── */
+.summary{
+  flex-shrink:0;
+  display:flex;align-items:center;gap:28px;
+  padding:16px 40px;
+  border-top:1px solid var(--bdr);
+}
+.s-item{}
+.s-num{font-family:'Instrument Serif','Georgia',serif;font-size:26px;font-weight:300;line-height:1;color:var(--gold)}
+.s-lbl{font-size:10px;color:var(--cream2);letter-spacing:.07em;margin-top:1px}
+.s-sep{width:1px;height:30px;background:var(--bdr)}
+.passing{margin-left:auto;display:flex;align-items:center;gap:12px}
+.p-lbl{font-size:9px;color:var(--cream2);letter-spacing:.14em;text-transform:uppercase}
+.p-dots{display:flex;gap:5px;align-items:center}
+@keyframes pdot{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+.p-dot{width:9px;height:9px;border-radius:50%;animation:pdot 2.4s ease-in-out infinite}
+.p-dot:nth-child(2){animation-delay:.4s}
+.p-dot:nth-child(3){animation-delay:.8s}
+.p-dot:nth-child(4){animation-delay:1.2s}
+</style>
+</head>
+<body>
+
+<div class="top-accent"></div>
+<header>
+  <div class="header-left">
+    <a href="nucleus-investor.html" class="back-link">← Overview</a>
+    <div class="logo">
+      <span class="logo-nucleus">nucleus</span>
+      <span class="logo-sep">·</span>
+      <span class="logo-word">Heritage</span>
+      <span class="logo-plus">+</span>
+      <span class="demo-badge">Demo</span>
+    </div>
+  </div>
+  <div class="tagline">Your genome · Your lineage · Your legacy</div>
+  <div class="family-id">
+    <div class="family-name">The Leroux — Russo Family</div>
+    <div class="family-meta">Legacy package · 4 generations · 8 members · 2,847 markers</div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- ═══ TREE PANEL ═══════════════════════════════════════ -->
+  <div class="tree-panel">
+
+    <div class="filters">
+      <button class="f-btn active" onclick="setFilter('all',this)">
+        <span class="f-dot" style="background:var(--gold)"></span> All traits
+      </button>
+      <button class="f-btn" onclick="setFilter('longevity',this)">
+        <span class="f-dot" style="background:var(--teal)"></span> Longevity
+      </button>
+      <button class="f-btn" onclick="setFilter('health',this)">
+        <span class="f-dot" style="background:var(--coral)"></span> Health watch
+      </button>
+      <button class="f-btn" onclick="setFilter('physical',this)">
+        <span class="f-dot" style="background:var(--blue)"></span> Physical
+      </button>
+      <button class="f-btn" onclick="setFilter('cognitive',this)">
+        <span class="f-dot" style="background:var(--lav)"></span> Cognitive
+      </button>
+    </div>
+
+    <div class="tree-scroll">
+    <svg id="tree-svg" viewBox="0 0 760 510" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rg-mat" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#2E1F0A"/><stop offset="100%" stop-color="#1A1410"/>
+        </radialGradient>
+        <radialGradient id="rg-pat" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0A1A28"/><stop offset="100%" stop-color="#0E1418"/>
+        </radialGradient>
+        <radialGradient id="rg-self" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#221D0A"/><stop offset="100%" stop-color="#141210"/>
+        </radialGradient>
+        <radialGradient id="rg-child" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1A180A"/><stop offset="100%" stop-color="#111008"/>
+        </radialGradient>
+        <radialGradient id="glo-gold" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glo-teal" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4A9B8E" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#4A9B8E" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="f-glow">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Generation labels -->
+      <text class="gen-lbl" x="18" y="86">Grandparents</text>
+      <text class="gen-lbl" x="18" y="222">Parents</text>
+      <text class="gen-lbl" x="18" y="352">You</text>
+      <text class="gen-lbl" x="18" y="472">Children</text>
+
+      <!-- ── BASE STRUCTURE LINES ── -->
+      <!-- GP → Parents -->
+      <path class="base-path" d="M130,105 C130,155 215,162 215,196"/>
+      <path class="base-path" d="M270,105 C270,155 215,162 215,196"/>
+      <path class="base-path" d="M490,105 C490,155 548,162 548,196"/>
+      <path class="base-path" d="M628,105 C628,155 548,162 548,196"/>
+      <!-- Parents → You -->
+      <path class="base-path" d="M215,248 C215,298 378,310 378,328"/>
+      <path class="base-path" d="M548,248 C548,298 378,310 378,328"/>
+      <!-- You → Children -->
+      <path class="base-path" d="M378,385 C378,415 315,428 315,450"/>
+      <path class="base-path" d="M378,385 C378,415 448,428 448,450"/>
+
+      <!-- ── TRAIT FLOW LINES ── -->
+
+      <!-- LONGEVITY (teal) -->
+      <g class="flow-group" data-cat="longevity">
+        <!-- FOXO3: Aldo→Sofia→You -->
+        <path class="flow-path" style="stroke:#4A9B8E;stroke-opacity:.75" d="M270,105 C270,155 215,162 215,196"/>
+        <path class="flow-path d1" style="stroke:#4A9B8E;stroke-opacity:.75" d="M215,248 C215,298 378,310 378,328"/>
+        <!-- CETP: Marie→Marc→You -->
+        <path class="flow-path d2 slow" style="stroke:#4A9B8E;stroke-opacity:.55" d="M490,105 C490,155 548,162 548,196"/>
+        <path class="flow-path slow" style="stroke:#4A9B8E;stroke-opacity:.55" d="M548,248 C548,298 378,310 378,328"/>
+        <!-- Pass to children -->
+        <path class="flow-path d1" style="stroke:#4A9B8E;stroke-opacity:.35" d="M378,385 C378,415 315,428 315,450"/>
+        <path class="flow-path d2" style="stroke:#4A9B8E;stroke-opacity:.35" d="M378,385 C378,415 448,428 448,450"/>
+      </g>
+
+      <!-- HEALTH WATCH (coral) -->
+      <g class="flow-group" data-cat="health">
+        <!-- BRCA2: Sofia→You -->
+        <path class="flow-path d2" style="stroke:#D4705A;stroke-opacity:.6" d="M215,248 C215,298 378,310 378,328"/>
+        <!-- TCF7L2: Marc→You -->
+        <path class="flow-path d1" style="stroke:#D4705A;stroke-opacity:.45" d="M548,248 C548,298 378,310 378,328"/>
+        <!-- Pass to children (dashed, uncertain) -->
+        <path class="flow-path slow" style="stroke:#D4705A;stroke-opacity:.25;stroke-dasharray:3 12" d="M378,385 C378,415 315,428 315,450"/>
+        <path class="flow-path d2 slow" style="stroke:#D4705A;stroke-opacity:.25;stroke-dasharray:3 12" d="M378,385 C378,415 448,428 448,450"/>
+      </g>
+
+      <!-- PHYSICAL (blue) -->
+      <g class="flow-group" data-cat="physical">
+        <!-- MC1R: Elena→Sofia→You -->
+        <path class="flow-path d1 slow" style="stroke:#6B9EC4;stroke-opacity:.55" d="M130,105 C130,155 215,162 215,196"/>
+        <path class="flow-path slow" style="stroke:#6B9EC4;stroke-opacity:.45" d="M215,248 C215,298 378,310 378,328"/>
+        <!-- Eye color: Jean→Marc→You -->
+        <path class="flow-path d2" style="stroke:#6B9EC4;stroke-opacity:.5" d="M628,105 C628,155 548,162 548,196"/>
+        <path class="flow-path d1" style="stroke:#6B9EC4;stroke-opacity:.5" d="M548,248 C548,298 378,310 378,328"/>
+      </g>
+
+      <!-- COGNITIVE (lavender) -->
+      <g class="flow-group" data-cat="cognitive">
+        <!-- BDNF: Elena→Sofia→You -->
+        <path class="flow-path d2 slow" style="stroke:#9B8CC4;stroke-opacity:.5" d="M130,105 C130,155 215,162 215,196"/>
+        <path class="flow-path d1 slow" style="stroke:#9B8CC4;stroke-opacity:.45" d="M215,248 C215,298 378,310 378,328"/>
+        <!-- COMT: Marie→Marc→You -->
+        <path class="flow-path slow" style="stroke:#9B8CC4;stroke-opacity:.45" d="M490,105 C490,155 548,162 548,196"/>
+        <path class="flow-path d2" style="stroke:#9B8CC4;stroke-opacity:.4" d="M548,248 C548,298 378,310 378,328"/>
+      </g>
+
+      <!-- ══ NODES ══════════════════════════════════════════ -->
+
+      <!-- Elena Russo (mat GM) -->
+      <g class="node-g" id="nd-mgm" onclick="select('mgm')">
+        <circle cx="130" cy="82" r="40" fill="url(#glo-gold)" opacity=".6"/>
+        <circle class="node-outer" cx="130" cy="82" r="27" fill="url(#rg-mat)" stroke="#7A6530" stroke-width="1"/>
+        <text class="nm" x="130" y="78">Elena</text>
+        <text class="nl" x="130" y="94">Russo</text>
+        <circle cx="112" cy="59" r="3.5" fill="#9B8CC4" opacity=".85"/>
+        <circle cx="148" cy="59" r="3.5" fill="#6B9EC4" opacity=".85"/>
+      </g>
+
+      <!-- Aldo Russo (mat GF) -->
+      <g class="node-g" id="nd-mgf" onclick="select('mgf')">
+        <circle cx="270" cy="82" r="40" fill="url(#glo-gold)" opacity=".6"/>
+        <circle class="node-outer" cx="270" cy="82" r="27" fill="url(#rg-mat)" stroke="#7A6530" stroke-width="1"/>
+        <text class="nm" x="270" y="78">Aldo</text>
+        <text class="nl" x="270" y="94">Russo</text>
+        <circle cx="253" cy="59" r="3.5" fill="#4A9B8E" opacity=".9"/>
+        <circle cx="287" cy="59" r="3.5" fill="#4A9B8E" opacity=".65"/>
+      </g>
+
+      <!-- Marie Leroux (pat GM) -->
+      <g class="node-g" id="nd-pgm" onclick="select('pgm')">
+        <circle cx="490" cy="82" r="40" fill="url(#glo-teal)" opacity=".55"/>
+        <circle class="node-outer" cx="490" cy="82" r="27" fill="url(#rg-pat)" stroke="#1E4060" stroke-width="1"/>
+        <text class="nm" x="490" y="78">Marie</text>
+        <text class="nl" x="490" y="94">Leroux</text>
+        <circle cx="472" cy="59" r="3.5" fill="#4A9B8E" opacity=".9"/>
+        <circle cx="508" cy="59" r="3.5" fill="#9B8CC4" opacity=".8"/>
+      </g>
+
+      <!-- Jean Leroux (pat GF) -->
+      <g class="node-g" id="nd-pgf" onclick="select('pgf')">
+        <circle cx="628" cy="82" r="40" fill="url(#glo-teal)" opacity=".45"/>
+        <circle class="node-outer" cx="628" cy="82" r="27" fill="url(#rg-pat)" stroke="#1E4060" stroke-width="1"/>
+        <text class="nm" x="628" y="78">Jean</text>
+        <text class="nl" x="628" y="94">Leroux</text>
+        <circle cx="614" cy="59" r="3.5" fill="#6B9EC4" opacity=".85"/>
+      </g>
+
+      <!-- Sofia (mother) -->
+      <g class="node-g" id="nd-mother" onclick="select('mother')">
+        <circle cx="215" cy="222" r="46" fill="url(#glo-gold)" opacity=".65"/>
+        <circle class="node-outer" cx="215" cy="222" r="30" fill="url(#rg-mat)" stroke="#9A7830" stroke-width="1.5"/>
+        <text class="nm" x="215" y="218">Sofia</text>
+        <text class="nl" x="215" y="233">Russo</text>
+        <circle cx="197" cy="195" r="4" fill="#D4705A" opacity=".9"/>
+        <circle cx="215" cy="193" r="4" fill="#4A9B8E" opacity=".9"/>
+        <circle cx="233" cy="195" r="4" fill="#6B9EC4" opacity=".9"/>
+      </g>
+
+      <!-- Marc (father) -->
+      <g class="node-g" id="nd-father" onclick="select('father')">
+        <circle cx="548" cy="222" r="46" fill="url(#glo-teal)" opacity=".55"/>
+        <circle class="node-outer" cx="548" cy="222" r="30" fill="url(#rg-pat)" stroke="#1E4060" stroke-width="1.5"/>
+        <text class="nm" x="548" y="218">Marc</text>
+        <text class="nl" x="548" y="233">Leroux</text>
+        <circle cx="530" cy="195" r="4" fill="#D4705A" opacity=".75"/>
+        <circle cx="548" cy="193" r="4" fill="#6B9EC4" opacity=".9"/>
+        <circle cx="566" cy="195" r="4" fill="#4A9B8E" opacity=".9"/>
+      </g>
+
+      <!-- YOU (center — larger, gold ring) -->
+      <g class="node-g" id="nd-you" onclick="select('you')">
+        <!-- outer glow -->
+        <circle cx="378" cy="354" r="68" fill="url(#glo-gold)" opacity=".7"/>
+        <!-- spinning dashed ring -->
+        <circle class="spin-ring" cx="378" cy="354" r="42" stroke="#C9A84C" stroke-opacity=".5"/>
+        <!-- main circle -->
+        <circle class="node-outer" cx="378" cy="354" r="34" fill="url(#rg-self)" stroke="#C9A84C" stroke-width="1.5"/>
+        <text class="nm nm-you" x="378" y="349">Isabelle</text>
+        <text class="nl" style="font-size:10px;fill:rgba(201,168,76,0.6)" x="378" y="366">Leroux</text>
+        <!-- trait constellation -->
+        <circle cx="348" cy="318" r="4.5" fill="#4A9B8E" opacity=".9"/>
+        <circle cx="362" cy="313" r="4.5" fill="#D4705A" opacity=".9"/>
+        <circle cx="378" cy="311" r="4.5" fill="#6B9EC4" opacity=".9"/>
+        <circle cx="394" cy="313" r="4.5" fill="#9B8CC4" opacity=".9"/>
+        <circle cx="408" cy="318" r="4.5" fill="#4A9B8E" opacity=".7"/>
+      </g>
+
+      <!-- Luca (child 1) -->
+      <g class="node-g" id="nd-child1" onclick="select('child1')">
+        <circle cx="315" cy="471" r="36" fill="url(#glo-gold)" opacity=".3"/>
+        <circle class="node-outer" cx="315" cy="471" r="24" fill="url(#rg-child)" stroke="#5A4A1A" stroke-width="1" stroke-dasharray="4 4"/>
+        <text class="nm" style="font-size:11px" x="315" y="467">Luca</text>
+        <text class="nl" x="315" y="481">Leroux</text>
+      </g>
+
+      <!-- Mia (child 2) -->
+      <g class="node-g" id="nd-child2" onclick="select('child2')">
+        <circle cx="448" cy="471" r="36" fill="url(#glo-gold)" opacity=".3"/>
+        <circle class="node-outer" cx="448" cy="471" r="24" fill="url(#rg-child)" stroke="#5A4A1A" stroke-width="1" stroke-dasharray="4 4"/>
+        <text class="nm" style="font-size:11px" x="448" y="467">Mia</text>
+        <text class="nl" x="448" y="481">Leroux</text>
+      </g>
+
+      <!-- Selection highlight ring (moved by JS) -->
+      <circle id="sel-ring" cx="378" cy="354" r="38" fill="none"
+        stroke="#C9A84C" stroke-width="2" stroke-dasharray="5 4"
+        stroke-opacity="0" style="pointer-events:none;transition:all .35s ease"/>
+
+    </svg>
+    </div>
+  </div>
+
+  <!-- ═══ DETAIL PANEL ══════════════════════════════════════ -->
+  <div class="detail" id="detail">
+
+    <div class="d-person">
+      <div class="d-avatar" id="d-avatar">IL</div>
+      <div class="d-info">
+        <h2 id="d-name">Isabelle Leroux</h2>
+        <p id="d-role">Your genome · 2,847 markers</p>
+      </div>
+    </div>
+
+    <div id="score-summary"></div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="ts-head" style="color:var(--teal)">Longevity markers</div>
+      <div class="t-list" id="lon-list"></div>
+    </div>
+
+    <div>
+      <div class="ts-head" style="color:var(--coral)">Health watch</div>
+      <div class="t-list" id="hlt-list"></div>
+    </div>
+
+    <div>
+      <div class="ts-head" style="color:var(--blue)">Physical traits</div>
+      <div class="t-list" id="phy-list"></div>
+    </div>
+
+    <div>
+      <div class="ts-head" style="color:var(--lav)">Cognitive profile</div>
+      <div class="t-list" id="cog-list"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ SUMMARY BAR ════════════════════════════════════════ -->
+<div class="summary">
+  <div class="s-item">
+    <div class="s-num">14</div>
+    <div class="s-lbl">Favorable markers</div>
+  </div>
+  <div class="s-sep"></div>
+  <div class="s-item">
+    <div class="s-num" style="color:var(--coral)">2</div>
+    <div class="s-lbl">To monitor</div>
+  </div>
+  <div class="s-sep"></div>
+  <div class="s-item">
+    <div class="s-num" style="color:var(--blue)">8</div>
+    <div class="s-lbl">Physical traits</div>
+  </div>
+  <div class="s-sep"></div>
+  <div class="s-item">
+    <div class="s-num" style="color:var(--lav)">4</div>
+    <div class="s-lbl">Cognitive markers</div>
+  </div>
+  <div class="s-sep"></div>
+  <div class="s-item">
+    <div class="s-num" style="color:var(--cream2);font-size:18px">4 gen</div>
+    <div class="s-lbl">Lineage depth</div>
+  </div>
+  <div class="passing">
+    <div class="p-lbl">Passing to your children</div>
+    <div class="p-dots">
+      <div class="p-dot" style="background:var(--teal)"></div>
+      <div class="p-dot" style="background:var(--blue)"></div>
+      <div class="p-dot" style="background:var(--lav)"></div>
+      <div class="p-dot" style="background:var(--coral)"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────
+const DB = {
+  mgm:{
+    name:'Elena Russo', initials:'ER', role:'Maternal grandmother · 312 markers',
+    longevity:[
+      {n:'APOE ε4 — absent',d:'No late-onset Alzheimer\'s risk detected',s:'fav'},
+    ],
+    health:[],
+    physical:[
+      {n:'MC1R — red hair gene',d:'Carrier — passed to Sofia',s:'tri'},
+    ],
+    cognitive:[
+      {n:'BDNF Val66Met',d:'Strong memory formation — inherited by Isabelle',s:'fav'},
+    ]
+  },
+  mgf:{
+    name:'Aldo Russo', initials:'AR', role:'Maternal grandfather · 298 markers',
+    longevity:[
+      {n:'FOXO3 longevity variant',d:'Associated with extended lifespan in population studies',s:'fav'},
+      {n:'mTOR pathway efficiency',d:'Cellular renewal longevity marker',s:'fav'},
+    ],
+    health:[],
+    physical:[],
+    cognitive:[]
+  },
+  pgm:{
+    name:'Marie Leroux', initials:'ML', role:'Paternal grandmother · 287 markers',
+    longevity:[
+      {n:'CETP variant — high HDL',d:'Cardiovascular protection marker',s:'fav'},
+    ],
+    health:[],
+    physical:[],
+    cognitive:[
+      {n:'COMT Met/Met',d:'High dopamine stability and stress resilience',s:'fav'},
+    ]
+  },
+  pgf:{
+    name:'Jean Leroux', initials:'JL', role:'Paternal grandfather · 301 markers',
+    longevity:[],
+    health:[],
+    physical:[
+      {n:'HERC2/OCA2 — eye color',d:'Blue/green eye color origin — passed to Marc',s:'tri'},
+    ],
+    cognitive:[]
+  },
+  mother:{
+    name:'Sofia Russo', initials:'SR', role:'Mother · 524 markers',
+    longevity:[
+      {n:'APOE ε3/ε3',d:'Standard Alzheimer\'s risk — favorable baseline',s:'fav'},
+      {n:'FOXO3 — inherited from Aldo',d:'Longevity marker confirmed in carrier',s:'fav'},
+    ],
+    health:[
+      {n:'BRCA2 — moderate variant',d:'Breast cancer predisposition — annual screening advised',s:'mon'},
+    ],
+    physical:[
+      {n:'MC1R carrier',d:'Red hair gene — carrier, not expressed in Sofia',s:'tri'},
+    ],
+    cognitive:[
+      {n:'BDNF Val66Met',d:'Memory formation marker — sourced from Elena',s:'fav'},
+    ]
+  },
+  father:{
+    name:'Marc Leroux', initials:'MLe', role:'Father · 509 markers',
+    longevity:[
+      {n:'CETP — inherited from Marie',d:'High HDL cardiovascular protection',s:'fav'},
+    ],
+    health:[
+      {n:'TCF7L2 — type 2 diabetes',d:'Elevated metabolic risk — diet and lifestyle factor',s:'mon'},
+    ],
+    physical:[
+      {n:'GHR — height potential',d:'Above-average height variant — passed to children',s:'tri'},
+      {n:'HERC2/OCA2 — eye color',d:'Blue/green eyes from Jean — expressed in Marc',s:'tri'},
+    ],
+    cognitive:[
+      {n:'COMT Met/Met',d:'Stress resilience — sourced from Marie',s:'fav'},
+    ]
+  },
+  you:{
+    name:'Isabelle Leroux', initials:'IL', role:'Your genome · 2,847 markers',
+    longevity:[
+      {n:'APOE ε3/ε3',d:'Standard Alzheimer\'s risk · from Sofia (mother)',s:'fav'},
+      {n:'FOXO3 longevity variant',d:'Extended lifespan association · from Aldo (grandfather)',s:'fav'},
+      {n:'CETP — high HDL',d:'Cardiovascular protection · from Marie (grandmother)',s:'fav'},
+    ],
+    health:[
+      {n:'BRCA2 — moderate variant',d:'Breast cancer predisposition · from Sofia (mother) — annual screening',s:'mon'},
+      {n:'TCF7L2 — type 2 diabetes',d:'Elevated metabolic risk · from Marc (father) — lifestyle management',s:'mon'},
+    ],
+    physical:[
+      {n:'MC1R — red hair carrier',d:'Carrier, not expressed · from Elena (grandmother)',s:'tri'},
+      {n:'HERC2/OCA2 — eye color',d:'Blue/green predisposition · from Jean (grandfather)',s:'tri'},
+      {n:'GHR — height potential',d:'Above-average height marker · from Marc (father)',s:'tri'},
+    ],
+    cognitive:[
+      {n:'BDNF Val66Met',d:'Strong memory formation · from Elena (grandmother)',s:'fav'},
+      {n:'COMT Met/Met',d:'Stress resilience, high dopamine stability · from Marie (grandmother)',s:'fav'},
+    ]
+  },
+  child1:{
+    name:'Luca Leroux', initials:'LL', role:'Child · Probabilistic analysis (50%)',
+    longevity:[
+      {n:'FOXO3 — 50% likelihood',d:'May inherit longevity variant from maternal line',s:'fav'},
+    ],
+    health:[
+      {n:'BRCA2 — 50% probability',d:'Monitoring recommended upon adulthood — not a certainty',s:'mon'},
+    ],
+    physical:[
+      {n:'MC1R — 25% red hair',d:'Possible red hair expression if partner also carries MC1R',s:'tri'},
+    ],
+    cognitive:[
+      {n:'BDNF Val66Met — 50%',d:'Strong memory formation likely to be inherited',s:'fav'},
+    ]
+  },
+  child2:{
+    name:'Mia Leroux', initials:'MiL', role:'Child · Probabilistic analysis (50%)',
+    longevity:[
+      {n:'CETP — 50% likelihood',d:'May inherit high HDL cardiovascular protection',s:'fav'},
+    ],
+    health:[
+      {n:'TCF7L2 — 50% probability',d:'Metabolic monitoring recommended at age 25+',s:'mon'},
+    ],
+    physical:[
+      {n:'HERC2/OCA2 — high likelihood',d:'Blue/green eyes — strong paternal inheritance',s:'tri'},
+      {n:'GHR — 50% chance',d:'Height potential possible — depends on partner\'s genome',s:'tri'},
+    ],
+    cognitive:[
+      {n:'COMT — 50% chance',d:'Stress resilience marker may pass through',s:'fav'},
+    ]
+  }
+};
+
+// Node positions for the selection ring
+const nodePos = {
+  mgm:{x:130,y:82,r:29}, mgf:{x:270,y:82,r:29},
+  pgm:{x:490,y:82,r:29}, pgf:{x:628,y:82,r:29},
+  mother:{x:215,y:222,r:32}, father:{x:548,y:222,r:32},
+  you:{x:378,y:354,r:38},
+  child1:{x:315,y:471,r:26}, child2:{x:448,y:471,r:26}
+};
+
+// Badge classes
+const bClass = {fav:'fav',mon:'mon',tri:'tri'};
+const bLabel = {fav:'Favorable',mon:'Monitor',tri:'Trait'};
+const dotColor = {fav:'#4A9B8E',mon:'#D4705A',tri:'#6B9EC4'};
+
+function renderList(id, items){
+  const el = document.getElementById(id);
+  if(!items||items.length===0){
+    el.innerHTML='<div class="empty-note">No markers in this category</div>';return;
+  }
+  el.innerHTML = items.map(t=>`
+    <div class="t-item">
+      <div class="t-dot" style="background:${dotColor[t.s]}"></div>
+      <div class="t-txt">
+        <div class="t-name">${t.n}</div>
+        <div class="t-desc">${t.d}</div>
+      </div>
+      <span class="t-badge ${bClass[t.s]}">${bLabel[t.s]}</span>
+    </div>`).join('');
+}
+
+const scoreSummaries = {
+  you:`<div class="origin-box"><div class="origin-label">Origin AI · Overall Score</div><div class="origin-score">91<span style="font-size:18px;color:rgba(201,168,76,.5)">/100</span></div><div class="origin-sub">Top 9th percentile · 14 favorable · 2 to monitor · 2,847 markers analyzed</div></div><div class="score-row"><div class="score-cell"><div class="score-cell-n" style="color:#4A9B8E">92</div><div class="score-cell-l">Longevity index</div></div><div class="score-cell"><div class="score-cell-n" style="color:#D4705A">78</div><div class="score-cell-l">Health watch</div></div><div class="score-cell"><div class="score-cell-n" style="color:#6B9EC4">88</div><div class="score-cell-l">Physical profile</div></div><div class="score-cell"><div class="score-cell-n" style="color:#9B8CC4">94</div><div class="score-cell-l">Cognitive profile</div></div></div>`,
+  mother:`<div class="origin-box"><div class="origin-label">Origin AI · Profile</div><div class="origin-score">84<span style="font-size:18px;color:rgba(201,168,76,.5)">/100</span></div><div class="origin-sub">524 markers · 1 variant to monitor · BRCA2 moderate variant identified</div></div>`,
+  father:`<div class="origin-box"><div class="origin-label">Origin AI · Profile</div><div class="origin-score">79<span style="font-size:18px;color:rgba(201,168,76,.5)">/100</span></div><div class="origin-sub">509 markers · 1 variant to monitor · TCF7L2 metabolic variant identified</div></div>`
+};
+
+function select(id){
+  const d = DB[id]; if(!d) return;
+  // Update panel text
+  document.getElementById('d-avatar').textContent = d.initials;
+  document.getElementById('d-name').textContent   = d.name;
+  document.getElementById('d-role').textContent   = d.role;
+  document.getElementById('score-summary').innerHTML = scoreSummaries[id] || '';
+  renderList('lon-list', d.longevity);
+  renderList('hlt-list', d.health);
+  renderList('phy-list', d.physical);
+  renderList('cog-list', d.cognitive);
+
+  // Move selection ring
+  const pos = nodePos[id];
+  const ring = document.getElementById('sel-ring');
+  ring.setAttribute('cx', pos.x);
+  ring.setAttribute('cy', pos.y);
+  ring.setAttribute('r',  pos.r + 6);
+  ring.setAttribute('stroke-opacity', id==='you' ? '0' : '0.7');
+}
+
+function setFilter(cat, btn){
+  // Update buttons
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update flow opacity
+  document.querySelectorAll('.flow-group').forEach(g=>{
+    const gc = g.getAttribute('data-cat');
+    g.style.opacity = (cat==='all'||gc===cat) ? '1' : '0.04';
+  });
+}
+
+// Init with 'you' selected
+select('you');
+</script>
+</body>
+</html>

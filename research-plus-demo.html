@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nucleus Research+ — Pharma Research Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0908;
+    --panel-1: #141210;
+    --panel-2: #1C1916;
+    --accent: #6B5FA0;
+    --accent-dim: rgba(107,95,160,0.18);
+    --accent-hover: #7D70B8;
+    --teal: #4ABA9E;
+    --amber: #C9A84C;
+    --text: #F7F5F1;
+    --muted: rgba(247,245,241,0.45);
+    --muted-2: rgba(247,245,241,0.25);
+    --border: rgba(107,95,160,0.18);
+    --border-light: rgba(247,245,241,0.08);
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-ui: 'Syne', system-ui, sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(107,95,160,0.3); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(107,95,160,0.6); }
+
+  /* ── HEADER ── */
+  .header {
+    height: 56px;
+    background: var(--panel-1);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 0;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .logo-text {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .logo-plus {
+    color: var(--accent);
+    font-family: var(--font-serif);
+    font-size: 20px;
+    margin-left: -6px;
+  }
+
+  .header-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--border-light);
+    margin: 0 4px;
+  }
+
+  .badge-research {
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: var(--font-ui);
+  }
+
+  .header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .header-portal-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .header-version {
+    font-size: 10px;
+    color: var(--muted-2);
+    letter-spacing: 0.06em;
+    margin-top: 1px;
+  }
+
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .back-link {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--text); }
+
+  .btn-access {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-access:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    display: flex;
+    height: calc(100vh - 56px);
+    overflow: hidden;
+  }
+
+  /* ── COLUMN 1 ── */
+  .col-catalogue {
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--panel-1);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .col-header {
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .col-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .col-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .dataset-count {
+    font-size: 11px;
+    color: var(--muted-2);
+  }
+
+  .search-input {
+    width: 100%;
+    background: rgba(247,245,241,0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    padding: 7px 10px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input::placeholder { color: var(--muted-2); }
+  .search-input:focus { border-color: rgba(107,95,160,0.5); }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 10px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .chip {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 9px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--font-ui);
+    transition: all 0.15s;
+  }
+  .chip:hover { border-color: rgba(107,95,160,0.5); color: var(--text); }
+  .chip.active {
+    background: var(--accent-dim);
+    border-color: rgba(107,95,160,0.45);
+    color: var(--text);
+  }
+
+  .dataset-list {
+    overflow-y: auto;
+    flex: 1;
+    padding: 8px 8px;
+  }
+
+  .dataset-card {
+    padding: 11px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 3px;
+    position: relative;
+  }
+  .dataset-card:hover {
+    background: rgba(247,245,241,0.04);
+    border-color: var(--border);
+  }
+  .dataset-card.selected {
+    background: var(--accent-dim);
+    border-color: rgba(107,95,160,0.4);
+  }
+  .dataset-card.hidden { display: none; }
+
+  .dataset-card-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 3px;
+    font-family: var(--font-ui);
+  }
+
+  .dataset-card-samples {
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .dataset-card-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-bottom: 5px;
+  }
+
+  .dataset-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .avail-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: 0.03em;
+  }
+  .avail-available {
+    background: rgba(74,186,158,0.15);
+    color: var(--teal);
+    border: 1px solid rgba(74,186,158,0.25);
+  }
+  .avail-restricted {
+    background: rgba(201,168,76,0.12);
+    color: var(--amber);
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+  .avail-building {
+    background: rgba(247,245,241,0.06);
+    color: var(--muted);
+    border: 1px solid var(--border-light);
+  }
+
+  .dataset-price {
+    font-size: 10px;
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  /* ── COLUMN 2 ── */
+  .col-detail {
+    flex: 1;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+  }
+
+  .detail-scroll {
+    overflow-y: auto;
+    flex: 1;
+    padding: 24px;
+  }
+
+  .detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-title {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .detail-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .version-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(107,95,160,0.2);
+    color: var(--accent);
+    border: 1px solid rgba(107,95,160,0.3);
+    letter-spacing: 0.04em;
+  }
+
+  .updated-text {
+    font-size: 11px;
+    color: var(--muted-2);
+  }
+
+  .stat-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .stat-tile {
+    background: var(--panel-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 12px;
+    transition: border-color 0.15s;
+  }
+  .stat-tile:hover { border-color: rgba(107,95,160,0.35); }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .stat-value {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .stat-unit {
+    font-size: 10px;
+    color: var(--muted-2);
+  }
+
+  .detail-section {
+    margin-bottom: 22px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .meta-item {
+    background: var(--panel-1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .meta-item-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .meta-item-value {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .geo-bars { display: flex; flex-direction: column; gap: 5px; margin-top: 2px; }
+  .geo-row { display: flex; align-items: center; gap: 8px; }
+  .geo-label { font-size: 11px; color: var(--muted); width: 36px; flex-shrink: 0; }
+  .geo-bar-track { flex: 1; height: 4px; background: rgba(247,245,241,0.08); border-radius: 2px; overflow: hidden; }
+  .geo-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+  .geo-pct { font-size: 11px; color: var(--text); width: 32px; text-align: right; }
+
+  .phenotype-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .phenotype-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px;
+    background: var(--panel-1);
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: border-color 0.12s;
+  }
+  .phenotype-row:hover { border-color: var(--border); }
+
+  .pheno-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .pheno-dot.available { background: var(--teal); box-shadow: 0 0 6px rgba(74,186,158,0.5); }
+  .pheno-dot.partial { background: var(--amber); box-shadow: 0 0 6px rgba(201,168,76,0.4); }
+
+  .pheno-name { font-size: 12px; color: var(--text); flex: 1; }
+  .pheno-status { font-size: 10px; font-weight: 600; }
+  .pheno-status.available { color: var(--teal); }
+  .pheno-status.partial { color: var(--amber); }
+
+  .schema-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11.5px;
+  }
+  .schema-table thead tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .schema-table th {
+    text-align: left;
+    padding: 6px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: var(--font-ui);
+    background: var(--panel-2);
+  }
+  .schema-table th:first-child { border-radius: 6px 0 0 0; }
+  .schema-table th:last-child { border-radius: 0 6px 0 0; }
+  .schema-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid rgba(247,245,241,0.04);
+  }
+  .schema-table tr:last-child td { border-bottom: none; }
+  .schema-table tbody tr:hover td { background: rgba(247,245,241,0.02); }
+  .schema-table tr { background: var(--panel-1); }
+  .schema-table tr:nth-child(even) { background: rgba(28,25,22,0.6); }
+
+  .field-name { color: #A8D8FF; }
+  .field-type { color: var(--amber); }
+  .field-desc { color: var(--muted); }
+
+  .licensing-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .license-card {
+    background: var(--panel-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .license-card:hover { border-color: rgba(107,95,160,0.4); transform: translateY(-2px); }
+  .license-card.featured {
+    border-color: rgba(107,95,160,0.5);
+    background: linear-gradient(135deg, rgba(107,95,160,0.12), var(--panel-1));
+  }
+  .license-card.featured::before {
+    content: 'POPULAR';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(107,95,160,0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .license-tier { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .license-price { font-family: var(--font-serif); font-size: 22px; color: var(--text); margin-bottom: 4px; line-height: 1; }
+  .license-period { font-size: 10px; color: var(--muted-2); margin-bottom: 12px; }
+
+  .license-features { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .license-features li {
+    font-size: 11px;
+    color: var(--muted);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .license-features li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-size: 14px;
+    line-height: 1;
+    top: 0px;
+  }
+
+  .btn-request {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 11px 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.15s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-request:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  /* ── COLUMN 3 ── */
+  .col-console {
+    width: 360px;
+    flex-shrink: 0;
+    background: var(--panel-1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .console-scroll {
+    overflow-y: auto;
+    flex: 1;
+    padding: 16px;
+  }
+
+  .console-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .console-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .api-version-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(74,186,158,0.15);
+    color: var(--teal);
+    border: 1px solid rgba(74,186,158,0.3);
+    letter-spacing: 0.04em;
+  }
+
+  .docs-link {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+  }
+  .docs-link:hover { color: var(--accent-hover); }
+
+  .console-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .query-panel {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .query-field {
+    margin-bottom: 10px;
+  }
+
+  .query-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 5px;
+  }
+
+  .query-select, .query-input {
+    width: 100%;
+    background: rgba(247,245,241,0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    padding: 7px 10px;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .query-select:focus, .query-input:focus { border-color: rgba(107,95,160,0.5); }
+  .query-select option { background: #1C1916; }
+
+  .select-wrapper {
+    position: relative;
+  }
+  .select-wrapper::after {
+    content: '▾';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    font-size: 11px;
+  }
+
+  .params-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .param-item {
+    background: rgba(247,245,241,0.04);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .param-name { font-size: 11px; color: var(--muted); }
+
+  .toggle {
+    width: 28px;
+    height: 15px;
+    background: var(--accent);
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    right: 2px;
+    transition: right 0.15s;
+  }
+  .toggle.off { background: rgba(247,245,241,0.12); }
+  .toggle.off::after { right: 15px; }
+
+  .btn-run {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .btn-run:hover { background: var(--accent-hover); }
+  .btn-run:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .spinner {
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .spinner.visible { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .code-block {
+    background: #0D0B0A;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11.5px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .code-label {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-family: var(--font-ui);
+  }
+
+  .s-method { color: #C792EA; }
+  .s-url { color: #A8D8FF; }
+  .s-header { color: var(--muted); }
+  .s-key { color: #A8D8FF; }
+  .s-string { color: #C3E88D; }
+  .s-bool { color: #F78C6C; }
+  .s-number { color: var(--amber); }
+  .s-punct { color: rgba(247,245,241,0.35); }
+  .s-comment { color: rgba(247,245,241,0.2); font-style: italic; }
+
+  .response-panel {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .response-panel.visible { opacity: 1; transform: translateY(0); }
+
+  .response-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 8px 10px;
+    background: rgba(247,245,241,0.03);
+    border-radius: 6px;
+    flex-wrap: wrap;
+  }
+  .response-meta-item {
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .response-meta-item .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--teal); display: inline-block; }
+
+  .models-note {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: rgba(107,95,160,0.08);
+    border: 1px solid var(--accent-dim);
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .models-note strong { color: var(--text); font-weight: 600; }
+
+  /* SEPARATOR DOT */
+  .sep-dot {
+    color: var(--muted-2);
+    margin: 0 3px;
+  }
+
+  /* STATUS INDICATOR */
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(74,186,158,0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <span class="logo-text">nucleus</span><span class="logo-plus">+</span>
+    <div class="header-sep"></div>
+    <span class="badge-research">Research+</span>
+  </div>
+
+  <div class="header-center">
+    <div class="header-portal-title">Pharma Research Portal</div>
+    <div class="header-version">v2.1 &middot; Dataset release Q1 2026</div>
+  </div>
+
+  <div class="header-right">
+    <a href="nucleus-investor.html" class="back-link">← Back to overview</a>
+    <button class="btn-access">Request Access</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- COLUMN 1: Dataset Catalogue -->
+  <aside class="col-catalogue">
+    <div class="col-header">
+      <div class="col-header-row">
+        <span class="col-title">Available Datasets</span>
+        <span class="dataset-count" id="dataset-count">7 datasets</span>
+      </div>
+      <input type="text" class="search-input" placeholder="Search datasets..." id="search-input">
+    </div>
+
+    <div class="filter-chips">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="oncology">Oncology</button>
+      <button class="chip" data-filter="cardiovascular">Cardiovascular</button>
+      <button class="chip" data-filter="metabolic">Metabolic</button>
+      <button class="chip" data-filter="neurological">Neurological</button>
+      <button class="chip" data-filter="rare">Rare Disease</button>
+    </div>
+
+    <div class="dataset-list" id="dataset-list">
+
+      <div class="dataset-card selected" data-id="cardio" data-category="cardiovascular" onclick="selectDataset('cardio', this)">
+        <div class="dataset-card-name">NUC-CARDIO-2025</div>
+        <div class="dataset-card-samples">4,847 samples</div>
+        <div class="dataset-card-desc">Cardiovascular polygenic risk</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-available">Available</span>
+          <span class="dataset-price">$480K/yr</span>
+        </div>
+      </div>
+
+      <div class="dataset-card" data-id="brca" data-category="oncology" onclick="selectDataset('brca', this)">
+        <div class="dataset-card-name">NUC-ONCO-BRCA</div>
+        <div class="dataset-card-samples">2,134 samples</div>
+        <div class="dataset-card-desc">BRCA1/2 + PALB2 cohort</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-available">Available</span>
+          <span class="dataset-price">$320K/yr</span>
+        </div>
+      </div>
+
+      <div class="dataset-card" data-id="t2d" data-category="metabolic" onclick="selectDataset('t2d', this)">
+        <div class="dataset-card-name">NUC-META-T2D</div>
+        <div class="dataset-card-samples">6,221 samples</div>
+        <div class="dataset-card-desc">Type 2 diabetes + metabolic</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-available">Available</span>
+          <span class="dataset-price">$540K/yr</span>
+        </div>
+      </div>
+
+      <div class="dataset-card" data-id="foxo" data-category="neurological" onclick="selectDataset('foxo', this)">
+        <div class="dataset-card-name">NUC-NEURO-FOXO</div>
+        <div class="dataset-card-samples">1,847 samples</div>
+        <div class="dataset-card-desc">Longevity + neurological</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-available">Available</span>
+          <span class="dataset-price">$290K/yr</span>
+        </div>
+      </div>
+
+      <div class="dataset-card" data-id="ivf" data-category="reproductive" onclick="selectDataset('ivf', this)">
+        <div class="dataset-card-name">NUC-IVF-EMBRYO</div>
+        <div class="dataset-card-samples">8,341 embryos</div>
+        <div class="dataset-card-desc">PGT-WGS embryo dataset</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-restricted">Restricted</span>
+          <span class="dataset-price">On request</span>
+        </div>
+      </div>
+
+      <div class="dataset-card" data-id="rare" data-category="rare" onclick="selectDataset('rare', this)">
+        <div class="dataset-card-name">NUC-RARE-2026</div>
+        <div class="dataset-card-samples">892 samples</div>
+        <div class="dataset-card-desc">Rare disease variants</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-building">Building · Q3 2026</span>
+        </div>
+      </div>
+
+      <div class="dataset-card" data-id="ancestry" data-category="ancestry" onclick="selectDataset('ancestry', this)">
+        <div class="dataset-card-name">NUC-ANCESTRY-GLB</div>
+        <div class="dataset-card-samples">12,440 samples</div>
+        <div class="dataset-card-desc">Global ancestry + traits</div>
+        <div class="dataset-card-footer">
+          <span class="avail-badge avail-available">Available</span>
+          <span class="dataset-price">$680K/yr</span>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- COLUMN 2: Dataset Detail -->
+  <section class="col-detail">
+    <div class="detail-scroll" id="detail-view">
+
+      <!-- NUC-CARDIO-2025 detail (default) -->
+      <div class="detail-header">
+        <div>
+          <div class="detail-title" id="detail-name">NUC-CARDIO-2025</div>
+          <div class="detail-meta">
+            <span class="version-badge">v3.2</span>
+            <span class="updated-text">Last updated: Feb 14, 2026</span>
+            <span class="sep-dot">·</span>
+            <span class="status-dot"></span>
+            <span style="font-size:11px;color:var(--teal);font-weight:600;">Live</span>
+          </div>
+        </div>
+        <span class="avail-badge avail-available" style="font-size:11px;padding:4px 12px;">Available</span>
+      </div>
+
+      <div class="stat-tiles">
+        <div class="stat-tile">
+          <div class="stat-label">Samples</div>
+          <div class="stat-value" style="color:var(--teal);">4,847</div>
+          <div class="stat-unit">individuals</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Phenotypes</div>
+          <div class="stat-value">38</div>
+          <div class="stat-unit">measured traits</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Variants</div>
+          <div class="stat-value" style="color:var(--accent);">2.1M</div>
+          <div class="stat-unit">analyzed</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Coverage</div>
+          <div class="stat-value" style="color:var(--amber);">30×</div>
+          <div class="stat-unit">WGS depth</div>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-item-label">Geographic Distribution</div>
+          <div class="geo-bars">
+            <div class="geo-row">
+              <span class="geo-label">USA</span>
+              <div class="geo-bar-track"><div class="geo-bar-fill" style="width:68%;"></div></div>
+              <span class="geo-pct">68%</span>
+            </div>
+            <div class="geo-row">
+              <span class="geo-label">EU</span>
+              <div class="geo-bar-track"><div class="geo-bar-fill" style="width:18%;background:var(--teal)"></div></div>
+              <span class="geo-pct">18%</span>
+            </div>
+            <div class="geo-row">
+              <span class="geo-label">LATAM</span>
+              <div class="geo-bar-track"><div class="geo-bar-fill" style="width:9%;background:var(--amber)"></div></div>
+              <span class="geo-pct">9%</span>
+            </div>
+            <div class="geo-row">
+              <span class="geo-label">APAC</span>
+              <div class="geo-bar-track"><div class="geo-bar-fill" style="width:5%;background:rgba(247,245,241,0.3)"></div></div>
+              <span class="geo-pct">5%</span>
+            </div>
+          </div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-item-label">Demographics</div>
+          <div class="meta-item-value" style="margin-bottom:6px;">
+            <span style="color:var(--muted);font-size:11px;">Age (mean)</span><br>
+            <span style="font-family:var(--font-serif);font-size:18px;">47 years</span>
+            <span style="font-size:11px;color:var(--muted-2);"> (range 18–84)</span>
+          </div>
+          <div class="meta-item-label" style="margin-top:10px;">Consent Framework</div>
+          <div class="meta-item-value" style="font-size:11px;color:var(--teal);">
+            Commercial research use approved<br>
+            <span style="color:var(--muted-2);">IRB #2024-NUC-047</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="section-title">Phenotype Coverage</div>
+        <div class="phenotype-list">
+          <div class="phenotype-row">
+            <div class="pheno-dot available"></div>
+            <span class="pheno-name">LDL/HDL ratios</span>
+            <span class="pheno-status available">Full coverage</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot available"></div>
+            <span class="pheno-name">Myocardial infarction history</span>
+            <span class="pheno-status available">Full coverage</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot available"></div>
+            <span class="pheno-name">Hypertension</span>
+            <span class="pheno-status available">Full coverage</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot available"></div>
+            <span class="pheno-name">CETP variants (rs708272)</span>
+            <span class="pheno-status available">Full coverage</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot available"></div>
+            <span class="pheno-name">APOE status</span>
+            <span class="pheno-status available">Full coverage</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot partial"></div>
+            <span class="pheno-name">Statin response phenotypes</span>
+            <span class="pheno-status partial">Partial (72%)</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot partial"></div>
+            <span class="pheno-name">Exercise capacity markers</span>
+            <span class="pheno-status partial">Partial (58%)</span>
+          </div>
+          <div class="phenotype-row">
+            <div class="pheno-dot available"></div>
+            <span class="pheno-name">Troponin + BNP biomarkers</span>
+            <span class="pheno-status available">Full coverage</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="section-title">Data Schema Preview</div>
+        <div style="background:var(--panel-1);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+          <table class="schema-table">
+            <thead>
+              <tr>
+                <th>field_name</th>
+                <th>type</th>
+                <th>description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="field-name">sample_id</span></td>
+                <td><span class="field-type">VARCHAR(16)</span></td>
+                <td><span class="field-desc">Unique participant identifier (de-identified)</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">age_at_enrollment</span></td>
+                <td><span class="field-type">INT</span></td>
+                <td><span class="field-desc">Age in years at study enrollment</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">sex</span></td>
+                <td><span class="field-type">CHAR(1)</span></td>
+                <td><span class="field-desc">Biological sex: M / F / X</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">ethnicity_pca</span></td>
+                <td><span class="field-type">FLOAT[10]</span></td>
+                <td><span class="field-desc">Top 10 PCA ancestry components</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">cetp_rs708272</span></td>
+                <td><span class="field-type">CHAR(3)</span></td>
+                <td><span class="field-desc">CETP TaqIB genotype (B1B1 / B1B2 / B2B2)</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">apoe_alleles</span></td>
+                <td><span class="field-type">VARCHAR(8)</span></td>
+                <td><span class="field-desc">APOE haplotype (e.g. ε3/ε4)</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">ldl_baseline</span></td>
+                <td><span class="field-type">FLOAT</span></td>
+                <td><span class="field-desc">LDL cholesterol at enrollment (mg/dL)</span></td>
+              </tr>
+              <tr>
+                <td><span class="field-name">hdl_baseline</span></td>
+                <td><span class="field-type">FLOAT</span></td>
+                <td><span class="field-desc">HDL cholesterol at enrollment (mg/dL)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="section-title">Licensing Options</div>
+        <div class="licensing-tiers">
+          <div class="license-card">
+            <div class="license-tier">Standard</div>
+            <div class="license-price">$480K</div>
+            <div class="license-period">per year</div>
+            <ul class="license-features">
+              <li>Read-only dataset access</li>
+              <li>Up to 2 licensed users</li>
+              <li>SFTP + cloud delivery</li>
+              <li>Standard SLA (99.5%)</li>
+              <li>Annual data refreshes</li>
+            </ul>
+          </div>
+          <div class="license-card featured">
+            <div class="license-tier">Research</div>
+            <div class="license-price">$720K</div>
+            <div class="license-period">per year</div>
+            <ul class="license-features">
+              <li>Full API access (Origin)</li>
+              <li>Custom cohort queries</li>
+              <li>Up to 5 licensed users</li>
+              <li>Priority SLA (99.9%)</li>
+              <li>Quarterly data refreshes</li>
+            </ul>
+          </div>
+          <div class="license-card">
+            <div class="license-tier">Enterprise</div>
+            <div class="license-price" style="font-size:18px;">Custom</div>
+            <div class="license-period">co-development terms</div>
+            <ul class="license-features">
+              <li>Co-development partnership</li>
+              <li>Milestone rev share model</li>
+              <li>Unlimited users</li>
+              <li>Dedicated data engineer</li>
+              <li>Real-time data pipeline</li>
+            </ul>
+          </div>
+        </div>
+
+        <button class="btn-request">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 1L13 7L7 13M1 7H13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Request dataset access
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COLUMN 3: Origin API Console -->
+  <aside class="col-console">
+    <div class="console-header">
+      <span class="console-title">Origin API</span>
+      <span class="api-version-badge">v2.3</span>
+      <a href="#" class="docs-link">Docs ↗</a>
+    </div>
+
+    <div class="console-scroll">
+
+      <div style="margin-bottom:16px;">
+        <div class="console-section-title">Query Builder</div>
+
+        <div class="query-panel">
+          <div class="query-field">
+            <div class="query-label">Model</div>
+            <div class="select-wrapper">
+              <select class="query-select">
+                <option>NUC-LONGEVITY-001</option>
+                <option>NUC-CARDIO-001</option>
+                <option>NUC-METABOLIC-001</option>
+                <option>NUC-ONCO-001</option>
+                <option>NUC-NEURO-001</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="query-field">
+            <div class="query-label">Input</div>
+            <input class="query-input" type="text" value="NUC-4847-X" placeholder="Sample ID or variant set">
+          </div>
+
+          <div class="query-field">
+            <div class="query-label">Parameters</div>
+            <div class="params-grid">
+              <div class="param-item">
+                <span class="param-name">age_weight</span>
+                <div class="toggle"></div>
+              </div>
+              <div class="param-item">
+                <span class="param-name">pop_adjust</span>
+                <div class="toggle"></div>
+              </div>
+              <div class="param-item">
+                <span class="param-name">confidence</span>
+                <div class="toggle"></div>
+              </div>
+              <div class="param-item">
+                <span class="param-name">verbose</span>
+                <div class="toggle off"></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-run" id="run-btn" onclick="runQuery()">
+            <span id="run-text">Run Query</span>
+            <div class="spinner" id="spinner"></div>
+          </button>
+        </div>
+
+        <div class="console-section-title">Request</div>
+        <div class="code-block">
+          <span class="code-label">HTTP</span>
+          <pre style="white-space:pre-wrap;word-break:break-all;"><span class="s-method">POST</span> <span class="s-url">/v2/models/longevity/predict</span>
+<span class="s-header">Authorization:</span> <span class="s-string">Bearer nuc_live_...</span>
+<span class="s-header">Content-Type:</span> <span class="s-string">application/json</span>
+
+<span class="s-punct">{</span>
+  <span class="s-key">"genome_id"</span><span class="s-punct">:</span> <span class="s-string">"NUC-4847-X"</span><span class="s-punct">,</span>
+  <span class="s-key">"model"</span><span class="s-punct">:</span> <span class="s-string">"longevity_v3"</span><span class="s-punct">,</span>
+  <span class="s-key">"reference_pop"</span><span class="s-punct">:</span> <span class="s-string">"EUR"</span><span class="s-punct">,</span>
+  <span class="s-key">"include_confidence"</span><span class="s-punct">:</span> <span class="s-bool">true</span>
+<span class="s-punct">}</span></pre>
+        </div>
+      </div>
+
+      <div id="response-wrapper" class="response-panel">
+        <div class="console-section-title">Response</div>
+        <div class="code-block">
+          <span class="code-label" style="color:var(--teal);">200 OK</span>
+          <pre style="white-space:pre-wrap;word-break:break-all;"><span class="s-punct">{</span>
+  <span class="s-key">"genome_id"</span><span class="s-punct">:</span> <span class="s-string">"NUC-4847-X"</span><span class="s-punct">,</span>
+  <span class="s-key">"model"</span><span class="s-punct">:</span> <span class="s-string">"longevity_v3"</span><span class="s-punct">,</span>
+  <span class="s-key">"longevity_score"</span><span class="s-punct">:</span> <span class="s-number">78.4</span><span class="s-punct">,</span>
+  <span class="s-key">"percentile"</span><span class="s-punct">:</span> <span class="s-number">82</span><span class="s-punct">,</span>
+  <span class="s-key">"confidence"</span><span class="s-punct">:</span> <span class="s-number">0.91</span><span class="s-punct">,</span>
+  <span class="s-key">"key_variants"</span><span class="s-punct">:</span> <span class="s-punct">[</span>
+    <span class="s-punct">{</span>
+      <span class="s-key">"gene"</span><span class="s-punct">:</span> <span class="s-string">"FOXO3"</span><span class="s-punct">,</span>
+      <span class="s-key">"rsid"</span><span class="s-punct">:</span> <span class="s-string">"rs2802292"</span><span class="s-punct">,</span>
+      <span class="s-key">"effect"</span><span class="s-punct">:</span> <span class="s-string">"+6.2"</span>
+    <span class="s-punct">},</span>
+    <span class="s-punct">{</span>
+      <span class="s-key">"gene"</span><span class="s-punct">:</span> <span class="s-string">"APOE"</span><span class="s-punct">,</span>
+      <span class="s-key">"allele"</span><span class="s-punct">:</span> <span class="s-string">"ε3/ε3"</span><span class="s-punct">,</span>
+      <span class="s-key">"effect"</span><span class="s-punct">:</span> <span class="s-string">"+2.1"</span>
+    <span class="s-punct">},</span>
+    <span class="s-punct">{</span>
+      <span class="s-key">"gene"</span><span class="s-punct">:</span> <span class="s-string">"CETP"</span><span class="s-punct">,</span>
+      <span class="s-key">"rsid"</span><span class="s-punct">:</span> <span class="s-string">"rs708272"</span><span class="s-punct">,</span>
+      <span class="s-key">"effect"</span><span class="s-punct">:</span> <span class="s-string">"+3.8"</span>
+    <span class="s-punct">}</span>
+  <span class="s-punct">],</span>
+  <span class="s-key">"risk_modifiers"</span><span class="s-punct">:</span> <span class="s-punct">{</span>
+    <span class="s-key">"cardiovascular"</span><span class="s-punct">:</span> <span class="s-number">-1.2</span><span class="s-punct">,</span>
+    <span class="s-key">"metabolic"</span><span class="s-punct">:</span> <span class="s-number">+0.4</span><span class="s-punct">,</span>
+    <span class="s-key">"inflammatory"</span><span class="s-punct">:</span> <span class="s-number">+1.1</span>
+  <span class="s-punct">},</span>
+  <span class="s-key">"timestamp"</span><span class="s-punct">:</span> <span class="s-string">"2026-03-23T09:41:22Z"</span>
+<span class="s-punct">}</span></pre>
+        </div>
+
+        <div class="response-meta">
+          <div class="response-meta-item"><span class="dot"></span> API latency: 124ms</div>
+          <div class="response-meta-item" style="color:var(--muted-2);">·</div>
+          <div class="response-meta-item">Model: 3.1.2</div>
+          <div class="response-meta-item" style="color:var(--muted-2);">·</div>
+          <div class="response-meta-item">Updated: Jan 2026</div>
+        </div>
+      </div>
+
+      <div class="models-note">
+        <strong>Origin API</strong> offers <strong>9 prediction models:</strong>
+        longevity, cardiovascular, metabolic, oncology, neurological, cognitive, physical, immune, reproductive
+      </div>
+
+    </div>
+  </aside>
+
+</main>
+
+<script>
+  // ── DATASET DATA ──
+  const datasets = {
+    cardio: {
+      name: 'NUC-CARDIO-2025',
+      version: 'v3.2',
+      updated: 'Feb 14, 2026',
+      status: 'Available',
+      samples: '4,847',
+      phenotypes: '38',
+      variants: '2.1M',
+      coverage: '30×',
+      samplesUnit: 'individuals',
+      variantsUnit: 'analyzed',
+      coverageUnit: 'WGS depth',
+      geo: [
+        { label: 'USA', pct: 68, color: 'var(--accent)' },
+        { label: 'EU', pct: 18, color: 'var(--teal)' },
+        { label: 'LATAM', pct: 9, color: 'var(--amber)' },
+        { label: 'APAC', pct: 5, color: 'rgba(247,245,241,0.3)' }
+      ],
+      ageMean: 47, ageRange: '18–84',
+      irb: 'IRB #2024-NUC-047',
+      phenotypeList: [
+        { name: 'LDL/HDL ratios', status: 'available', label: 'Full coverage' },
+        { name: 'Myocardial infarction history', status: 'available', label: 'Full coverage' },
+        { name: 'Hypertension', status: 'available', label: 'Full coverage' },
+        { name: 'CETP variants (rs708272)', status: 'available', label: 'Full coverage' },
+        { name: 'APOE status', status: 'available', label: 'Full coverage' },
+        { name: 'Statin response phenotypes', status: 'partial', label: 'Partial (72%)' },
+        { name: 'Exercise capacity markers', status: 'partial', label: 'Partial (58%)' },
+        { name: 'Troponin + BNP biomarkers', status: 'available', label: 'Full coverage' }
+      ],
+      schema: [
+        { field: 'sample_id', type: 'VARCHAR(16)', desc: 'Unique participant identifier (de-identified)' },
+        { field: 'age_at_enrollment', type: 'INT', desc: 'Age in years at study enrollment' },
+        { field: 'sex', type: 'CHAR(1)', desc: 'Biological sex: M / F / X' },
+        { field: 'ethnicity_pca', type: 'FLOAT[10]', desc: 'Top 10 PCA ancestry components' },
+        { field: 'cetp_rs708272', type: 'CHAR(3)', desc: 'CETP TaqIB genotype (B1B1 / B1B2 / B2B2)' },
+        { field: 'apoe_alleles', type: 'VARCHAR(8)', desc: 'APOE haplotype (e.g. ε3/ε4)' },
+        { field: 'ldl_baseline', type: 'FLOAT', desc: 'LDL cholesterol at enrollment (mg/dL)' },
+        { field: 'hdl_baseline', type: 'FLOAT', desc: 'HDL cholesterol at enrollment (mg/dL)' }
+      ],
+      pricing: [
+        { tier: 'Standard', price: '$480K', period: 'per year', features: ['Read-only dataset access', 'Up to 2 licensed users', 'SFTP + cloud delivery', 'Standard SLA (99.5%)', 'Annual data refreshes'], featured: false },
+        { tier: 'Research', price: '$720K', period: 'per year', features: ['Full API access (Origin)', 'Custom cohort queries', 'Up to 5 licensed users', 'Priority SLA (99.9%)', 'Quarterly data refreshes'], featured: true },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Co-development partnership', 'Milestone rev share model', 'Unlimited users', 'Dedicated data engineer', 'Real-time data pipeline'], featured: false }
+      ]
+    },
+    brca: {
+      name: 'NUC-ONCO-BRCA', version: 'v2.0', updated: 'Jan 20, 2026', status: 'Available',
+      samples: '2,134', phenotypes: '24', variants: '1.4M', coverage: '30×',
+      samplesUnit: 'individuals', variantsUnit: 'analyzed', coverageUnit: 'WGS depth',
+      geo: [{ label: 'USA', pct: 54, color: 'var(--accent)' }, { label: 'EU', pct: 31, color: 'var(--teal)' }, { label: 'LATAM', pct: 9, color: 'var(--amber)' }, { label: 'APAC', pct: 6, color: 'rgba(247,245,241,0.3)' }],
+      ageMean: 52, ageRange: '21–79', irb: 'IRB #2024-NUC-031',
+      phenotypeList: [
+        { name: 'BRCA1 pathogenic variants', status: 'available', label: 'Full coverage' },
+        { name: 'BRCA2 pathogenic variants', status: 'available', label: 'Full coverage' },
+        { name: 'PALB2 variants', status: 'available', label: 'Full coverage' },
+        { name: 'Tumor grade + histology', status: 'partial', label: 'Partial (81%)' },
+        { name: 'Treatment response (chemo)', status: 'partial', label: 'Partial (64%)' },
+        { name: 'Hormone receptor status', status: 'available', label: 'Full coverage' }
+      ],
+      schema: [
+        { field: 'sample_id', type: 'VARCHAR(16)', desc: 'Unique participant identifier (de-identified)' },
+        { field: 'age_at_diagnosis', type: 'INT', desc: 'Age at initial cancer diagnosis' },
+        { field: 'brca1_variant', type: 'VARCHAR(32)', desc: 'BRCA1 pathogenic variant (HGVS notation)' },
+        { field: 'brca2_variant', type: 'VARCHAR(32)', desc: 'BRCA2 pathogenic variant (HGVS notation)' },
+        { field: 'palb2_status', type: 'BOOLEAN', desc: 'PALB2 pathogenic variant present' },
+        { field: 'er_status', type: 'CHAR(3)', desc: 'Estrogen receptor status: POS / NEG' },
+        { field: 'tumor_grade', type: 'INT', desc: 'Histological tumor grade (1-3)' },
+        { field: 'family_history_score', type: 'FLOAT', desc: 'Weighted family history risk score' }
+      ],
+      pricing: [
+        { tier: 'Standard', price: '$320K', period: 'per year', features: ['Read-only dataset access', 'Up to 2 licensed users', 'SFTP + cloud delivery', 'Standard SLA (99.5%)', 'Annual data refreshes'], featured: false },
+        { tier: 'Research', price: '$480K', period: 'per year', features: ['Full API access (Origin)', 'Custom cohort queries', 'Up to 5 licensed users', 'Priority SLA (99.9%)', 'Quarterly data refreshes'], featured: true },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Co-development partnership', 'Milestone rev share model', 'Unlimited users', 'Dedicated data engineer', 'Real-time data pipeline'], featured: false }
+      ]
+    },
+    t2d: {
+      name: 'NUC-META-T2D', version: 'v4.1', updated: 'Mar 3, 2026', status: 'Available',
+      samples: '6,221', phenotypes: '51', variants: '3.2M', coverage: '30×',
+      samplesUnit: 'individuals', variantsUnit: 'analyzed', coverageUnit: 'WGS depth',
+      geo: [{ label: 'USA', pct: 41, color: 'var(--accent)' }, { label: 'EU', pct: 22, color: 'var(--teal)' }, { label: 'LATAM', pct: 18, color: 'var(--amber)' }, { label: 'APAC', pct: 19, color: 'rgba(247,245,241,0.3)' }],
+      ageMean: 55, ageRange: '30–88', irb: 'IRB #2024-NUC-019',
+      phenotypeList: [
+        { name: 'HbA1c longitudinal', status: 'available', label: 'Full coverage' },
+        { name: 'Insulin resistance (HOMA-IR)', status: 'available', label: 'Full coverage' },
+        { name: 'BMI + waist circumference', status: 'available', label: 'Full coverage' },
+        { name: 'GLP-1 receptor variants', status: 'available', label: 'Full coverage' },
+        { name: 'Fasting glucose series', status: 'partial', label: 'Partial (77%)' },
+        { name: 'Microbiome diversity score', status: 'partial', label: 'Partial (43%)' }
+      ],
+      schema: [
+        { field: 'sample_id', type: 'VARCHAR(16)', desc: 'Unique participant identifier (de-identified)' },
+        { field: 'hba1c_baseline', type: 'FLOAT', desc: 'Baseline HbA1c percentage' },
+        { field: 'hba1c_followup', type: 'FLOAT[]', desc: 'Longitudinal HbA1c measurements array' },
+        { field: 'homa_ir', type: 'FLOAT', desc: 'HOMA-IR insulin resistance index' },
+        { field: 'bmi', type: 'FLOAT', desc: 'Body mass index (kg/m²)' },
+        { field: 'glp1r_variant', type: 'VARCHAR(16)', desc: 'GLP-1 receptor variant status' },
+        { field: 'metformin_response', type: 'CHAR(4)', desc: 'Metformin response: RESP / NRSP' },
+        { field: 'fasting_glucose', type: 'FLOAT', desc: 'Fasting plasma glucose (mg/dL)' }
+      ],
+      pricing: [
+        { tier: 'Standard', price: '$540K', period: 'per year', features: ['Read-only dataset access', 'Up to 2 licensed users', 'SFTP + cloud delivery', 'Standard SLA (99.5%)', 'Annual data refreshes'], featured: false },
+        { tier: 'Research', price: '$810K', period: 'per year', features: ['Full API access (Origin)', 'Custom cohort queries', 'Up to 5 licensed users', 'Priority SLA (99.9%)', 'Quarterly data refreshes'], featured: true },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Co-development partnership', 'Milestone rev share model', 'Unlimited users', 'Dedicated data engineer', 'Real-time data pipeline'], featured: false }
+      ]
+    },
+    foxo: {
+      name: 'NUC-NEURO-FOXO', version: 'v1.5', updated: 'Dec 11, 2025', status: 'Available',
+      samples: '1,847', phenotypes: '29', variants: '1.1M', coverage: '30×',
+      samplesUnit: 'individuals', variantsUnit: 'analyzed', coverageUnit: 'WGS depth',
+      geo: [{ label: 'USA', pct: 38, color: 'var(--accent)' }, { label: 'EU', pct: 44, color: 'var(--teal)' }, { label: 'LATAM', pct: 7, color: 'var(--amber)' }, { label: 'APAC', pct: 11, color: 'rgba(247,245,241,0.3)' }],
+      ageMean: 72, ageRange: '60–107', irb: 'IRB #2024-NUC-055',
+      phenotypeList: [
+        { name: 'FOXO3 rs2802292 genotype', status: 'available', label: 'Full coverage' },
+        { name: 'Cognitive function scores', status: 'available', label: 'Full coverage' },
+        { name: 'Telomere length (qPCR)', status: 'partial', label: 'Partial (68%)' },
+        { name: 'Inflammatory biomarkers', status: 'available', label: 'Full coverage' },
+        { name: 'Alzheimer risk variants', status: 'partial', label: 'Partial (72%)' },
+        { name: 'Activity + longevity self-report', status: 'available', label: 'Full coverage' }
+      ],
+      schema: [
+        { field: 'sample_id', type: 'VARCHAR(16)', desc: 'Unique participant identifier (de-identified)' },
+        { field: 'current_age', type: 'INT', desc: 'Current age in years' },
+        { field: 'foxo3_rs2802292', type: 'CHAR(2)', desc: 'FOXO3 genotype: GG / GT / TT' },
+        { field: 'mmse_score', type: 'INT', desc: 'Mini-Mental State Examination score' },
+        { field: 'telomere_ratio', type: 'FLOAT', desc: 'T/S ratio from qPCR telomere assay' },
+        { field: 'apoe_e4_count', type: 'INT', desc: 'Number of APOE ε4 alleles (0-2)' },
+        { field: 'il6_level', type: 'FLOAT', desc: 'Interleukin-6 (pg/mL)' },
+        { field: 'centenarian_firstdeg', type: 'BOOLEAN', desc: 'First-degree centenarian relative' }
+      ],
+      pricing: [
+        { tier: 'Standard', price: '$290K', period: 'per year', features: ['Read-only dataset access', 'Up to 2 licensed users', 'SFTP + cloud delivery', 'Standard SLA (99.5%)', 'Annual data refreshes'], featured: false },
+        { tier: 'Research', price: '$440K', period: 'per year', features: ['Full API access (Origin)', 'Custom cohort queries', 'Up to 5 licensed users', 'Priority SLA (99.9%)', 'Quarterly data refreshes'], featured: true },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Co-development partnership', 'Milestone rev share model', 'Unlimited users', 'Dedicated data engineer', 'Real-time data pipeline'], featured: false }
+      ]
+    },
+    ivf: {
+      name: 'NUC-IVF-EMBRYO', version: 'v2.1', updated: 'Jan 8, 2026', status: 'Restricted',
+      samples: '8,341', phenotypes: '17', variants: '4.8M', coverage: '15×',
+      samplesUnit: 'embryos', variantsUnit: 'analyzed', coverageUnit: 'WGS depth',
+      geo: [{ label: 'USA', pct: 71, color: 'var(--accent)' }, { label: 'EU', pct: 21, color: 'var(--teal)' }, { label: 'LATAM', pct: 5, color: 'var(--amber)' }, { label: 'APAC', pct: 3, color: 'rgba(247,245,241,0.3)' }],
+      ageMean: null, ageRange: 'Day 5-6 blastocysts', irb: 'IRB #2024-NUC-072 (Restricted)',
+      phenotypeList: [
+        { name: 'Chromosomal aneuploidy status', status: 'available', label: 'Full coverage' },
+        { name: 'Implantation outcome', status: 'available', label: 'Full coverage' },
+        { name: 'Morphology grading', status: 'available', label: 'Full coverage' },
+        { name: 'De novo mutation rate', status: 'partial', label: 'Partial (55%)' },
+        { name: 'Mitochondrial copy number', status: 'partial', label: 'Partial (62%)' },
+        { name: 'Live birth outcome (2yr)', status: 'partial', label: 'Partial (48%)' }
+      ],
+      schema: [
+        { field: 'embryo_id', type: 'VARCHAR(16)', desc: 'De-identified embryo identifier' },
+        { field: 'day_of_biopsy', type: 'INT', desc: 'Embryo biopsy day (5 or 6)' },
+        { field: 'ploidy_status', type: 'VARCHAR(12)', desc: 'Euploid / Aneuploid / Mosaic' },
+        { field: 'implanted', type: 'BOOLEAN', desc: 'Whether embryo was transferred' },
+        { field: 'morphology_grade', type: 'CHAR(4)', desc: 'Gardner grading (e.g. 4AA)' },
+        { field: 'mtdna_copy_number', type: 'FLOAT', desc: 'Mitochondrial DNA copy number (normalized)' },
+        { field: 'live_birth', type: 'BOOLEAN', desc: 'Live birth outcome (nullable)' },
+        { field: 'denovo_snv_count', type: 'INT', desc: 'De novo single nucleotide variants' }
+      ],
+      pricing: [
+        { tier: 'Standard', price: 'On Request', period: 'restricted access', features: ['Ethics board approval required', 'Data use agreement mandatory', 'Secure enclave access only', 'Annual ethics review', 'Limited query scope'], featured: false },
+        { tier: 'Research', price: 'On Request', period: 'restricted access', features: ['Full API (gated environment)', 'Joint IRB committee review', 'Up to 3 licensed users', 'Dedicated compliance liaison', 'Quarterly audits'], featured: true },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Joint research partnership', 'Milestone-gated access', 'Co-authorship agreement', 'Full compliance package', 'Ethics advisory board'], featured: false }
+      ]
+    },
+    rare: {
+      name: 'NUC-RARE-2026', version: 'v0.3', updated: 'Building — Q3 2026', status: 'Building',
+      samples: '892', phenotypes: '14', variants: '0.8M', coverage: '30×',
+      samplesUnit: 'individuals', variantsUnit: 'analyzed (interim)', coverageUnit: 'WGS depth',
+      geo: [{ label: 'USA', pct: 45, color: 'var(--accent)' }, { label: 'EU', pct: 35, color: 'var(--teal)' }, { label: 'LATAM', pct: 10, color: 'var(--amber)' }, { label: 'APAC', pct: 10, color: 'rgba(247,245,241,0.3)' }],
+      ageMean: 31, ageRange: '0–65', irb: 'IRB #2025-NUC-008 (pending)',
+      phenotypeList: [
+        { name: 'Ultra-rare variant catalogue', status: 'partial', label: 'In progress' },
+        { name: 'OMIM disease annotations', status: 'partial', label: 'In progress' },
+        { name: 'Carrier frequency data', status: 'available', label: 'Available' },
+        { name: 'Clinical phenotype mapping', status: 'partial', label: 'Partial (38%)' },
+        { name: 'Family trio linkage data', status: 'partial', label: 'Partial (22%)' },
+        { name: 'Functional variant scores', status: 'partial', label: 'In progress' }
+      ],
+      schema: [
+        { field: 'sample_id', type: 'VARCHAR(16)', desc: 'Unique participant identifier (de-identified)' },
+        { field: 'omim_disease_id', type: 'VARCHAR(8)', desc: 'Primary OMIM disease identifier' },
+        { field: 'causal_variant', type: 'VARCHAR(64)', desc: 'Identified causal variant (HGVS)' },
+        { field: 'inheritance_mode', type: 'VARCHAR(16)', desc: 'Inheritance: AR / AD / XL / MT' },
+        { field: 'variant_class', type: 'VARCHAR(24)', desc: 'ClinVar classification' },
+        { field: 'trio_sequenced', type: 'BOOLEAN', desc: 'Family trio available' },
+        { field: 'carrier_freq_gnomad', type: 'FLOAT', desc: 'gnomAD carrier frequency' },
+        { field: 'functional_score', type: 'FLOAT', desc: 'CADD / REVEL composite score' }
+      ],
+      pricing: [
+        { tier: 'Early Access', price: 'Pre-order', period: 'launching Q3 2026', features: ['Priority access at launch', 'Discounted year-1 pricing', 'Co-design phenotype scope', 'Dedicated researcher briefing', 'Beta API access'], featured: true },
+        { tier: 'Standard', price: 'TBD', period: 'at launch', features: ['Read-only dataset access', 'Up to 2 licensed users', 'SFTP + cloud delivery', 'Standard SLA', 'Pricing TBD at launch'], featured: false },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Phenotype co-design', 'Recruitment partnership', 'Exclusive 6mo window', 'Dedicated data engineer', 'Rev share on findings'], featured: false }
+      ]
+    },
+    ancestry: {
+      name: 'NUC-ANCESTRY-GLB', version: 'v5.0', updated: 'Mar 18, 2026', status: 'Available',
+      samples: '12,440', phenotypes: '64', variants: '5.7M', coverage: '30×',
+      samplesUnit: 'individuals', variantsUnit: 'analyzed', coverageUnit: 'WGS depth',
+      geo: [{ label: 'AFR', pct: 24, color: 'var(--accent)' }, { label: 'EUR', pct: 28, color: 'var(--teal)' }, { label: 'EAS', pct: 21, color: 'var(--amber)' }, { label: 'SAS', pct: 27, color: 'rgba(247,245,241,0.3)' }],
+      ageMean: 44, ageRange: '18–92', irb: 'IRB #2023-NUC-004',
+      phenotypeList: [
+        { name: 'Global ancestry proportions', status: 'available', label: 'Full coverage' },
+        { name: 'Polygenic score portability', status: 'available', label: 'Full coverage' },
+        { name: 'Population-specific variants', status: 'available', label: 'Full coverage' },
+        { name: 'Admixture proportions', status: 'available', label: 'Full coverage' },
+        { name: 'Trait-ancestry interactions', status: 'partial', label: 'Partial (71%)' },
+        { name: 'Cross-population GWAS', status: 'available', label: 'Full coverage' }
+      ],
+      schema: [
+        { field: 'sample_id', type: 'VARCHAR(16)', desc: 'Unique participant identifier (de-identified)' },
+        { field: 'ancestry_pca', type: 'FLOAT[20]', desc: 'Top 20 global ancestry PCA components' },
+        { field: 'continent_label', type: 'VARCHAR(8)', desc: 'Inferred continental ancestry label' },
+        { field: 'admixture_k8', type: 'FLOAT[8]', desc: 'ADMIXTURE K=8 ancestry proportions' },
+        { field: 'ibd_cluster_id', type: 'INT', desc: 'Identity-by-descent cluster assignment' },
+        { field: 'haplotype_phase', type: 'BOOLEAN', desc: 'Statistically phased haplotypes available' },
+        { field: 'gnomad_superpop', type: 'CHAR(3)', desc: 'gnomAD superpopulation label' },
+        { field: 'pgs_portability_score', type: 'FLOAT', desc: 'Polygenic score transferability metric' }
+      ],
+      pricing: [
+        { tier: 'Standard', price: '$680K', period: 'per year', features: ['Read-only dataset access', 'Up to 2 licensed users', 'SFTP + cloud delivery', 'Standard SLA (99.5%)', 'Annual data refreshes'], featured: false },
+        { tier: 'Research', price: '$1.02M', period: 'per year', features: ['Full API access (Origin)', 'Custom cohort queries', 'Up to 5 licensed users', 'Priority SLA (99.9%)', 'Quarterly data refreshes'], featured: true },
+        { tier: 'Enterprise', price: 'Custom', period: 'co-development terms', features: ['Co-development partnership', 'Milestone rev share model', 'Unlimited users', 'Dedicated data engineer', 'Real-time data pipeline'], featured: false }
+      ]
+    }
+  };
+
+  // ── SELECT DATASET ──
+  function selectDataset(id, el) {
+    // Highlight card
+    document.querySelectorAll('.dataset-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+
+    const d = datasets[id];
+    if (!d) return;
+
+    const statusClass = d.status === 'Available' ? 'avail-available' : d.status === 'Restricted' ? 'avail-restricted' : 'avail-building';
+
+    const geoHTML = d.geo.map(g => `
+      <div class="geo-row">
+        <span class="geo-label">${g.label}</span>
+        <div class="geo-bar-track"><div class="geo-bar-fill" style="width:${g.pct}%;background:${g.color}"></div></div>
+        <span class="geo-pct">${g.pct}%</span>
+      </div>
+    `).join('');
+
+    const ageHTML = d.ageMean
+      ? `<span style="font-family:var(--font-serif);font-size:18px;">${d.ageMean} years</span><span style="font-size:11px;color:var(--muted-2);"> (range ${d.ageRange})</span>`
+      : `<span style="font-size:12px;color:var(--muted);">${d.ageRange}</span>`;
+
+    const phenoHTML = d.phenotypeList.map(p => `
+      <div class="phenotype-row">
+        <div class="pheno-dot ${p.status}"></div>
+        <span class="pheno-name">${p.name}</span>
+        <span class="pheno-status ${p.status}">${p.label}</span>
+      </div>
+    `).join('');
+
+    const schemaRows = d.schema.map(s => `
+      <tr>
+        <td><span class="field-name">${s.field}</span></td>
+        <td><span class="field-type">${s.type}</span></td>
+        <td><span class="field-desc">${s.desc}</span></td>
+      </tr>
+    `).join('');
+
+    const pricingHTML = d.pricing.map(p => `
+      <div class="license-card${p.featured ? ' featured' : ''}">
+        <div class="license-tier">${p.tier}</div>
+        <div class="license-price" style="${p.price === 'Custom' || p.price === 'TBD' || p.price === 'Pre-order' || p.price === 'On Request' ? 'font-size:18px;' : ''}">${p.price}</div>
+        <div class="license-period">${p.period}</div>
+        <ul class="license-features">
+          ${p.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+
+    const irbColor = d.status === 'Restricted' ? 'var(--amber)' : d.status === 'Building' ? 'var(--muted)' : 'var(--teal)';
+
+    const html = `
+      <div class="detail-header">
+        <div>
+          <div class="detail-title" id="detail-name">${d.name}</div>
+          <div class="detail-meta">
+            <span class="version-badge">${d.version}</span>
+            <span class="updated-text">Last updated: ${d.updated}</span>
+            ${d.status === 'Available' ? `<span class="sep-dot">·</span><span class="status-dot"></span><span style="font-size:11px;color:var(--teal);font-weight:600;">Live</span>` : ''}
+          </div>
+        </div>
+        <span class="avail-badge ${statusClass}" style="font-size:11px;padding:4px 12px;">${d.status}</span>
+      </div>
+
+      <div class="stat-tiles">
+        <div class="stat-tile">
+          <div class="stat-label">Samples</div>
+          <div class="stat-value" style="color:var(--teal);">${d.samples}</div>
+          <div class="stat-unit">${d.samplesUnit}</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Phenotypes</div>
+          <div class="stat-value">${d.phenotypes}</div>
+          <div class="stat-unit">measured traits</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Variants</div>
+          <div class="stat-value" style="color:var(--accent);">${d.variants}</div>
+          <div class="stat-unit">${d.variantsUnit}</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-label">Coverage</div>
+          <div class="stat-value" style="color:var(--amber);">${d.coverage}</div>
+          <div class="stat-unit">${d.coverageUnit}</div>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-item-label">Geographic Distribution</div>
+          <div class="geo-bars">${geoHTML}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-item-label">Demographics</div>
+          <div class="meta-item-value" style="margin-bottom:6px;">
+            ${d.ageMean ? '<span style="color:var(--muted);font-size:11px;">Age (mean)</span><br>' : '<span style="color:var(--muted);font-size:11px;">Sample type</span><br>'}
+            ${ageHTML}
+          </div>
+          <div class="meta-item-label" style="margin-top:10px;">Consent Framework</div>
+          <div class="meta-item-value" style="font-size:11px;color:${irbColor};">
+            ${d.status === 'Building' ? 'Ethics approval in progress' : 'Commercial research use approved'}<br>
+            <span style="color:var(--muted-2);">${d.irb}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="section-title">Phenotype Coverage</div>
+        <div class="phenotype-list">${phenoHTML}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="section-title">Data Schema Preview</div>
+        <div style="background:var(--panel-1);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+          <table class="schema-table">
+            <thead>
+              <tr><th>field_name</th><th>type</th><th>description</th></tr>
+            </thead>
+            <tbody>${schemaRows}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="section-title">Licensing Options</div>
+        <div class="licensing-tiers">${pricingHTML}</div>
+        <button class="btn-request">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 1L13 7L7 13M1 7H13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Request dataset access
+        </button>
+      </div>
+    `;
+
+    const detailView = document.getElementById('detail-view');
+    detailView.innerHTML = html;
+    detailView.scrollTop = 0;
+  }
+
+  // ── FILTER CHIPS ──
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+
+      const filter = this.dataset.filter;
+      const cards = document.querySelectorAll('.dataset-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const cat = card.dataset.category;
+        const show = filter === 'all'
+          || (filter === 'oncology' && cat === 'oncology')
+          || (filter === 'cardiovascular' && cat === 'cardiovascular')
+          || (filter === 'metabolic' && cat === 'metabolic')
+          || (filter === 'neurological' && cat === 'neurological')
+          || (filter === 'rare' && cat === 'rare');
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      document.getElementById('dataset-count').textContent = visible + ' dataset' + (visible !== 1 ? 's' : '');
+    });
+  });
+
+  // ── SEARCH ──
+  document.getElementById('search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.dataset-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const show = text.includes(q);
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    document.getElementById('dataset-count').textContent = visible + ' dataset' + (visible !== 1 ? 's' : '');
+  });
+
+  // ── RUN QUERY ──
+  function runQuery() {
+    const btn = document.getElementById('run-btn');
+    const spinner = document.getElementById('spinner');
+    const runText = document.getElementById('run-text');
+    const responseWrapper = document.getElementById('response-wrapper');
+
+    btn.disabled = true;
+    spinner.classList.add('visible');
+    runText.textContent = 'Running...';
+    responseWrapper.classList.remove('visible');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      spinner.classList.remove('visible');
+      runText.textContent = 'Run Query';
+      responseWrapper.classList.add('visible');
+      responseWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 800);
+  }
+
+  // Show response on load (pre-populated state)
+  document.getElementById('response-wrapper').classList.add('visible');
+</script>
+</body>
+</html>

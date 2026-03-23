@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nucleus IVF+ — Embryo Genetic Selection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0908;
+    --panel-1: #141210;
+    --panel-2: #1C1916;
+    --accent: #C9A84C;
+    --favorable: #4ABA9E;
+    --caution: #C45840;
+    --text: #F0EBE0;
+    --muted: rgba(240,235,224,0.5);
+    --border: rgba(201,168,76,0.12);
+    --border-strong: rgba(201,168,76,0.35);
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    background: var(--panel-1);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-wordmark {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .logo-plus {
+    color: var(--accent);
+    font-size: 14px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: -1px;
+  }
+
+  .header-sep {
+    width: 1px;
+    height: 22px;
+    background: var(--border-strong);
+  }
+
+  .ivf-badge {
+    background: var(--accent);
+    color: #0A0908;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .patient-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.2px;
+  }
+
+  .patient-sub {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+
+  .header-right a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-right a:hover { color: var(--text); }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 28px;
+    background: var(--panel-1);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .filter-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-right: 6px;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+  }
+  .filter-btn:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .filter-btn.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(201,168,76,0.08);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100vh - 60px - 44px - 52px);
+  }
+
+  /* ── EMBRYO GRID ── */
+  .embryo-grid-wrap {
+    flex: 1;
+    padding: 24px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .embryo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 14px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .embryo-card {
+    background: var(--panel-1);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .embryo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .embryo-card:hover {
+    background: #1a1714;
+    border-color: rgba(201,168,76,0.25);
+    transform: translateY(-1px);
+  }
+
+  .embryo-card:hover::before { opacity: 1; }
+
+  .embryo-card.selected {
+    background: var(--panel-2);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.15), 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .embryo-card.selected::before { opacity: 1; }
+
+  .embryo-card.dimmed {
+    opacity: 0.3;
+    transform: none;
+  }
+
+  /* Card top row */
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .embryo-id {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding: 3px 9px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-recommended {
+    background: rgba(201,168,76,0.18);
+    color: var(--accent);
+    border: 1px solid rgba(201,168,76,0.35);
+  }
+  .badge-strong {
+    background: rgba(74,186,158,0.12);
+    color: var(--favorable);
+    border: 1px solid rgba(74,186,158,0.3);
+  }
+  .badge-suitable {
+    background: rgba(240,235,224,0.06);
+    color: rgba(240,235,224,0.65);
+    border: 1px solid rgba(240,235,224,0.15);
+  }
+  .badge-caution {
+    background: rgba(196,88,64,0.15);
+    color: var(--caution);
+    border: 1px solid rgba(196,88,64,0.3);
+  }
+
+  /* Donut ring */
+  .card-ring-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ring-svg {
+    overflow: visible;
+  }
+
+  .ring-track {
+    fill: none;
+    stroke: rgba(201,168,76,0.1);
+    stroke-width: 6;
+  }
+
+  .ring-fill {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dasharray 0.6s ease;
+  }
+
+  .ring-score {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    fill: var(--text);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  .ring-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 8px;
+    fill: var(--muted);
+    text-anchor: middle;
+    dominant-baseline: central;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Trait bars */
+  .card-traits {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .trait-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .trait-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .trait-name {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+    width: 62px;
+    flex-shrink: 0;
+    letter-spacing: 0.2px;
+  }
+
+  .trait-bar-track {
+    flex: 1;
+    height: 3px;
+    background: rgba(240,235,224,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .trait-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  .trait-val {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 600;
+    width: 26px;
+    text-align: right;
+  }
+
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    width: 380px;
+    flex-shrink: 0;
+    background: var(--panel-1);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail-panel::-webkit-scrollbar { width: 4px; }
+  .detail-panel::-webkit-scrollbar-track { background: transparent; }
+  .detail-panel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+  .detail-inner {
+    padding: 28px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .detail-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .detail-embryo-id {
+    font-family: 'Instrument Serif', serif;
+    font-size: 44px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .detail-ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .detail-ring-svg .ring-track { stroke-width: 8; }
+  .detail-ring-svg .ring-fill { stroke-width: 8; }
+  .detail-ring-svg .ring-score { font-size: 26px; }
+
+  /* Section */
+  .detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Score bars */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .score-label {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  .score-bar-track {
+    flex: 1;
+    height: 5px;
+    background: rgba(240,235,224,0.07);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .score-val {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    width: 30px;
+    text-align: right;
+  }
+
+  /* Variants */
+  .variant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .variant-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 10px;
+  }
+
+  .variant-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .variant-icon svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .variant-text {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* Physician note */
+  .physician-note {
+    background: rgba(240,235,224,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 12.5px;
+    color: rgba(240,235,224,0.8);
+    line-height: 1.65;
+    font-style: italic;
+    font-family: 'Instrument Serif', serif;
+  }
+
+  /* Transfer button */
+  .transfer-btn {
+    background: var(--accent);
+    color: #0A0908;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .transfer-btn:hover {
+    background: #d4b660;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    transform: translateY(-1px);
+  }
+
+  .transfer-btn:active { transform: translateY(0); }
+
+  .transfer-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Origin AI badge */
+  .origin-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .origin-pill {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    background: var(--panel-1);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .footer-stats {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    border-right: 1px solid var(--border);
+    height: 30px;
+  }
+
+  .stat-item:first-child { padding-left: 0; }
+
+  .stat-icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .stat-text {
+    font-size: 11.5px;
+    color: var(--muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .footer-highlight {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 10px;
+    padding: 7px 16px;
+    white-space: nowrap;
+  }
+
+  .footer-highlight-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  .footer-highlight-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.3px;
+  }
+
+  /* Scrollbar */
+  * { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+
+  /* Smooth transitions */
+  .embryo-card { transition: opacity 0.3s ease, transform 0.25s ease, background 0.2s, border-color 0.2s, box-shadow 0.25s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="logo-wordmark">
+      nucleus
+      <span class="logo-plus">+</span>
+    </div>
+    <div class="header-sep"></div>
+    <div class="ivf-badge">IVF+</div>
+  </div>
+
+  <div class="header-center">
+    <div class="patient-name">Chen, Sarah &amp; Michael &nbsp;·&nbsp; Cycle #3</div>
+    <div class="patient-sub">Dr. Ellen Goldstein &nbsp;·&nbsp; Beverly Hills Fertility</div>
+  </div>
+
+  <div class="header-right">
+    <a href="nucleus-investor.html">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path d="M8 2L4 6L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to overview
+    </a>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter by</span>
+  <button class="filter-btn active" onclick="setFilter('all')">All</button>
+  <button class="filter-btn" onclick="setFilter('longevity')">Longevity</button>
+  <button class="filter-btn" onclick="setFilter('disease')">Disease-free</button>
+  <button class="filter-btn" onclick="setFilter('cognitive')">Cognitive</button>
+  <button class="filter-btn" onclick="setFilter('cardio')">Cardiovascular</button>
+  <button class="filter-btn" onclick="setFilter('metabolic')">Metabolic</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- EMBRYO GRID -->
+  <div class="embryo-grid-wrap">
+    <div class="embryo-grid" id="embryoGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- DETAIL PANEL -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-inner" id="detailInner">
+      <!-- Content injected by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-stats">
+    <div class="stat-item">
+      <div class="stat-icon" style="background:var(--accent)"></div>
+      <span class="stat-text">2,048 conditions screened</span>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"></div>
+      <span class="stat-text">6 embryos analyzed</span>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon" style="background:var(--favorable)"></div>
+      <span class="stat-text">0 pathogenic variants in recommended embryo</span>
+    </div>
+    <div class="stat-item" style="border-right:none;">
+      <div class="stat-icon" style="background:rgba(201,168,76,0.5)"></div>
+      <span class="stat-text">Origin AI powered</span>
+    </div>
+  </div>
+  <div class="footer-highlight">
+    <div class="footer-highlight-dot"></div>
+    <span class="footer-highlight-text">Recommended: E1 &nbsp;·&nbsp; Score 94/100</span>
+  </div>
+</footer>
+
+<script>
+const EMBRYOS = [
+  {
+    id: 'E1',
+    overall: 94,
+    longevity: 92,
+    disease: 97,
+    cognitive: 88,
+    cardio: 95,
+    metabolic: 91,
+    status: 'Recommended',
+    statusKey: 'recommended',
+    variants: [
+      'FOXO3+ longevity variant',
+      'APOE ε3/ε3 — optimal',
+      'CETP+ cardioprotection'
+    ],
+    note: 'Strongest overall genomic profile. 2,048 conditions screened — all clear. Top-tier polygenic longevity score.'
+  },
+  {
+    id: 'E2',
+    overall: 89,
+    longevity: 87,
+    disease: 91,
+    cognitive: 92,
+    cardio: 88,
+    metabolic: 86,
+    status: 'Suitable',
+    statusKey: 'suitable',
+    variants: [
+      'BDNF Val66Met+ — memory formation',
+      '1 low-risk watchlist variant'
+    ],
+    note: 'Highest cognitive polygenic score of all embryos. Strong memory and processing markers.'
+  },
+  {
+    id: 'E3',
+    overall: 83,
+    longevity: 81,
+    disease: 85,
+    cognitive: 84,
+    cardio: 82,
+    metabolic: 83,
+    status: 'Suitable',
+    statusKey: 'suitable',
+    variants: [
+      'Standard risk profile',
+      'No major variants'
+    ],
+    note: 'No concerning findings. Average polygenic scores across categories.'
+  },
+  {
+    id: 'E4',
+    overall: 91,
+    longevity: 90,
+    disease: 93,
+    cognitive: 89,
+    cardio: 91,
+    metabolic: 90,
+    status: 'Strong Alternative',
+    statusKey: 'strong',
+    variants: [
+      'BDNF Val66Met+ — memory',
+      'CETP variant — cardioprotective',
+      'APOE ε3/ε3'
+    ],
+    note: 'Excellent cardiovascular and cognitive profile. Second choice if E1 does not progress to transfer.'
+  },
+  {
+    id: 'E5',
+    overall: 76,
+    longevity: 74,
+    disease: 79,
+    cognitive: 78,
+    cardio: 72,
+    metabolic: 77,
+    status: 'Caution',
+    statusKey: 'caution',
+    variants: [
+      'TCF7L2 variant — metabolic monitoring recommended',
+      'Reduced cardiovascular score'
+    ],
+    note: 'Metabolic risk variant identified. Not recommended as first choice. Lifestyle monitoring advisable.'
+  },
+  {
+    id: 'E6',
+    overall: 88,
+    longevity: 85,
+    disease: 90,
+    cognitive: 87,
+    cardio: 89,
+    metabolic: 88,
+    status: 'Suitable',
+    statusKey: 'suitable',
+    variants: [
+      'Standard favorable profile',
+      'APOE ε3/ε3',
+      'No concerning variants'
+    ],
+    note: 'Solid across all dimensions. Good backup option with no watchlist items.'
+  }
+];
+
+const CATEGORY_MAP = {
+  longevity: 'longevity',
+  disease: 'disease',
+  cognitive: 'cognitive',
+  cardio: 'cardio',
+  metabolic: 'metabolic'
+};
+
+const TRAIT_LABELS = [
+  { key: 'longevity', label: 'Longevity' },
+  { key: 'disease', label: 'Disease-free' },
+  { key: 'cognitive', label: 'Cognitive' },
+  { key: 'cardio', label: 'Cardio' }
+];
+
+let selectedId = 'E1';
+let activeFilter = 'all';
+
+function getStatusBadgeClass(key) {
+  return {
+    recommended: 'badge-recommended',
+    strong: 'badge-strong',
+    suitable: 'badge-suitable',
+    caution: 'badge-caution'
+  }[key] || 'badge-suitable';
+}
+
+function getRingColor(key) {
+  return {
+    recommended: 'var(--accent)',
+    strong: 'var(--favorable)',
+    suitable: 'rgba(240,235,224,0.55)',
+    caution: 'var(--caution)'
+  }[key] || 'var(--accent)';
+}
+
+function getBarColor(val) {
+  if (val >= 90) return 'var(--accent)';
+  if (val >= 80) return 'var(--favorable)';
+  if (val >= 70) return 'rgba(240,235,224,0.45)';
+  return 'var(--caution)';
+}
+
+function makeMiniDonut(score, statusKey, r) {
+  const circ = 2 * Math.PI * r;
+  const filled = (score / 100) * circ;
+  const size = (r + 10) * 2;
+  const cx = r + 10;
+  const color = getRingColor(statusKey);
+  return `<svg class="ring-svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle class="ring-track" cx="${cx}" cy="${cx}" r="${r}"/>
+    <circle class="ring-fill" cx="${cx}" cy="${cx}" r="${r}"
+      stroke="${color}"
+      stroke-dasharray="${filled.toFixed(2)} ${(circ - filled).toFixed(2)}"
+      style="transform-origin:${cx}px ${cx}px"/>
+    <text class="ring-score" x="${cx}" y="${cx - 5}">${score}</text>
+    <text class="ring-label" x="${cx}" y="${cx + 11}">score</text>
+  </svg>`;
+}
+
+function getStrongestCat(embryo) {
+  const cats = ['longevity','disease','cognitive','cardio','metabolic'];
+  let best = cats[0], bestVal = embryo[cats[0]];
+  cats.forEach(c => { if (embryo[c] > bestVal) { bestVal = embryo[c]; best = c; } });
+  return best;
+}
+
+function renderGrid() {
+  const grid = document.getElementById('embryoGrid');
+  grid.innerHTML = EMBRYOS.map(e => {
+    const isSelected = e.id === selectedId;
+    const strongest = getStrongestCat(e);
+    let dimmed = false;
+    if (activeFilter !== 'all') {
+      dimmed = strongest !== activeFilter;
+    }
+
+    const classes = [
+      'embryo-card',
+      isSelected ? 'selected' : '',
+      dimmed ? 'dimmed' : ''
+    ].join(' ').trim();
+
+    const traits = TRAIT_LABELS.map(t => {
+      const val = e[t.key];
+      const color = getBarColor(val);
+      return `<div class="trait-row">
+        <div class="trait-dot" style="background:${color}"></div>
+        <div class="trait-name">${t.label}</div>
+        <div class="trait-bar-track">
+          <div class="trait-bar-fill" style="width:${val}%;background:${color}"></div>
+        </div>
+        <div class="trait-val">${val}</div>
+      </div>`;
+    }).join('');
+
+    return `<div class="${classes}" id="card-${e.id}" onclick="select('${e.id}')">
+      <div class="card-header">
+        <div class="embryo-id">${e.id}</div>
+        <div class="status-badge ${getStatusBadgeClass(e.statusKey)}">${e.status}</div>
+      </div>
+      <div class="card-ring-wrap">
+        ${makeMiniDonut(e.overall, e.statusKey, 36)}
+      </div>
+      <div class="card-traits">${traits}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderDetail(embryo) {
+  const color = getRingColor(embryo.statusKey);
+  const CATEGORIES = [
+    { key: 'longevity', label: 'Longevity' },
+    { key: 'disease', label: 'Disease-free' },
+    { key: 'cognitive', label: 'Cognitive' },
+    { key: 'cardio', label: 'Cardiovascular' },
+    { key: 'metabolic', label: 'Metabolic' }
+  ];
+
+  const scoreBars = CATEGORIES.map(c => {
+    const val = embryo[c.key];
+    const barColor = getBarColor(val);
+    return `<div class="score-row">
+      <div class="score-label">${c.label}</div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" style="width:${val}%;background:${barColor}"></div>
+      </div>
+      <div class="score-val">${val}</div>
+    </div>`;
+  }).join('');
+
+  const variantItems = embryo.variants.map(v => `
+    <div class="variant-item">
+      <div class="variant-icon">
+        <svg viewBox="0 0 8 8" fill="none">
+          <path d="M1.5 4L3 5.5L6.5 2" stroke="${color}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="variant-text">${v}</div>
+    </div>
+  `).join('');
+
+  const circ = 2 * Math.PI * 55;
+  const filled = (embryo.overall / 100) * circ;
+  const cx = 75;
+
+  document.getElementById('detailInner').innerHTML = `
+    <div class="detail-top">
+      <div>
+        <div class="detail-embryo-id">${embryo.id}</div>
+        <div class="status-badge ${getStatusBadgeClass(embryo.statusKey)}" style="display:inline-block;margin-top:6px">${embryo.status}</div>
+      </div>
+      <div class="detail-ring-wrap">
+        <svg class="ring-svg detail-ring-svg" width="150" height="150" viewBox="0 0 150 150">
+          <circle class="ring-track" cx="${cx}" cy="${cx}" r="55" stroke-width="8"/>
+          <circle class="ring-fill" cx="${cx}" cy="${cx}" r="55"
+            stroke="${color}"
+            stroke-width="8"
+            stroke-linecap="round"
+            stroke-dasharray="${filled.toFixed(2)} ${(circ - filled).toFixed(2)}"
+            style="transform-origin:${cx}px ${cx}px"/>
+          <text class="ring-score" x="${cx}" y="${cx - 8}" style="font-size:26px">${embryo.overall}</text>
+          <text class="ring-label" x="${cx}" y="${cx + 14}" style="font-size:9px">overall</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="section-title">Category Scores</div>
+      ${scoreBars}
+    </div>
+
+    <div class="detail-section">
+      <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Origin AI Assessment</span>
+        <div class="origin-pill">AI</div>
+      </div>
+      <div class="variant-list">${variantItems}</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="section-title">Physician Note</div>
+      <div class="physician-note">"${embryo.note}"</div>
+    </div>
+
+    <button class="transfer-btn" onclick="return false;">
+      <svg viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M5 7H9M9 7L7 5M9 7L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Select ${embryo.id} for Transfer
+    </button>
+  `;
+}
+
+function select(id) {
+  selectedId = id;
+  const embryo = EMBRYOS.find(e => e.id === id);
+  if (!embryo) return;
+
+  // Update cards
+  document.querySelectorAll('.embryo-card').forEach(el => {
+    el.classList.remove('selected');
+  });
+  const card = document.getElementById('card-' + id);
+  if (card) card.classList.add('selected');
+
+  // Render detail
+  renderDetail(embryo);
+}
+
+function setFilter(cat) {
+  activeFilter = cat;
+
+  // Update buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+
+  // Update card dims
+  EMBRYOS.forEach(e => {
+    const card = document.getElementById('card-' + e.id);
+    if (!card) return;
+    if (cat === 'all') {
+      card.classList.remove('dimmed');
+    } else {
+      const strongest = getStrongestCat(e);
+      if (strongest === cat) {
+        card.classList.remove('dimmed');
+      } else {
+        card.classList.add('dimmed');
+      }
+    }
+  });
+}
+
+// Init
+renderGrid();
+renderDetail(EMBRYOS[0]);
+</script>
+</body>
+</html>
