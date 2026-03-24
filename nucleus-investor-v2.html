@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nucleus — Series B Investor Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:       #080706;
+      --bg2:      #0D0B09;
+      --surface:  #141210;
+      --surface2: #1C1816;
+      --cream:    #F5EFE4;
+      --cream2:   #C4BAB0;
+      --cream3:   #6E6560;
+      --gold:     #C9A84C;
+      --gold-lt:  #E8C96A;
+      --gold-bg:  rgba(201,168,76,0.06);
+      --gold-bdr: rgba(201,168,76,0.18);
+      --green:    #0F6E56;
+      --coral:    #C45840;
+      --blue:     #2E6FA3;
+      --lav:      #6B5FA0;
+      --amber:    #9A6E20;
+      --ease:     cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ─── RESET & BASE ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Syne', sans-serif;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    /* ─── CURSOR ─────────────────────────────────────────────── */
+    #cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.1s var(--ease), width 0.25s var(--ease), height 0.25s var(--ease), opacity 0.25s;
+      will-change: transform;
+    }
+    #cursor.hovered {
+      width: 28px; height: 28px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      opacity: 0.7;
+    }
+
+    a, button, [data-mag] { cursor: none; }
+
+    /* ─── REVEAL SYSTEM ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(52px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .clip-reveal {
+      display: inline-block;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.2s var(--ease);
+    }
+    .clip-reveal.in {
+      clip-path: inset(0 0% 0 0);
+    }
+
+    /* ─── PASSWORD GATE ──────────────────────────────────────── */
+    #gate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #gate.hidden { display: none; }
+
+    .gate-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      width: min(420px, 90vw);
+    }
+
+    .gate-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 3.2rem;
+      color: var(--gold);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .gate-series {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--cream3);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .gate-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--cream3);
+      letter-spacing: 0.12em;
+      margin-bottom: 44px;
+    }
+
+    .gate-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold-bdr);
+      margin-bottom: 44px;
+    }
+
+    .gate-input-wrap {
+      width: 100%;
+      border-bottom: 1px solid var(--gold);
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    #gate-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--cream);
+      padding: 10px 0;
+      letter-spacing: 0.1em;
+    }
+
+    #gate-input::placeholder {
+      color: var(--cream3);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+    }
+
+    .gate-submit {
+      background: none;
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem;
+      color: var(--gold);
+      position: absolute;
+      right: 0;
+      bottom: 10px;
+      transition: transform 0.3s var(--ease), color 0.3s;
+      padding: 0;
+    }
+    .gate-submit:hover { transform: translateX(4px); color: var(--gold-lt); }
+
+    .gate-error {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--coral);
+      letter-spacing: 0.1em;
+      height: 18px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .gate-footer {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--cream3);
+      letter-spacing: 0.1em;
+      text-align: center;
+      line-height: 1.8;
+    }
+    .gate-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .gate-footer a:hover { color: var(--gold-lt); }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 68px;
+      transition: background 0.5s var(--ease), backdrop-filter 0.5s;
+    }
+    #nav.scrolled {
+      background: rgba(8,7,6,0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--gold-bdr);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--cream2);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      border: 1px solid var(--gold-bdr);
+      border-radius: 100px;
+      padding: 6px 14px;
+      white-space: nowrap;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 8vw;
+      padding-right: 8vw;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero-watermark {
+      position: absolute;
+      right: -2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 24vw;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201,168,76,0.06);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      animation: breathe 8s ease-in-out infinite;
+      z-index: 0;
+    }
+    @keyframes breathe {
+      0%,100% { opacity: 0.4; }
+      50%      { opacity: 1; }
+    }
+
+    .hero-orb {
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(4rem, 9vw, 10rem);
+      line-height: 0.95;
+      color: var(--cream);
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-rule {
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 32px;
+      transition: width 1.2s var(--ease) 0.8s;
+    }
+    .hero-rule.in { width: 80px; }
+
+    .hero-sub {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--cream2);
+      max-width: 480px;
+      margin-bottom: 44px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 3px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cream);
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(245,239,228,0.25);
+      padding: 13px 28px;
+      border-radius: 3px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+    }
+    .btn-ghost:hover { border-color: var(--cream2); color: var(--cream); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border-top: 1px solid var(--gold-bdr);
+      padding-top: 32px;
+    }
+
+    .hero-stat {
+      flex: 1;
+      padding: 0 28px 0 0;
+      position: relative;
+    }
+    .hero-stat:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--gold-bdr);
+    }
+    .hero-stat:not(:first-child) { padding-left: 28px; }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: var(--cream3);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--cream2);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── PRESS BAR ──────────────────────────────────────────── */
+    #press {
+      background: var(--bg2);
+      border-top: 1px solid var(--gold-bdr);
+      border-bottom: 1px solid var(--gold-bdr);
+      padding: 22px 8vw;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .press-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      color: var(--cream3);
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-right: 36px;
+      flex-shrink: 0;
+    }
+
+    .press-items {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      row-gap: 8px;
+    }
+
+    .press-item {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--cream3);
+      white-space: nowrap;
+      padding: 0 28px;
+      position: relative;
+    }
+    .press-item:not(:last-child)::after {
+      content: '·';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+
+    /* ─── PROBLEM ────────────────────────────────────────────── */
+    #problem {
+      background: var(--cream);
+      padding: 120px 8vw;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    #problem .section-label { color: var(--amber); }
+
+    .section-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    #problem .section-h2 {
+      font-size: clamp(2.6rem, 5vw, 5.2rem);
+      color: #1A1510;
+      line-height: 1.1;
+      margin-bottom: 72px;
+      max-width: 640px;
+    }
+
+    .problem-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+
+    .problem-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pstat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(4rem, 8vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+    .pstat-number.coral  { color: var(--coral); }
+    .pstat-number.amber  { color: var(--amber); }
+    .pstat-number.green  { color: var(--green); }
+
+    .pstat-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #1A1510;
+      text-transform: uppercase;
+    }
+
+    .pstat-body {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: #5A5048;
+      max-width: 280px;
+    }
+
+    /* ─── SOLUTION ───────────────────────────────────────────── */
+    #solution {
+      background: var(--bg);
+      padding: 120px 8vw;
+    }
+
+    #solution .section-h2 {
+      font-size: clamp(2.4rem, 4.5vw, 4.8rem);
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 64px;
+      max-width: 600px;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .core-engine-box {
+      background: var(--surface);
+      border: 1px solid var(--gold-bdr);
+      border-radius: 6px;
+      padding: 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .core-engine-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold-bg);
+      pointer-events: none;
+    }
+
+    .core-engine-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .core-engine-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 2rem;
+      color: var(--cream);
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    .core-engine-desc {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--cream2);
+    }
+
+    .core-engine-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--gold-bdr);
+      margin: 28px 0;
+    }
+
+    .core-engine-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .core-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      color: var(--cream2);
+    }
+    .core-feature::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .channel-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .channel-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 22px;
+      background: var(--surface);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .channel-row-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .channel-row-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cream);
+      flex: 1;
+    }
+
+    .channel-row-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--cream3);
+    }
+
+    .channel-bar-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+    }
+    .channel-bar-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 2px;
+      transition: width 1.4s var(--ease);
+    }
+    .channel-row.in .channel-bar-fill { width: var(--fill-w, 60%); }
+
+    /* ─── MOAT ───────────────────────────────────────────────── */
+    #moat {
+      background: var(--surface);
+      padding: 120px 8vw;
+    }
+
+    #moat .section-h2 {
+      font-size: clamp(2.4rem, 4vw, 4.4rem);
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 64px;
+      max-width: 640px;
+    }
+
+    .moat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .moat-card {
+      background: var(--bg);
+      border: 1px solid var(--gold-bdr);
+      border-radius: 6px;
+      padding: 36px;
+      transition: border-color 0.35s, transform 0.4s var(--ease);
+    }
+    .moat-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-3px);
+    }
+
+    .moat-icon {
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+      display: block;
+      color: var(--gold);
+    }
+
+    .moat-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .moat-card-desc {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--cream2);
+    }
+
+    /* Competition table */
+    .comp-table-wrap {
+      overflow-x: auto;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+    }
+
+    .comp-table th {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--gold-bdr);
+    }
+    .comp-table th:first-child { color: var(--cream3); }
+    .comp-table th:nth-child(2),
+    .comp-table th:nth-child(3) { color: var(--cream3); }
+    .comp-table th:last-child { color: var(--gold); }
+
+    .comp-table td {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--cream2);
+    }
+    .comp-table td:first-child { color: var(--cream); font-weight: 500; }
+    .comp-table td:last-child { color: var(--gold); }
+
+    .comp-table tr:last-child td { border-bottom: none; }
+
+    .check { color: var(--gold); }
+    .cross { color: var(--cream3); opacity: 0.5; }
+    .partial { color: var(--amber); }
+
+    /* ─── CHANNELS ───────────────────────────────────────────── */
+    #channels {
+      background: var(--cream);
+      padding: 120px 8vw;
+    }
+
+    #channels .section-label { color: var(--amber); }
+
+    #channels .section-h2 {
+      font-size: clamp(2.4rem, 4.5vw, 4.8rem);
+      color: #1A1510;
+      line-height: 1.1;
+      margin-bottom: 64px;
+      max-width: 640px;
+    }
+
+    .channels-table-wrap {
+      overflow-x: auto;
+      border-radius: 6px;
+      border: 1px solid rgba(26,21,16,0.1);
+    }
+
+    .channels-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+    }
+
+    .channels-table thead th {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #5A5048;
+      padding: 16px 22px;
+      text-align: left;
+      background: rgba(26,21,16,0.04);
+      border-bottom: 1px solid rgba(26,21,16,0.1);
+    }
+
+    .channels-table tbody tr {
+      position: relative;
+      transition: background 0.25s;
+    }
+    .channels-table tbody tr:hover { background: rgba(201,168,76,0.04); }
+    .channels-table tbody tr:not(:last-child) td {
+      border-bottom: 1px solid rgba(26,21,16,0.07);
+    }
+
+    .channels-table td {
+      padding: 22px 22px;
+      vertical-align: middle;
+    }
+
+    /* Left accent bar */
+    .ch-accent {
+      width: 4px;
+      padding: 0 !important;
+    }
+    .ch-accent-bar {
+      width: 4px;
+      height: 100%;
+      min-height: 54px;
+      border-radius: 2px;
+    }
+
+    .ch-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #1A1510;
+      line-height: 1.2;
+    }
+    .ch-sub {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #8A7A6E;
+      margin-top: 3px;
+    }
+
+    .ch-price {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: #2A201A;
+      white-space: nowrap;
+    }
+
+    .ch-margin {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--green);
+    }
+
+    .ch-y1 {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: #2A201A;
+      font-weight: 500;
+    }
+
+    .ch-status {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .ch-status.live {
+      background: rgba(15,110,86,0.12);
+      color: var(--green);
+      border: 1px solid rgba(15,110,86,0.25);
+    }
+    .ch-status.q2 {
+      background: rgba(46,111,163,0.12);
+      color: var(--blue);
+      border: 1px solid rgba(46,111,163,0.25);
+    }
+    .ch-status.q3 {
+      background: rgba(154,110,32,0.12);
+      color: var(--amber);
+      border: 1px solid rgba(154,110,32,0.25);
+    }
+    .ch-status.q4 {
+      background: rgba(107,95,160,0.12);
+      color: var(--lav);
+      border: 1px solid rgba(107,95,160,0.25);
+    }
+
+    .channels-table tfoot td {
+      padding: 22px 22px;
+      border-top: 2px solid rgba(26,21,16,0.15);
+      background: rgba(201,168,76,0.05);
+    }
+
+    .ch-total-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #1A1510;
+    }
+
+    .ch-total-y1 {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #1A1510;
+    }
+    .ch-total-y2 {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--amber);
+      margin-top: 3px;
+    }
+
+    /* ─── UTILITY ────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .solution-grid { grid-template-columns: 1fr; }
+      .moat-grid { grid-template-columns: 1fr; }
+      .problem-stats { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .hero-stat:not(:last-child)::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── CURSOR ──────────────────────────────────────────────── -->
+  <div id="cursor"></div>
+
+  <!-- ─── PASSWORD GATE ───────────────────────────────────────── -->
+  <div id="gate">
+    <div class="gate-card">
+      <div class="gate-logo">nucleus</div>
+      <div class="gate-series">Series B</div>
+      <div class="gate-subtitle">Investor Overview · Confidential</div>
+      <div class="gate-divider"></div>
+      <div class="gate-input-wrap">
+        <input type="password" id="gate-input" placeholder="access code" autocomplete="off" spellcheck="false" />
+        <button class="gate-submit" id="gate-btn" aria-label="Unlock">→</button>
+      </div>
+      <div class="gate-error" id="gate-error"></div>
+      <div class="gate-footer">
+        Confidential &nbsp;·&nbsp; Request access &nbsp;·&nbsp;
+        <a href="mailto:invest@nucleus.com">invest@nucleus.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NAV ─────────────────────────────────────────────────── -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">nucleus<span>+</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#channels">Channels</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#ask">The Ask</a></li>
+    </ul>
+    <div class="nav-pill">Series B · $45–50M</div>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-watermark" aria-hidden="true">nucleus</div>
+    <div class="hero-orb" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Series B · 2026</p>
+
+      <h1 class="hero-h1">
+        <span class="clip-reveal" style="transition-delay:0.15s">Your family's genes.</span>
+        <span class="clip-reveal" style="transition-delay:0.35s">Now a business.</span>
+      </h1>
+
+      <div class="hero-rule reveal" style="transition-delay:0.55s"></div>
+
+      <p class="hero-sub reveal" style="transition-delay:0.65s">
+        Five sales channels. One whole-genome test. The most advanced genomic intelligence platform ever built for families — and the physicians and researchers who serve them.
+      </p>
+
+      <div class="hero-ctas reveal" style="transition-delay:0.75s">
+        <a href="#ask" class="btn-primary" data-mag>View the ask &nbsp;→</a>
+        <a href="#solution" class="btn-ghost" data-mag>See how it works</a>
+      </div>
+
+      <div class="hero-stats reveal" style="transition-delay:0.85s">
+        <div class="hero-stat">
+          <div class="stat-label">Moore's Law</div>
+          <div class="stat-value">Reduction Continues</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-label">Total addressable market</div>
+          <div class="stat-value">$38B</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-label">Conditions screened</div>
+          <div class="stat-value">2,000+</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-label">Year 2 target</div>
+          <div class="stat-value">$80M</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PRESS BAR ─────────────────────────────────────────────── -->
+  <div id="press" aria-label="As featured in">
+    <span class="press-label">As seen in</span>
+    <div class="press-items">
+      <span class="press-item">The New York Times</span>
+      <span class="press-item">STAT News</span>
+      <span class="press-item">Forbes</span>
+      <span class="press-item">Nature Medicine</span>
+      <span class="press-item">TechCrunch</span>
+      <span class="press-item">The Atlantic</span>
+      <span class="press-item">MIT Technology Review</span>
+    </div>
+  </div>
+
+  <!-- ─── PROBLEM ───────────────────────────────────────────────── -->
+  <section id="problem">
+    <p class="section-label reveal">The Problem</p>
+    <h2 class="section-h2 reveal" style="transition-delay:0.1s">
+      Most families are<br/>flying blind.
+    </h2>
+
+    <div class="problem-stats">
+
+      <div class="problem-stat reveal" style="transition-delay:0.0s">
+        <div class="pstat-number coral clip-reveal">1 in 25</div>
+        <div class="pstat-label">Babies born with a genetic disorder</div>
+        <p class="pstat-body">Over 7,000 known genetic conditions affect newborns globally — most are detectable before conception or at birth.</p>
+      </div>
+
+      <div class="problem-stat reveal" style="transition-delay:0.12s">
+        <div class="pstat-number amber clip-reveal">95%</div>
+        <div class="pstat-label">Carriers who don't know it</div>
+        <p class="pstat-body">The vast majority of families carrying serious heritable variants have never been tested and remain unaware of their risk.</p>
+      </div>
+
+      <div class="problem-stat reveal" style="transition-delay:0.24s">
+        <div class="pstat-number green clip-reveal">$80B</div>
+        <div class="pstat-label">Spent yearly on preventable conditions</div>
+        <p class="pstat-body">Early genomic intelligence can redirect resources from acute treatment to proactive, preventive care — at massive scale.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SOLUTION ──────────────────────────────────────────────── -->
+  <section id="solution">
+    <p class="section-label reveal">The Solution</p>
+    <h2 class="section-h2 reveal" style="transition-delay:0.1s">
+      One engine.<br/>Five markets.
+    </h2>
+
+    <div class="solution-grid">
+
+      <!-- Core engine box -->
+      <div class="core-engine-box reveal" style="transition-delay:0.2s">
+        <div class="core-engine-tag">Nucleus Core Engine</div>
+        <div class="core-engine-title">Whole-genome intelligence, purpose-built for families.</div>
+        <p class="core-engine-desc">
+          A single lab-to-report infrastructure processes 30× whole-genome coverage and surfaces clinically actionable insights across 2,000+ conditions — delivered through five purpose-built product channels.
+        </p>
+        <div class="core-engine-divider"></div>
+        <div class="core-engine-features">
+          <div class="core-feature">30× whole-genome sequencing (WGS)</div>
+          <div class="core-feature">Polygenic risk scores for 50+ complex traits</div>
+          <div class="core-feature">Origin AI — proprietary longevity model</div>
+          <div class="core-feature">Embryo optimization analysis layer</div>
+          <div class="core-feature">Family tree genomic visualization</div>
+          <div class="core-feature">CLIA/CAP certified lab network</div>
+        </div>
+      </div>
+
+      <!-- Channel rows -->
+      <div class="channel-rows">
+
+        <div class="channel-row reveal" style="transition-delay:0.25s" data-fill="78">
+          <div class="channel-row-dot" style="background:var(--coral)"></div>
+          <div class="channel-row-name">IVF+</div>
+          <div class="channel-row-badge">Fertility clinics · Live</div>
+          <div class="channel-bar-track"><div class="channel-bar-fill" style="background:var(--coral);--fill-w:78%"></div></div>
+        </div>
+
+        <div class="channel-row reveal" style="transition-delay:0.37s">
+          <div class="channel-row-dot" style="background:var(--blue)"></div>
+          <div class="channel-row-name">Heritage+</div>
+          <div class="channel-row-badge">DTC families · Q2</div>
+          <div class="channel-bar-track"><div class="channel-bar-fill" style="background:var(--blue);--fill-w:62%"></div></div>
+        </div>
+
+        <div class="channel-row reveal" style="transition-delay:0.49s">
+          <div class="channel-row-dot" style="background:var(--amber)"></div>
+          <div class="channel-row-name">Med+</div>
+          <div class="channel-row-badge">Physician platform · Q3</div>
+          <div class="channel-bar-track"><div class="channel-bar-fill" style="background:var(--amber);--fill-w:55%"></div></div>
+        </div>
+
+        <div class="channel-row reveal" style="transition-delay:0.61s">
+          <div class="channel-row-dot" style="background:var(--green)"></div>
+          <div class="channel-row-name">Enterprise+</div>
+          <div class="channel-row-badge">Benefits channel · Q4</div>
+          <div class="channel-bar-track"><div class="channel-bar-fill" style="background:var(--green);--fill-w:48%"></div></div>
+        </div>
+
+        <div class="channel-row reveal" style="transition-delay:0.73s">
+          <div class="channel-row-dot" style="background:var(--lav)"></div>
+          <div class="channel-row-name">Research+</div>
+          <div class="channel-row-badge">Academic / biopharma · Q4</div>
+          <div class="channel-bar-track"><div class="channel-bar-fill" style="background:var(--lav);--fill-w:82%"></div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MOAT ───────────────────────────────────────────────────── -->
+  <section id="moat">
+    <p class="section-label reveal">Defensibility</p>
+    <h2 class="section-h2 reveal" style="transition-delay:0.1s">
+      Origin: The AI no<br/>one else has built.
+    </h2>
+
+    <div class="moat-grid">
+
+      <div class="moat-card reveal" style="transition-delay:0.15s">
+        <span class="moat-icon">⬡</span>
+        <div class="moat-card-title">Proprietary Longevity Model</div>
+        <p class="moat-card-desc">Origin is trained on 4M+ variant-phenotype pairs and delivers polygenic risk predictions across 50 complex traits — unavailable in any commercial product today.</p>
+      </div>
+
+      <div class="moat-card reveal" style="transition-delay:0.27s">
+        <span class="moat-icon">◈</span>
+        <div class="moat-card-title">Flywheel Data Advantage</div>
+        <p class="moat-card-desc">Every test enriches the model. Our longitudinal family dataset compounds in value with each cohort, creating a moat that widens with scale.</p>
+      </div>
+
+      <div class="moat-card reveal" style="transition-delay:0.39s">
+        <span class="moat-icon">⬙</span>
+        <div class="moat-card-title">Multi-Channel Distribution</div>
+        <p class="moat-card-desc">Five distinct GTM motions — IVF, DTC, clinical, enterprise benefits, research — de-risk revenue concentration and build compounding brand equity.</p>
+      </div>
+
+      <div class="moat-card reveal" style="transition-delay:0.51s">
+        <span class="moat-icon">◯</span>
+        <div class="moat-card-title">Regulatory & Lab Infrastructure</div>
+        <p class="moat-card-desc">CLIA/CAP-certified lab operations, established IRB frameworks, and existing CMS billing relationships create high barriers to replication.</p>
+      </div>
+
+    </div>
+
+    <!-- Competition comparison table -->
+    <div class="comp-table-wrap reveal" style="transition-delay:0.2s">
+      <table class="comp-table" aria-label="Competitive comparison">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>23andMe</th>
+            <th>Natera</th>
+            <th>Nucleus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Conditions screened</td>
+            <td class="partial">~70</td>
+            <td class="partial">~350</td>
+            <td class="check">2,000+</td>
+          </tr>
+          <tr>
+            <td>Whole genome (30×)</td>
+            <td class="cross">✕</td>
+            <td class="cross">✕</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>Polygenic longevity AI</td>
+            <td class="cross">✕</td>
+            <td class="cross">✕</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>Embryo optimization</td>
+            <td class="cross">✕</td>
+            <td class="partial">Partial</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>Family tree visualization</td>
+            <td class="partial">Basic</td>
+            <td class="cross">✕</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td>B2B clinical channel</td>
+            <td class="cross">✕</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── CHANNELS TABLE ─────────────────────────────────────────── -->
+  <section id="channels">
+    <p class="section-label reveal">Five Channels</p>
+    <h2 class="section-h2 reveal" style="transition-delay:0.1s">
+      One test.<br/>Five different buyers.
+    </h2>
+
+    <div class="channels-table-wrap reveal" style="transition-delay:0.2s">
+      <table class="channels-table" aria-label="Sales channel breakdown">
+        <thead>
+          <tr>
+            <th style="width:4px;padding:0"></th>
+            <th>Channel</th>
+            <th>Price Point</th>
+            <th>Est. Margin</th>
+            <th>Year 1 Rev</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- IVF+ -->
+          <tr class="reveal" style="transition-delay:0.1s">
+            <td class="ch-accent"><div class="ch-accent-bar" style="background:var(--coral)"></div></td>
+            <td>
+              <div class="ch-name">IVF+</div>
+              <div class="ch-sub">Fertility clinics</div>
+            </td>
+            <td class="ch-price">$40K / cycle</td>
+            <td class="ch-margin">~75%</td>
+            <td class="ch-y1">$12M</td>
+            <td><span class="ch-status live">Live</span></td>
+          </tr>
+
+          <!-- Heritage+ -->
+          <tr class="reveal" style="transition-delay:0.18s">
+            <td class="ch-accent"><div class="ch-accent-bar" style="background:var(--blue)"></div></td>
+            <td>
+              <div class="ch-name">Heritage+</div>
+              <div class="ch-sub">Direct-to-consumer families</div>
+            </td>
+            <td class="ch-price">$1,500 – $4K</td>
+            <td class="ch-margin">~70%</td>
+            <td class="ch-y1">$3M</td>
+            <td><span class="ch-status q2">Q2</span></td>
+          </tr>
+
+          <!-- Med+ -->
+          <tr class="reveal" style="transition-delay:0.26s">
+            <td class="ch-accent"><div class="ch-accent-bar" style="background:var(--amber)"></div></td>
+            <td>
+              <div class="ch-name">Med+</div>
+              <div class="ch-sub">Physician platform</div>
+            </td>
+            <td class="ch-price">$800 – $2,500</td>
+            <td class="ch-margin">~60%</td>
+            <td class="ch-y1">$3.6M</td>
+            <td><span class="ch-status q3">Q3</span></td>
+          </tr>
+
+          <!-- Enterprise+ -->
+          <tr class="reveal" style="transition-delay:0.34s">
+            <td class="ch-accent"><div class="ch-accent-bar" style="background:var(--green)"></div></td>
+            <td>
+              <div class="ch-name">Enterprise+</div>
+              <div class="ch-sub">Employer benefits</div>
+            </td>
+            <td class="ch-price">$200 – $500</td>
+            <td class="ch-margin">~65%</td>
+            <td class="ch-y1">$2.5M</td>
+            <td><span class="ch-status q4">Q4</span></td>
+          </tr>
+
+          <!-- Research+ -->
+          <tr class="reveal" style="transition-delay:0.42s">
+            <td class="ch-accent"><div class="ch-accent-bar" style="background:var(--lav)"></div></td>
+            <td>
+              <div class="ch-name">Research+</div>
+              <div class="ch-sub">Academic &amp; biopharma</div>
+            </td>
+            <td class="ch-price">$500K – $5M / yr</td>
+            <td class="ch-margin">~85%</td>
+            <td class="ch-y1">$3M</td>
+            <td><span class="ch-status q4">Q4</span></td>
+          </tr>
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td style="width:4px;padding:0"></td>
+            <td colspan="3">
+              <div class="ch-total-label">Total Projected</div>
+            </td>
+            <td colspan="2">
+              <div class="ch-total-y1">$24.1M Year 1</div>
+              <div class="ch-total-y2">$60–80M Year 2 target</div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── DIVIDER ─────────────────────────────────────────────── -->
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ─── PRODUCT SECTIONS ─────────────────────────────────────── -->
+
+  <!-- ── IVF+ ── -->
+  <section id="p-ivf" style="background:var(--bg);padding:120px 60px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:2vw;right:4vw;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12vw;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;user-select:none;">01</div>
+    <div style="max-width:1200px;margin:0 auto;">
+      <!-- Channel header -->
+      <div class="reveal" style="display:flex;align-items:center;gap:20px;margin-bottom:16px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#C9A84C;flex-shrink:0;"></span>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,5vw,72px);color:var(--cream);line-height:1;">IVF+</em>
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:rgba(201,168,76,0.15);color:#C9A84C;border:1px solid rgba(201,168,76,0.3);border-radius:40px;padding:4px 14px;">Live</span>
+      </div>
+      <!-- Stats row -->
+      <div class="reveal" style="display:flex;gap:40px;flex-wrap:wrap;margin-bottom:48px;transition-delay:0.1s;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C9A84C;">$12B</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">TAM</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C9A84C;">~75%</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Gross Margin</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C9A84C;">$5M</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">2025 Revenue</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C9A84C;">300K</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">US Cycles/Year</div></div>
+      </div>
+      <!-- Callout box -->
+      <div class="reveal" style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:24px 32px;margin-bottom:48px;transition-delay:0.15s;">
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2.4vw,32px);color:#C9A84C;">"Your DNA. Your Baby."</div>
+        <div style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);margin-top:8px;">The only whole-genome PGT platform with polygenic scoring — giving parents the most complete picture of their embryo's genetic health.</div>
+      </div>
+      <!-- Two-col -->
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px;transition-delay:0.2s;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;margin-bottom:20px;">Product Breakdown</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C9A84C;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Whole-Genome Embryo Sequencing</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C9A84C;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Origin AI — 9 Predictive Models</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C9A84C;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Embryo Comparison Software</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C9A84C;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Genetic Counselor Co-Sign</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C9A84C;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Clinic &amp; Patient Portals</span></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;margin-bottom:20px;">Launch Strategy</div>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:12px;counter-reset:launch;">
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;min-width:20px;margin-top:2px;">01</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Anchor Clinics Live <span style="color:#C9A84C;font-size:11px;">(Done)</span></span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;min-width:20px;margin-top:2px;">02</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Scale to 25 US Clinics Q4</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;min-width:20px;margin-top:2px;">03</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Mexico Full Rollout Q2</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;min-width:20px;margin-top:2px;">04</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Self-Serve Portal Launch</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;min-width:20px;margin-top:2px;">05</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Insurance Pre-Auth Q4</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;min-width:20px;margin-top:2px;">06</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">India Strategic Discussions Underway</span></li>
+          </ol>
+        </div>
+      </div>
+      <!-- TAM bar -->
+      <div class="reveal" style="margin-bottom:40px;transition-delay:0.25s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:16px;">TAM Capture</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:45%;height:100%;background:#C9A84C;border-radius:3px;transition:width 1.2s var(--ease);"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#C9A84C;">$12B addressable</span>
+        </div>
+      </div>
+      <!-- SWOT -->
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.12);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.3s;">
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px;">Strength</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Only whole-genome PGT + polygenic scoring at clinical scale</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Weakness</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Bioethics scrutiny on trait selection features</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Opportunity</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">IVF demand growing 10% annually globally</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--lav);margin-bottom:10px;">Threat</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">FDA may regulate polygenic embryo selection</p></div>
+      </div>
+      <!-- Demo link -->
+      <div class="reveal" style="transition-delay:0.35s;">
+        <a href="https://mynucleus.com/ivf" target="_blank" rel="noopener" class="mag" data-mag style="display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#C9A84C;border:1px solid rgba(201,168,76,0.35);border-radius:4px;padding:14px 28px;text-decoration:none;transition:background 0.3s,border-color 0.3s;">View IVF+ Demo <span style="font-size:16px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ── Heritage+ ── -->
+  <section id="p-heritage" style="background:var(--cream);padding:120px 60px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:2vw;right:4vw;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12vw;color:rgba(0,0,0,0.04);line-height:1;pointer-events:none;user-select:none;">02</div>
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="display:flex;align-items:center;gap:20px;margin-bottom:16px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#0F6E56;flex-shrink:0;"></span>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,5vw,72px);color:#0F6E56;line-height:1;">Heritage+</em>
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:rgba(15,110,86,0.12);color:#0F6E56;border:1px solid rgba(15,110,86,0.3);border-radius:40px;padding:4px 14px;">Pre-Launch</span>
+      </div>
+      <div class="reveal" style="display:flex;gap:40px;flex-wrap:wrap;margin-bottom:48px;transition-delay:0.1s;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#0F6E56;">$4.2B</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">TAM</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#0F6E56;">~70%</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">Gross Margin</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#0F6E56;">$1,500–$4,000</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">Price Range</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#0F6E56;">73M</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">US Households Target</div></div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px;transition-delay:0.2s;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0F6E56;margin-bottom:20px;">Product Breakdown</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#0F6E56;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Whole-Genome Family Sequencing</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#0F6E56;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Heritage Family Tree Visualization</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#0F6E56;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Trait &amp; Disease Risk Reports</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#0F6E56;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Genetic Counselor Delivery</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#0F6E56;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Heritage+ Gift Packaging</span></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0F6E56;margin-bottom:20px;">Launch Strategy</div>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#0F6E56;min-width:20px;margin-top:2px;">01</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">DTC Pre-Sale Launch</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#0F6E56;min-width:20px;margin-top:2px;">02</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Influencer &amp; PR Seeding</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#0F6E56;min-width:20px;margin-top:2px;">03</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Holiday Gift Campaign Q4</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#0F6E56;min-width:20px;margin-top:2px;">04</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">B2B Gift Partnerships</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="reveal" style="margin-bottom:40px;transition-delay:0.25s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6E6560;margin-bottom:16px;">TAM Capture</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="flex:1;height:6px;background:rgba(0,0,0,0.08);border-radius:3px;overflow:hidden;"><div style="width:25%;height:100%;background:#0F6E56;border-radius:3px;"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#0F6E56;">$4.2B addressable</span>
+        </div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(15,110,86,0.1);border:1px solid rgba(15,110,86,0.18);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.3s;">
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0F6E56;margin-bottom:10px;">Strength</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">Unique emotional family product — whole-genome for entire households</p></div>
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Weakness</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">Consumer education required — higher ticket than 23andMe</p></div>
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0F6E56;margin-bottom:10px;">Opportunity</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">73M US households already spend on ancestry products</p></div>
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--lav);margin-bottom:10px;">Threat</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">23andMe brand damage creates market opening — and consumer trust risk</p></div>
+      </div>
+      <div class="reveal" style="transition-delay:0.35s;">
+        <a href="heritage-plus_1.html" target="_blank" rel="noopener" class="mag" data-mag style="display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0F6E56;border:1px solid rgba(15,110,86,0.35);border-radius:4px;padding:14px 28px;text-decoration:none;transition:background 0.3s,border-color 0.3s;">View Heritage+ Demo <span style="font-size:16px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ── Med+ ── -->
+  <section id="p-med" style="background:var(--bg);padding:120px 60px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:2vw;right:4vw;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12vw;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;user-select:none;">03</div>
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="display:flex;align-items:center;gap:20px;margin-bottom:16px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#C45840;flex-shrink:0;"></span>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,5vw,72px);color:var(--cream);line-height:1;">Med+</em>
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:rgba(196,88,64,0.15);color:#C45840;border:1px solid rgba(196,88,64,0.3);border-radius:40px;padding:4px 14px;">In Development</span>
+      </div>
+      <div class="reveal" style="display:flex;gap:40px;flex-wrap:wrap;margin-bottom:48px;transition-delay:0.1s;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C45840;">$8.5B</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">TAM</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C45840;">~60%</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Gross Margin</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C45840;">$800–$2,500</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Per Test</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#C45840;">1M+</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Physician Orders/Year</div></div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px;transition-delay:0.2s;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C45840;margin-bottom:20px;">Product Breakdown</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C45840;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Clinical Whole-Genome Report</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C45840;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">ACMG-Compliant Variant Classification</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C45840;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">EHR Integration (Epic)</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C45840;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Genetic Counselor Consultation Layer</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#C45840;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Physician Dashboard</span></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C45840;margin-bottom:20px;">Launch Strategy</div>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;min-width:20px;margin-top:2px;">01</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">5 Pilot Clinics Q2</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;min-width:20px;margin-top:2px;">02</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">ACMG Accreditation Q3</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;min-width:20px;margin-top:2px;">03</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Oncology Focus First</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;min-width:20px;margin-top:2px;">04</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Epic Integration Q3</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;min-width:20px;margin-top:2px;">05</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Insurance Billing Codes Q4</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="reveal" style="margin-bottom:40px;transition-delay:0.25s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:16px;">TAM Capture</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:35%;height:100%;background:#C45840;border-radius:3px;"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#C45840;">$8.5B addressable</span>
+        </div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(196,88,64,0.08);border:1px solid rgba(196,88,64,0.18);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.3s;">
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C45840;margin-bottom:10px;">Strength</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">ACMG compliance + clinical-grade rigor that lab giants lack</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Weakness</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Long sales cycle for hospital and health system procurement</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Opportunity</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Oncology genomics growing 18% annually — fastest clinical segment</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--lav);margin-bottom:10px;">Threat</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Quest &amp; LabCorp entrenched in physician ordering channels</p></div>
+      </div>
+      <div class="reveal" style="transition-delay:0.35s;">
+        <a href="med-plus-demo.html" target="_blank" rel="noopener" class="mag" data-mag style="display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#C45840;border:1px solid rgba(196,88,64,0.35);border-radius:4px;padding:14px 28px;text-decoration:none;transition:background 0.3s,border-color 0.3s;">View Med+ Demo <span style="font-size:16px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ── Enterprise+ ── -->
+  <section id="p-enterprise" style="background:var(--cream);padding:120px 60px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:2vw;right:4vw;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12vw;color:rgba(0,0,0,0.04);line-height:1;pointer-events:none;user-select:none;">04</div>
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="display:flex;align-items:center;gap:20px;margin-bottom:16px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#2E6FA3;flex-shrink:0;"></span>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,5vw,72px);color:#2E6FA3;line-height:1;">Enterprise+</em>
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:rgba(46,111,163,0.12);color:#2E6FA3;border:1px solid rgba(46,111,163,0.3);border-radius:40px;padding:4px 14px;">In Development</span>
+      </div>
+      <div class="reveal" style="display:flex;gap:40px;flex-wrap:wrap;margin-bottom:48px;transition-delay:0.1s;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#2E6FA3;">$6.2B</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">TAM</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#2E6FA3;">~65%</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">Gross Margin</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#2E6FA3;">$200–$500</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">Per Employee</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#2E6FA3;">5,000</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6E6560;margin-top:4px;">Self-Insured US Employers 250+</div></div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px;transition-delay:0.2s;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2E6FA3;margin-bottom:20px;">Product Breakdown</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#2E6FA3;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Employee Genomic Baseline Program</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#2E6FA3;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Risk Stratification Dashboard</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#2E6FA3;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">ROI Calculator &amp; Reporting</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#2E6FA3;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">GINA-Compliant Consent Framework</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#2E6FA3;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Benefits Integration</span></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2E6FA3;margin-bottom:20px;">Launch Strategy</div>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#2E6FA3;min-width:20px;margin-top:2px;">01</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">3 Pilot Employers Q3</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#2E6FA3;min-width:20px;margin-top:2px;">02</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Benefits Broker Channel</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#2E6FA3;min-width:20px;margin-top:2px;">03</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">HSA/FSA Eligible Certification</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#2E6FA3;min-width:20px;margin-top:2px;">04</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:#080706;">Insurance Partnership Pilot</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="reveal" style="margin-bottom:40px;transition-delay:0.25s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6E6560;margin-bottom:16px;">TAM Capture</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="flex:1;height:6px;background:rgba(0,0,0,0.08);border-radius:3px;overflow:hidden;"><div style="width:30%;height:100%;background:#2E6FA3;border-radius:3px;"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#2E6FA3;">$6.2B addressable</span>
+        </div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(46,111,163,0.1);border:1px solid rgba(46,111,163,0.18);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.3s;">
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2E6FA3;margin-bottom:10px;">Strength</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">Clear ROI narrative for CFOs — measurable healthcare cost reduction</p></div>
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Weakness</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">Employee privacy concerns can stall adoption</p></div>
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0F6E56;margin-bottom:10px;">Opportunity</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">Self-insured market actively seeking healthcare cost reduction tools</p></div>
+        <div style="padding:24px;background:var(--cream);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--lav);margin-bottom:10px;">Threat</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:#141210;line-height:1.6;">GINA regulatory complexity adds compliance overhead</p></div>
+      </div>
+      <div class="reveal" style="transition-delay:0.35s;">
+        <a href="enterprise-plus-demo.html" target="_blank" rel="noopener" class="mag" data-mag style="display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#2E6FA3;border:1px solid rgba(46,111,163,0.35);border-radius:4px;padding:14px 28px;text-decoration:none;transition:background 0.3s,border-color 0.3s;">View Enterprise+ Demo <span style="font-size:16px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ── Research+ ── -->
+  <section id="p-research" style="background:var(--bg);padding:120px 60px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:2vw;right:4vw;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:12vw;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;user-select:none;">05</div>
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="display:flex;align-items:center;gap:20px;margin-bottom:16px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#6B5FA0;flex-shrink:0;"></span>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,5vw,72px);color:var(--cream);line-height:1;">Research+</em>
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:rgba(107,95,160,0.15);color:#6B5FA0;border:1px solid rgba(107,95,160,0.3);border-radius:40px;padding:4px 14px;">In Development</span>
+      </div>
+      <div class="reveal" style="display:flex;gap:40px;flex-wrap:wrap;margin-bottom:48px;transition-delay:0.1s;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#6B5FA0;">$18B</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">TAM</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#6B5FA0;">~85%</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Gross Margin</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#6B5FA0;">$500K–$5M</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Deal Size</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:28px;color:#6B5FA0;">4,000+</div><div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream3);margin-top:4px;">Pharma/Biotech Companies</div></div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px;transition-delay:0.2s;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6B5FA0;margin-bottom:20px;">Product Breakdown</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#6B5FA0;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Anonymised Genomic Dataset Licensing</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#6B5FA0;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Origin Model API Access</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#6B5FA0;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Custom Cohort Building</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#6B5FA0;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Longitudinal Family Health Data</span></li>
+            <li style="display:flex;align-items:flex-start;gap:12px;"><span style="width:6px;height:6px;border-radius:50%;background:#6B5FA0;margin-top:6px;flex-shrink:0;"></span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Research Portal</span></li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6B5FA0;margin-bottom:20px;">Launch Strategy</div>
+          <ol style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#6B5FA0;min-width:20px;margin-top:2px;">01</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">First Pharma Partnership Q4</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#6B5FA0;min-width:20px;margin-top:2px;">02</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">API Beta with 3 Biotech Partners</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#6B5FA0;min-width:20px;margin-top:2px;">03</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">IRB Protocol Established</span></li>
+            <li style="display:flex;align-items:flex-start;gap:14px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#6B5FA0;min-width:20px;margin-top:2px;">04</span><span style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Dataset Catalogue Live</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="reveal" style="margin-bottom:40px;transition-delay:0.25s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:16px;">TAM Capture</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:55%;height:100%;background:#6B5FA0;border-radius:3px;"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:#6B5FA0;">$18B addressable</span>
+        </div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(107,95,160,0.08);border:1px solid rgba(107,95,160,0.18);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.3s;">
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6B5FA0;margin-bottom:10px;">Strength</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Unique multi-generational family genomic data — no comparable asset exists</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Weakness</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">IRB and consent complexity adds lead time to each deal</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Opportunity</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Pharma spending $5B+/year on genomic data — demand outpaces supply</p></div>
+        <div style="padding:24px;background:var(--surface);"><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--lav);margin-bottom:10px;">Threat</div><p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.6;">Data privacy regulation tightening globally — GDPR, CCPA and beyond</p></div>
+      </div>
+      <div class="reveal" style="transition-delay:0.35s;">
+        <a href="research-plus-demo.html" target="_blank" rel="noopener" class="mag" data-mag style="display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6B5FA0;border:1px solid rgba(107,95,160,0.35);border-radius:4px;padding:14px 28px;text-decoration:none;transition:background 0.3s,border-color 0.3s;">View Research+ Demo <span style="font-size:16px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ─── TEAM ──────────────────────────────────────────────────── -->
+  <section id="team" style="background:var(--bg);padding:120px 60px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:64px;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Team</div>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(32px,4vw,60px);color:var(--cream);line-height:1.15;display:block;">Science-first. Builder-led.<br>Media-validated.</em>
+      </div>
+      <!-- Leader cards -->
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(201,168,76,0.08);border:1px solid var(--gold-bdr);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.1s;">
+        <!-- Kian -->
+        <div style="padding:36px 28px;background:var(--surface);">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#C9A84C;margin-bottom:16px;">KS</div>
+          <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">CEO · Founder · Gold</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--cream);margin-bottom:4px;">Kian Sadeghi</div>
+          <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);margin-bottom:16px;">Chief Executive Officer</div>
+          <p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.65;">Founder of Nucleus Genomics. Forbes 30 Under 30. Built the company from zero to clinical-stage. Featured in WSJ, TIME, Bloomberg. Drives vision, fundraising, and strategic partnerships.</p>
+        </div>
+        <!-- Lasse -->
+        <div style="padding:36px 28px;background:var(--surface);">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(15,110,86,0.15);border:1px solid rgba(15,110,86,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#0F6E56;margin-bottom:16px;">LF</div>
+          <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0F6E56;margin-bottom:8px;">CSO · Science</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--cream);margin-bottom:4px;">Lasse Folkersen PhD</div>
+          <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);margin-bottom:16px;">Chief Science Officer</div>
+          <p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.65;">Computational genomics pioneer. 200+ peer-reviewed publications. Former Karolinska Institute. Architect of Origin AI — the polygenic scoring engine underpinning every Nucleus product.</p>
+        </div>
+        <!-- Nathan -->
+        <div style="padding:36px 28px;background:var(--surface);">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(196,88,64,0.15);border:1px solid rgba(196,88,64,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#C45840;margin-bottom:16px;">NT</div>
+          <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C45840;margin-bottom:8px;">CCO · Clinical</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--cream);margin-bottom:4px;">Nathan Treff PhD HCLD</div>
+          <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);margin-bottom:16px;">Chief Clinical Officer</div>
+          <p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);line-height:1.65;">Preeminent embryologist and clinical geneticist. HCLD certified. Pioneered the clinical whole-genome embryo testing protocols that define the IVF+ offering. 25+ years in reproductive genomics.</p>
+        </div>
+      </div>
+      <!-- Advisors -->
+      <div class="reveal" style="margin-bottom:16px;transition-delay:0.15s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:24px;">Scientific &amp; Clinical Advisors</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <div style="padding:20px;background:var(--surface);border:1px solid var(--gold-bdr);border-radius:6px;">
+            <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2E6FA3;margin-bottom:6px;">Genetics</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--cream);">Barry Starr PhD</div>
+            <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--cream3);margin-top:4px;">Stanford · Science Communication</div>
+          </div>
+          <div style="padding:20px;background:var(--surface);border:1px solid var(--gold-bdr);border-radius:6px;">
+            <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#6B5FA0;margin-bottom:6px;">Immunogenomics</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--cream);">Jerry Lanchbury PhD</div>
+            <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--cream3);margin-top:4px;">Clinical Genomics · HLA Specialist</div>
+          </div>
+          <div style="padding:20px;background:var(--surface);border:1px solid var(--gold-bdr);border-radius:6px;">
+            <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#C9A84C;margin-bottom:6px;">Genetic Counseling</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--cream);">Ellen H. Goldstein MD</div>
+            <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--cream3);margin-top:4px;">Clinical Genetics · Patient Delivery</div>
+          </div>
+          <div style="padding:20px;background:var(--surface);border:1px solid var(--gold-bdr);border-radius:6px;">
+            <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Reproductive Medicine</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--cream);">Enrique Cervantes MD</div>
+            <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--cream3);margin-top:4px;">IVF · Mexico &amp; LATAM Markets</div>
+          </div>
+        </div>
+      </div>
+      <!-- Hiring pills -->
+      <div class="reveal" style="transition-delay:0.2s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:16px;">Now Hiring</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;border:1px solid var(--gold-bdr);border-radius:40px;padding:6px 16px;color:var(--cream2);">CFO</span>
+          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;border:1px solid var(--gold-bdr);border-radius:40px;padding:6px 16px;color:var(--cream2);">CMO</span>
+          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;border:1px solid var(--gold-bdr);border-radius:40px;padding:6px 16px;color:var(--cream2);">Head of Enterprise Sales</span>
+          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;border:1px solid var(--gold-bdr);border-radius:40px;padding:6px 16px;color:var(--cream2);">VP Clinical Affairs</span>
+          <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;border:1px solid var(--gold-bdr);border-radius:40px;padding:6px 16px;color:var(--cream2);">Head of Heritage+ Product</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ─── UNIT ECONOMICS ────────────────────────────────────────── -->
+  <section id="economics" style="background:var(--cream);padding:120px 60px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:16px;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#0F6E56;margin-bottom:20px;">Unit Economics</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,58px);font-weight:300;color:#080706;line-height:1.15;">Cost in. Multiples out.</div>
+      </div>
+      <!-- Disclaimer banner -->
+      <div class="reveal" style="background:rgba(154,110,32,0.1);border:1px solid rgba(154,110,32,0.25);border-radius:6px;padding:14px 20px;margin-bottom:48px;display:flex;align-items:center;gap:12px;transition-delay:0.05s;">
+        <span style="font-size:16px;">⚠</span>
+        <span style="font-family:'Syne',sans-serif;font-size:12px;color:#9A6E20;font-weight:600;">Figures shown are illustrative — for demo purposes only and do not constitute financial statements or projections.</span>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;transition-delay:0.1s;">
+        <!-- Left: cost stack -->
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6E6560;margin-bottom:24px;">Per-Test Cost Stack</div>
+          <table style="width:100%;border-collapse:collapse;">
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
+                <td style="padding:12px 0;font-family:'Syne',sans-serif;font-size:13px;color:#141210;">Illumina Raw Data</td>
+                <td style="padding:12px 0;font-family:'DM Mono',monospace;font-size:14px;color:#080706;text-align:right;">$110</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
+                <td style="padding:12px 0;font-family:'Syne',sans-serif;font-size:13px;color:#141210;">Processing &amp; Bioinformatics</td>
+                <td style="padding:12px 0;font-family:'DM Mono',monospace;font-size:14px;color:#080706;text-align:right;">$80</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
+                <td style="padding:12px 0;font-family:'Syne',sans-serif;font-size:13px;color:#141210;">Genetic Counseling</td>
+                <td style="padding:12px 0;font-family:'DM Mono',monospace;font-size:14px;color:#080706;text-align:right;">$60</td>
+              </tr>
+              <tr style="background:rgba(0,0,0,0.03);">
+                <td style="padding:14px 0;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#080706;">Total COGS</td>
+                <td style="padding:14px 0;font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:#080706;text-align:right;">$250</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:24px;padding:20px;background:rgba(0,0,0,0.04);border-radius:6px;border-left:3px solid rgba(0,0,0,0.15);">
+            <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#6E6560;margin-bottom:8px;">Overhead</div>
+            <div style="font-family:'DM Mono',monospace;font-size:20px;color:#080706;">$800K<span style="font-size:13px;color:#6E6560;">/month</span></div>
+            <div style="font-family:'Syne',sans-serif;font-size:12px;color:#6E6560;margin-top:4px;">Scales to $1.5M/month at full build</div>
+          </div>
+        </div>
+        <!-- Right: gross margin bars -->
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6E6560;margin-bottom:24px;">Gross Margin by Channel</div>
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:#080706;">IVF+</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:#C9A84C;">~75%</span></div>
+              <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;"><div style="width:75%;height:100%;background:#C9A84C;border-radius:4px;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:#080706;">Heritage+</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:#0F6E56;">~70%</span></div>
+              <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;"><div style="width:70%;height:100%;background:#0F6E56;border-radius:4px;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:#080706;">Med+</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:#C45840;">~60%</span></div>
+              <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;"><div style="width:60%;height:100%;background:#C45840;border-radius:4px;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:#080706;">Enterprise+</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:#2E6FA3;">~65%</span></div>
+              <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;"><div style="width:65%;height:100%;background:#2E6FA3;border-radius:4px;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:#080706;">Research+</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:#6B5FA0;">~85%</span></div>
+              <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;"><div style="width:85%;height:100%;background:#6B5FA0;border-radius:4px;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ─── FINANCIALS ────────────────────────────────────────────── -->
+  <section id="financials" style="background:var(--bg);padding:120px 60px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:64px;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Financials</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,58px);font-weight:300;color:var(--cream);line-height:1.15;">Path to $80M ARR.</div>
+      </div>
+      <!-- Three year columns -->
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gold-bdr);border:1px solid var(--gold-bdr);border-radius:8px;overflow:hidden;margin-bottom:48px;transition-delay:0.1s;">
+        <!-- 2025 -->
+        <div style="padding:36px 28px;background:var(--surface);">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:8px;">2025 CURRENT</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--cream);margin-bottom:8px;">$5M</div>
+          <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);margin-bottom:24px;">IVF+ only</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;"><div style="width:100%;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:#C9A84C;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;white-space:nowrap;">IVF+ $5M</span></div>
+          </div>
+        </div>
+        <!-- 2026 -->
+        <div style="padding:36px 28px;background:var(--surface);">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:8px;">2026 POST-RAISE</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--cream);margin-bottom:8px;">$24.1M</div>
+          <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);margin-bottom:24px;">5 channels launching</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:50%;height:100%;background:#C9A84C;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;white-space:nowrap;">IVF+ $12M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:25%;height:100%;background:#0F6E56;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#0F6E56;white-space:nowrap;">Heritage+ $6M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:15%;height:100%;background:#C45840;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;white-space:nowrap;">Med+ $3.6M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:10%;height:100%;background:#2E6FA3;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#2E6FA3;white-space:nowrap;">Ent+ $2.5M</span></div>
+          </div>
+        </div>
+        <!-- 2027 -->
+        <div style="padding:36px 28px;background:var(--surface);">
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:8px;">2027 SCALE</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--cream);margin-bottom:8px;">$60–80M</div>
+          <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);margin-bottom:24px;">Full build · all channels</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:40%;height:100%;background:#C9A84C;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C9A84C;white-space:nowrap;">IVF+ $30M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:20%;height:100%;background:#0F6E56;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#0F6E56;white-space:nowrap;">Heritage+ $15M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:15%;height:100%;background:#C45840;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#C45840;white-space:nowrap;">Med+ $12M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:10%;height:100%;background:#2E6FA3;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#2E6FA3;white-space:nowrap;">Ent+ $8M</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:15%;height:100%;background:#6B5FA0;border-radius:3px;"></div></div><span style="font-family:'DM Mono',monospace;font-size:11px;color:#6B5FA0;white-space:nowrap;">Research+ $15M</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="padding:20px 24px;background:var(--surface);border:1px solid var(--gold-bdr);border-radius:6px;transition-delay:0.15s;">
+        <p style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream3);line-height:1.7;">Break-even reached at <span style="color:var(--gold);font-weight:600;">450 IVF+ customers/month</span>. Series C milestone triggered at <span style="color:var(--gold);font-weight:600;">$80M ARR</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ─── THE ASK ────────────────────────────────────────────────── -->
+  <section id="ask" style="background:var(--bg);padding:120px 60px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:24px;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">The Ask</div>
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(40px,6vw,96px);color:var(--cream);line-height:1;display:block;">$45–50M<br>Series B.</em>
+      </div>
+      <div class="reveal" style="margin-bottom:64px;transition-delay:0.1s;">
+        <p style="font-family:'Syne',sans-serif;font-size:16px;color:var(--cream2);line-height:1.7;max-width:600px;">24 months. Five channels launched. Rocket fuel to revenue.</p>
+      </div>
+      <!-- Fund allocation bars -->
+      <div class="reveal" style="margin-bottom:64px;transition-delay:0.15s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:28px;">Fund Allocation</div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);">Overhead Runway 24mo</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">$16M</span></div>
+            <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="width:34%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);">Sales &amp; Marketing</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">$12M</span></div>
+            <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="width:26%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);">Channel Builds</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">$8M</span></div>
+            <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="width:18%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);">Clinical &amp; Regulatory</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">$4M</span></div>
+            <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="width:9%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);">Research &amp; Data Infra</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">$2M</span></div>
+            <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="width:5%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-family:'Syne',sans-serif;font-size:13px;color:var(--cream2);">Working Capital</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">$6M</span></div>
+            <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="width:14%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- 24-month milestones -->
+      <div class="reveal" style="transition-delay:0.2s;">
+        <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);margin-bottom:32px;">24-Month Milestones</div>
+        <div style="display:flex;flex-direction:column;gap:0;border-left:2px solid var(--gold-bdr);padding-left:32px;">
+          <div style="position:relative;padding-bottom:28px;">
+            <div style="position:absolute;left:-38px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 1–3</div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Heritage+ DTC Pre-Sale Launch</div>
+          </div>
+          <div style="position:relative;padding-bottom:28px;">
+            <div style="position:absolute;left:-38px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 3–6</div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Med+ Pilot Clinics — 5 Sites Active</div>
+          </div>
+          <div style="position:relative;padding-bottom:28px;">
+            <div style="position:absolute;left:-38px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 6–9</div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Heritage+ at Scale — Holiday Campaign</div>
+          </div>
+          <div style="position:relative;padding-bottom:28px;">
+            <div style="position:absolute;left:-38px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 9–12</div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Enterprise+ Pilot Employers Active</div>
+          </div>
+          <div style="position:relative;padding-bottom:28px;">
+            <div style="position:absolute;left:-38px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--gold-lt);border:2px solid var(--bg);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 12</div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream);font-weight:600;">$3M MRR</div>
+          </div>
+          <div style="position:relative;padding-bottom:28px;">
+            <div style="position:absolute;left:-38px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 18</div>
+            <div style="font-family:'Syne',sans-serif;font-size:14px;color:var(--cream2);">Research+ First Pharma Partnership Signed</div>
+          </div>
+          <div style="position:relative;">
+            <div style="position:absolute;left:-38px;top:3px;width:14px;height:14px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);left:-40px;"></div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);margin-bottom:4px;">Month 24</div>
+            <div style="font-family:'Syne',sans-serif;font-size:16px;color:var(--cream);font-weight:700;">$80M ARR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="height:1px;background:rgba(201,168,76,0.12);margin:0;"></div>
+
+  <!-- ─── CLOSE ──────────────────────────────────────────────────── -->
+  <section id="close" style="background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 60px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="max-width:900px;margin:0 auto;position:relative;">
+      <div class="reveal" style="margin-bottom:64px;">
+        <em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(28px,4.5vw,72px);color:var(--cream);line-height:1.2;display:block;">"Don't let your family history<br>define your family's future."</em>
+      </div>
+      <!-- 4 closing stats -->
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-bottom:80px;transition-delay:0.1s;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:clamp(24px,3vw,42px);color:var(--gold);">2,000+</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream3);margin-top:8px;">Conditions</div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:clamp(24px,3vw,42px);color:var(--gold);">$38B</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream3);margin-top:8px;">Market</div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:clamp(24px,3vw,42px);color:var(--gold);">5</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream3);margin-top:8px;">Channels</div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:clamp(24px,3vw,42px);color:var(--gold);">$45M</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream3);margin-top:8px;">Ask</div>
+        </div>
+      </div>
+      <!-- CTA -->
+      <div class="reveal" style="transition-delay:0.2s;">
+        <a href="mailto:investors@mynucleus.com" class="mag" data-mag style="display:inline-flex;align-items:center;gap:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--bg);background:var(--gold);border-radius:4px;padding:18px 40px;text-decoration:none;transition:background 0.3s;">Request full deck <span style="font-size:18px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer style="background:var(--surface);border-top:1px solid var(--gold-bdr);padding:28px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--cream);letter-spacing:0.04em;">nucleus<span style="color:var(--gold);">+</span></div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--cream3);letter-spacing:0.1em;text-transform:uppercase;">CONFIDENTIAL &middot; NUCLEUS GENOMICS, INC. &middot; 2026</div>
+    <a href="https://mynucleus.com" target="_blank" rel="noopener" style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cream3);text-decoration:none;letter-spacing:0.06em;">mynucleus.com</a>
+  </footer>
+
+  <!-- ─── SCRIPTS ──────────────────────────────────────────────── -->
+  <script>
+    /* ── Password gate ── */
+    (function () {
+      const SK = 'nucleus_v2_unlocked';
+      const PASS = 'nucleus2026';
+      const gate = document.getElementById('gate');
+      const inp  = document.getElementById('gate-input');
+      const btn  = document.getElementById('gate-btn');
+      const err  = document.getElementById('gate-error');
+
+      if (sessionStorage.getItem(SK) === '1') {
+        gate.classList.add('hidden');
+        return;
+      }
+
+      function attempt() {
+        if (inp.value === PASS) {
+          sessionStorage.setItem(SK, '1');
+          gate.style.transition = 'opacity 0.6s ease';
+          gate.style.opacity = '0';
+          setTimeout(() => gate.classList.add('hidden'), 620);
+        } else {
+          err.textContent = 'Incorrect access code. Please try again.';
+          inp.value = '';
+          inp.focus();
+          setTimeout(() => { err.textContent = ''; }, 3200);
+        }
+      }
+
+      btn.addEventListener('click', attempt);
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+    })();
+
+    /* ── Custom cursor ── */
+    (function () {
+      const cursor = document.getElementById('cursor');
+      let mx = -20, my = -20;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px';
+        cursor.style.top  = my + 'px';
+      });
+
+      document.querySelectorAll('a, button, [data-mag]').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+      });
+    })();
+
+    /* ── Magnetic buttons ── */
+    (function () {
+      document.querySelectorAll('[data-mag]').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const r = btn.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width  / 2)) * 0.18;
+          const dy = (e.clientY - (r.top  + r.height / 2)) * 0.18;
+          btn.style.transform = `translate(${dx}px,${dy}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = '';
+        });
+      });
+    })();
+
+    /* ── Scroll nav ── */
+    (function () {
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      }, { passive: true });
+    })();
+
+    /* ── Intersection observer — reveal + clip-reveal ── */
+    (function () {
+      const BASE_DELAY = 0;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal, .clip-reveal, .hero-rule').forEach(el => {
+        observer.observe(el);
+      });
+
+      /* Channel bar fills — observe the channel-row elements */
+      const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            barObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      document.querySelectorAll('.channel-row').forEach(el => barObserver.observe(el));
+    })();
+  </script>
+
+</body>
+</html>
